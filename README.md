@@ -49,7 +49,7 @@
 
 *合批方式：比如GPU instance或者动态批处理等等*
 
-绘制物体的顺序：比如相对于摄像机的远近来进行排序；
+绘制物体的顺序：比如相对于摄像机的远近来进行排序，这在blending中很重要；
 
 渲染目标：输出到FrameBuffer还是到RenderTexture；
 
@@ -64,13 +64,19 @@
 
 （三）光栅化阶段：
 
-①三角形设置与遍历：抗锯齿；参考：[LearnOpenGL-抗锯齿](https://learnopengl-cn.github.io/04%20Advanced%20OpenGL/11%20Anti%20Aliasing/)
+①三角形设置与遍历：抗锯齿；
 
-②像素着色器：插值。
+②像素着色器：插值；
 
-③颜色混合：透明度测试，模板测试，深度测试；
+③颜色混合：透明度测试，模板测试，深度测试，混合；
 
-④目标缓冲区：
+④目标缓冲区：FrameBuffer或RenderTexture；
+
+（四）后处理：
+
+Bloom（泛光）、HDR（高动态范围）；
+
+*FXAA、DepthOfView、边缘检测、径向模糊*
 
 ## 第二章 光照基础
 
