@@ -16,7 +16,7 @@
 
 1.渲染管线简介
 
-总参考：[闫令琪讲pipeline](https://www.bilibili.com/video/BV1X7411F744?p=8&t=1960)
+总参考：[闫令琪-渲染管线](https://www.bilibili.com/video/BV1X7411F744?p=8&t=1960)
 
 渲染管线就是通过一系列的处理，把3D元素转换成屏幕上的2D图像的一个线性过程，它一般分为3个阶段：应用阶段、几何阶段、光栅化阶段。现在的游戏引擎还会增加一个后处理阶段。
 
@@ -24,23 +24,24 @@
 
 ①准备基本场景数据：
 
-物理变换数据：MVP变换；物理网格数据：顶点位置、UV贴图等；
+物理变换数据：MVP变换；物理网格数据：顶点位置、纹理uv坐标等；
+参考：
+[LearnOpenGL-变换](https://learnopengl-cn.github.io/01%20Getting%20started/07%20Transformations/)
 
 光源数据：光源的类型，光源的位置、方向等其他参数，与之相对的阴影的参数设置；
 
 摄像机数据：位置、方向、远近裁剪平面、正交/透视（FOV）、视口比例；
 参考：
-[LearnOpenGL讲变换](https://learnopengl-cn.github.io/01%20Getting%20started/07%20Transformations/)、
-[LearnOpenGL讲坐标系统](https://learnopengl-cn.github.io/01%20Getting%20started/08%20Coordinate%20Systems/)、
-[LearnOpenGL讲摄像机](https://learnopengl-cn.github.io/01%20Getting%20started/09%20Camera/)
+[LearnOpenGL-坐标系统](https://learnopengl-cn.github.io/01%20Getting%20started/08%20Coordinate%20Systems/)、
+[LearnOpenGL-摄像机](https://learnopengl-cn.github.io/01%20Getting%20started/09%20Camera/)
 
 ②加速算法、粗粒度剔除等：
 
 *碰撞检测*
 
-加速算法：八叉树、BSP树、KD树、BVH包围盒等；参考：[闫令琪讲加速算法](https://www.bilibili.com/video/BV1X7411F744?p=14&t=1100)
+加速算法：八叉树、BSP树、KD树、BVH包围盒等；参考：[闫令琪-加速算法](https://www.bilibili.com/video/BV1X7411F744?p=14&t=1100)
 
-遮挡剔除：参考：[LearnOpenGL讲面剔除](https://learnopengl-cn.github.io/04%20Advanced%20OpenGL/04%20Face%20culling/)
+*遮挡剔除*
 
 *其他算法*
 
@@ -48,13 +49,28 @@
 
 *合批方式：比如GPU instance或者动态批处理等等*
 
-绘制物体的顺序：比如相对于摄像机的远近来进行排序
+绘制物体的顺序：比如相对于摄像机的远近来进行排序；
 
-渲染目标：输出到FrameBuffer还是到RenderTexture
+渲染目标：输出到FrameBuffer还是到RenderTexture；
 
-渲染模式：前向渲染或者延迟渲染
+渲染模式：前向渲染或者延迟渲染；
 
 ④输出渲染图元到显存
+
+（二）几何阶段：顶点着色器-视图变换→（曲面细分）→（几何着色器）→投影→裁剪（正面或背面剔除）→屏幕映射；
+
+几何着色器的参考：
+[LearnOpenGL-几何着色器](https://learnopengl-cn.github.io/04%20Advanced%20OpenGL/09%20Geometry%20Shader/)
+
+（三）光栅化阶段：
+
+①三角形设置与遍历：抗锯齿；参考：[LearnOpenGL-抗锯齿](https://learnopengl-cn.github.io/04%20Advanced%20OpenGL/11%20Anti%20Aliasing/)
+
+②像素着色器：插值。
+
+③颜色混合：透明度测试，模板测试，深度测试；
+
+④目标缓冲区：
 
 ## 第二章 光照基础
 
