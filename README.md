@@ -12,6 +12,8 @@
 
 技术美术百人计划（还在更新中）：[【技术美术百人计划】前言概况介绍](https://www.bilibili.com/video/BV1oo4y1d71a)
 
+《Real-Time Rendering》第4版
+
 ## 第一章 基础
 
 ### 1.渲染管线简介
@@ -96,7 +98,7 @@ Bloom（泛光）、HDR（高动态范围）；
 
 ### 3.纹理介绍：纹理，纹理过滤，mipmap，cubemap，各种贴图；
 
-4.图形API介绍：DX，OpenGL，OpenGL ES；
+### 4.图形API介绍：DX，OpenGL，OpenGL ES；
 
 ## 第二章 光照基础
 
