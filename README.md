@@ -14,26 +14,21 @@
 
 ## 第一章 基础
 
-1.渲染管线简介
+### 1.渲染管线简介
 
 总参考：[闫令琪-渲染管线](https://www.bilibili.com/video/BV1X7411F744?p=8&t=1960)
 
 渲染管线就是通过一系列的处理，把3D元素转换成屏幕上的2D图像的一个线性过程，它一般分为3个阶段：应用阶段、几何阶段、光栅化阶段。现在的游戏引擎还会增加一个后处理阶段。
 
-（一）应用阶段：一般在CPU上完成，从磁盘或者内存上读取模型或者贴图数据，然后加载到应用程序里。
+**（一）应用阶段：一般在CPU上完成，从磁盘或者内存上读取模型或者贴图数据，然后加载到应用程序里。**
 
 ①准备基本场景数据：
 
 物理变换数据：MVP变换；物理网格数据：顶点位置、纹理uv坐标等；
-参考：
-[LearnOpenGL-变换](https://learnopengl-cn.github.io/01%20Getting%20started/07%20Transformations/)
 
 光源数据：光源的类型，光源的位置、方向等其他参数，与之相对的阴影的参数设置；
 
 摄像机数据：位置、方向、远近裁剪平面、正交/透视（FOV）、视口比例；
-参考：
-[LearnOpenGL-坐标系统](https://learnopengl-cn.github.io/01%20Getting%20started/08%20Coordinate%20Systems/)、
-[LearnOpenGL-摄像机](https://learnopengl-cn.github.io/01%20Getting%20started/09%20Camera/)
 
 ②加速算法、粗粒度剔除等：
 
@@ -57,9 +52,9 @@
 
 ④输出渲染图元到显存
 
-（二）几何阶段：顶点着色器-视图变换→（曲面细分）→（几何着色器）→投影→裁剪（正面或背面剔除）→屏幕映射；
+**（二）几何阶段：顶点着色器-视图变换→（曲面细分）→（几何着色器）→投影→裁剪（正面或背面剔除）→屏幕映射；**
 
-（三）光栅化阶段：
+**（三）光栅化阶段：**
 
 ①三角形设置与遍历：抗锯齿；
 
@@ -69,15 +64,37 @@
 
 ④目标缓冲区：FrameBuffer或RenderTexture；
 
-（四）后处理：
+**（四）后处理：**
 
 Bloom（泛光）、HDR（高动态范围）；
 
 *FXAA、DepthOfView、边缘检测、径向模糊*
 
-2.数学基础
+### 2.数学基础
 
-3.纹理介绍：纹理，纹理过滤，mipmap，cubemap，各种贴图；
+**微积分，线性代数，概率论**
+
+参考：
+[闫令琪-线性代数复习](https://www.bilibili.com/video/BV1X7411F744?p=2)
+
+缩放矩阵（scale），旋转矩阵（rotation），位移矩阵（translation）
+![三维空间中的坐标变换](https://files.catbox.moe/x5khht.png)
+
+参考：
+[闫令琪-变换](https://www.bilibili.com/video/BV1X7411F744?p=3)
+
+**Local Space——Model Matrix—→World Space——View Matirx—→View Space——Projection Matrix—→Clip Space——View Transform—→Screen Space**
+
+模型矩阵、世界空间：将模型空间的顶点变换到世界空间，先缩放后旋转再平移。
+
+观察矩阵、观察空间：根据所有物体和摄像机的相对位置进行变换。具体而言，对世界坐标先平移，再旋转，使物体处于一个相当于摄像机在坐标原点的空间中。这一步需要摄像机的方向、上轴、右轴。
+
+投影矩阵、裁剪空间：投影分为透视投影和正交投影，我们用投影矩阵来实现，前者需要fov的值、视口宽高比、近远平面的值，后者需要左右顶底和近远平面的值。这个变换其实并不是真正的投影，它只是在为投影做准备，它以w分量作为范围值对顶点进行缩放，如果一个顶点在我们的视椎体内，那么它的x,y,z三个值都会处于-w和+w之间。
+
+参考：
+[闫令琪-变换](https://www.bilibili.com/video/BV1X7411F744?p=4)
+
+### 3.纹理介绍：纹理，纹理过滤，mipmap，cubemap，各种贴图；
 
 4.图形API介绍：DX，OpenGL，OpenGL ES；
 
