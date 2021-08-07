@@ -96,7 +96,7 @@ Bloom（泛光）、HDR（高动态范围）；
 参考：
 [GAMES101-变换](https://www.bilibili.com/video/BV1X7411F744?p=4)
 
-### 3.纹理介绍：纹理，纹理过滤，mipmap，cubemap，各种贴图；
+### 3.纹理介绍
 
 为什么选择纹理？：牺牲一些几何细节，能够大量减少建模的工作量，存储空间需求也能减少，读取速度也能增加。
 
@@ -115,9 +115,17 @@ Bloom（泛光）、HDR（高动态范围）；
 参考：
 [LearnOpenGL CN](https://learnopengl-cn.github.io/01%20Getting%20started/06%20Textures/)
 
-### 4.图形API介绍：DX，OpenGL，OpenGL ES；
+### 4.图形API介绍
 
+Khronos定义了OpenGL，微软定义了DirectX；
 
+目前手机，不管是iOS还是Android，都是支持OpenGL ES；
+
+Windows系统支持DirectX和OpenGL，Linux/Mac(Unix)系统支持OpenGL。
+
+这两个链接可以查看对应的手机芯片支持的OpenGL es支持的版本：
+[根据芯片查GPU](https://zh.wikipedia.org/wiki/%E9%AB%98%E9%80%9A%E9%A9%8D%E9%BE%8D%E5%85%83%E4%BB%B6%E5%88%97%E8%A1%A8#Snapdragon_888)
+[根据GPU查OpenGL ES版本](https://zh.wikipedia.org/wiki/Adreno)
 
 ## 第二章 光照基础
 
