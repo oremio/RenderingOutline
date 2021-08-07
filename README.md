@@ -104,7 +104,7 @@ Bloom（泛光）、HDR（高动态范围）；
 
 纹理太小：会显得很糊，需要双线性插值（Bilinear）、双三次插值（Bicubic）、*Qu´ılez的光滑曲线插值*；
 
-纹理太大：近处会有锯齿，远处会产生摩尔纹。需要Mipmap以及Ripmap（各向异性的Mipmap）、EWA过滤、*积分图Summed-Area Table*；
+纹理太大：近处会有锯齿，远处会产生摩尔纹。需要Mipmap以及Ripmap（各向异性的Mipmap）、EWA过滤、*积分图（Summed-Area Table）*；
 
 *CPU渲染优化常见方式：纹理图集/数组*；
 
@@ -113,7 +113,7 @@ Bloom（泛光）、HDR（高动态范围）；
 纹理的应用：立方体贴图，光照贴图，深度贴图，凹凸贴图，视差贴图
 
 参考：
-[LearnOpenGL CN](https://learnopengl-cn.github.io/01%20Getting%20started/06%20Textures/)
+[LearnOpenGL CN-纹理](https://learnopengl-cn.github.io/01%20Getting%20started/06%20Textures/)
 
 ### 4.图形API介绍
 
