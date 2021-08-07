@@ -18,7 +18,7 @@
 
 ### 1.渲染管线简介
 
-总参考：[闫令琪-渲染管线](https://www.bilibili.com/video/BV1X7411F744?p=8&t=1960)
+总参考：[GAMES101-渲染管线](https://www.bilibili.com/video/BV1X7411F744?p=8&t=1960)
 
 渲染管线就是通过一系列的处理，把3D元素转换成屏幕上的2D图像的一个线性过程，它一般分为3个阶段：应用阶段、几何阶段、光栅化阶段。现在的游戏引擎还会增加一个后处理阶段。
 
@@ -36,7 +36,7 @@
 
 *碰撞检测*
 
-加速算法：八叉树、BSP树、KD树、BVH包围盒等；参考：[闫令琪-加速算法](https://www.bilibili.com/video/BV1X7411F744?p=14&t=1100)
+加速算法：八叉树、BSP树、KD树、BVH包围盒等；参考：[GAMES101-加速算法](https://www.bilibili.com/video/BV1X7411F744?p=14&t=1100)
 
 *遮挡剔除*
 
@@ -77,13 +77,13 @@ Bloom（泛光）、HDR（高动态范围）；
 **微积分，线性代数，概率论**
 
 参考：
-[闫令琪-线性代数复习](https://www.bilibili.com/video/BV1X7411F744?p=2)
+[GAMES101-线性代数复习](https://www.bilibili.com/video/BV1X7411F744?p=2)
 
-缩放矩阵（scale），旋转矩阵（rotation），位移矩阵（translation）
+缩放矩阵（Scale），旋转矩阵（Rotation），位移矩阵（Translation）
 ![三维空间中的坐标变换](https://files.catbox.moe/x5khht.png)
 
 参考：
-[闫令琪-变换](https://www.bilibili.com/video/BV1X7411F744?p=3)
+[GAMES101-变换](https://www.bilibili.com/video/BV1X7411F744?p=3)
 
 **Local Space——Model Matrix—→World Space——View Matirx—→View Space——Projection Matrix—→Clip Space——View Transform—→Screen Space**
 
@@ -94,11 +94,28 @@ Bloom（泛光）、HDR（高动态范围）；
 投影矩阵、裁剪空间：投影分为透视投影和正交投影，我们用投影矩阵来实现，前者需要fov的值、视口宽高比、近远平面的值，后者需要左右顶底和近远平面的值。这个变换其实并不是真正的投影，它只是在为投影做准备，它以w分量作为范围值对顶点进行缩放，如果一个顶点在我们的视椎体内，那么它的x,y,z三个值都会处于-w和+w之间。
 
 参考：
-[闫令琪-变换](https://www.bilibili.com/video/BV1X7411F744?p=4)
+[GAMES101-变换](https://www.bilibili.com/video/BV1X7411F744?p=4)
 
 ### 3.纹理介绍：纹理，纹理过滤，mipmap，cubemap，各种贴图；
 
+包装模式/纹理寻址模式：Repeat，Mirror，Clamp（拉长边缘），Border
+
+纹理太小：会显得很糊，需要双线性插值（Bilinear）、双三次插值（Bicubic）、*Qu´ılez的光滑曲线插值*；
+
+纹理太大：近处会有锯齿，远处会产生摩尔纹。需要Mipmap以及Ripmap（各向异性的Mipmap）、EWA过滤、*积分图Summed-Area Table*；
+
+*CPU渲染优化常见方式：纹理图集/数组*；
+
+*GPU渲染优化常见方式：纹理压缩*；
+
+纹理的应用：立方体贴图，光照贴图，深度贴图，凹凸贴图，视差贴图
+
+参考：
+[LearnOpenGL CN](https://learnopengl-cn.github.io/01%20Getting%20started/06%20Textures/)
+
 ### 4.图形API介绍：DX，OpenGL，OpenGL ES；
+
+
 
 ## 第二章 光照基础
 
