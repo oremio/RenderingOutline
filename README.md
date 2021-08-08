@@ -147,7 +147,7 @@ Windows系统支持DirectX和OpenGL，Linux/Mac(Unix)系统支持OpenGL。
 
 ![设备相关的RGB色彩空间](https://pic4.zhimg.com/v2-847b6a6e229101f4163b1a0c584330ff_r.jpg)
 
-参考：[章佳杰-色彩空间基础](https://zhuanlan.zhihu.com/p/24214731)和[【技术美术百人计划】图形 2.1 色彩空间介绍](https://www.bilibili.com/video/BV1Qb4y1S7CC?p=2)
+参考：[章佳杰-色彩空间基础](https://zhuanlan.zhihu.com/p/24214731)和[【技术美术百人计划】图形 2.1 色彩空间介绍](https://www.bilibili.com/video/BV1Qb4y1S7CC?p=2)和[GAMES101-颜色](https://www.bilibili.com/video/BV1X7411F744?p=20)
 
 2.模型与材质
 
