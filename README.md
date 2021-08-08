@@ -22,7 +22,9 @@
 
 渲染管线就是通过一系列的处理，把3D元素转换成屏幕上的2D图像的一个线性过程，它一般分为3个阶段：应用阶段、几何阶段、光栅化阶段。现在的游戏引擎还会增加一个后处理阶段。
 
-**（一）应用阶段：一般在CPU上完成，从磁盘或者内存上读取模型或者贴图数据，然后加载到应用程序里。**
+**（一）应用阶段：**
+
+**一般在CPU上完成，从磁盘或者内存上读取模型或者贴图数据，然后加载到应用程序里。**
 
 ①准备基本场景数据：
 
@@ -54,7 +56,9 @@
 
 ④输出渲染图元到显存
 
-**（二）几何阶段：顶点着色器-视图变换→（曲面细分）→（几何着色器）→投影→裁剪（正面或背面剔除）→屏幕映射；**
+**（二）几何阶段：**
+
+**顶点着色器-视图变换→（曲面细分）→（几何着色器）→投影→裁剪（正面或背面剔除）→屏幕映射；**
 
 **（三）光栅化阶段：**
 
@@ -76,16 +80,14 @@ Bloom（泛光）、HDR（高动态范围）；
 
 **微积分，线性代数，概率论**
 
-参考：
-[GAMES101-线性代数复习](https://www.bilibili.com/video/BV1X7411F744?p=2)
+参考：[GAMES101-线性代数复习](https://www.bilibili.com/video/BV1X7411F744?p=2)
 
 缩放矩阵（Scale），旋转矩阵（Rotation），位移矩阵（Translation）
 ![三维空间中的坐标变换](https://files.catbox.moe/x5khht.png)
 
-参考：
-[GAMES101-变换](https://www.bilibili.com/video/BV1X7411F744?p=3)
+参考：[GAMES101-变换](https://www.bilibili.com/video/BV1X7411F744?p=3)
 
-**Local Space——Model Matrix—→World Space——View Matirx—→View Space——Projection Matrix—→Clip Space——View Transform—→Screen Space**
+**Local Space—Model Matrix→World Space—View Matirx→View Space—Projection Matrix→Clip Space—View Transform→Screen Space**
 
 模型矩阵、世界空间：将模型空间的顶点变换到世界空间，先缩放后旋转再平移。
 
@@ -93,8 +95,7 @@ Bloom（泛光）、HDR（高动态范围）；
 
 投影矩阵、裁剪空间：投影分为透视投影和正交投影，我们用投影矩阵来实现，前者需要fov的值、视口宽高比、近远平面的值，后者需要左右顶底和近远平面的值。这个变换其实并不是真正的投影，它只是在为投影做准备，它以w分量作为范围值对顶点进行缩放，如果一个顶点在我们的视椎体内，那么它的x,y,z三个值都会处于-w和+w之间。
 
-参考：
-[GAMES101-变换](https://www.bilibili.com/video/BV1X7411F744?p=4)
+参考：[GAMES101-变换](https://www.bilibili.com/video/BV1X7411F744?p=4)
 
 ### 3.纹理介绍
 
@@ -118,10 +119,7 @@ Bloom（泛光）、HDR（高动态范围）；
 
 纹理的应用：立方体贴图，光照贴图，深度贴图，凹凸贴图，视差贴图
 
-参考：
-[LearnOpenGL CN-纹理](https://learnopengl-cn.github.io/01%20Getting%20started/06%20Textures/)和
-[GAMES101-纹理、Mipmap](https://www.bilibili.com/video/BV1X7411F744?p=9)和
-[GAMES202-SAT](https://www.bilibili.com/video/BV1YK4y1T7yY?p=4&t=4315)
+参考：[LearnOpenGL CN-纹理](https://learnopengl-cn.github.io/01%20Getting%20started/06%20Textures/)和[GAMES101-纹理、Mipmap](https://www.bilibili.com/video/BV1X7411F744?p=9)和[GAMES202-SAT](https://www.bilibili.com/video/BV1YK4y1T7yY?p=4&t=4315)
 
 ### 4.图形API介绍
 
@@ -132,12 +130,24 @@ Khronos定义了OpenGL，微软定义了DirectX；
 Windows系统支持DirectX和OpenGL，Linux/Mac(Unix)系统支持OpenGL。
 
 这两个链接可以查看对应的手机芯片支持的OpenGL ES支持的版本：
-[根据芯片查GPU](https://zh.wikipedia.org/wiki/%E9%AB%98%E9%80%9A%E9%A9%8D%E9%BE%8D%E5%85%83%E4%BB%B6%E5%88%97%E8%A1%A8#Snapdragon_888)
+[根据芯片查GPU](https://zh.wikipedia.org/wiki/%E9%AB%98%E9%80%9A%E9%A9%8D%E9%BE%8D%E5%85%83%E4%BB%B6%E5%88%97%E8%A1%A8#Snapdragon_888)、
 [根据GPU查OpenGL ES版本](https://zh.wikipedia.org/wiki/Adreno)
 
 ## 第二章 光照基础
 
 1.颜色空间
+
+我们常用的sRGB色彩空间，其构成为：
+
+1.色域： sRGB首先设定了RGB三个基色的坐标；
+
+2.白点：sRGB规定了白点位置；
+
+3.gamma：sRGB的gamma设定为≈2.2，也就是说从外向内切，先切的很细，然后逐渐变粗。
+
+![设备相关的RGB色彩空间](https://pic4.zhimg.com/v2-847b6a6e229101f4163b1a0c584330ff_r.jpg)
+
+参考：[章佳杰-色彩空间基础](https://zhuanlan.zhihu.com/p/24214731)和[【技术美术百人计划】图形 2.1 色彩空间介绍](https://www.bilibili.com/video/BV1Qb4y1S7CC?p=2)
 
 2.模型与材质
 
