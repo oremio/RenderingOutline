@@ -113,7 +113,9 @@ Bloom（泛光）、HDR（高动态范围）；
 纹理的应用：立方体贴图，光照贴图，深度贴图，凹凸贴图，视差贴图
 
 参考：
-[LearnOpenGL CN-纹理](https://learnopengl-cn.github.io/01%20Getting%20started/06%20Textures/)
+[LearnOpenGL CN-纹理](https://learnopengl-cn.github.io/01%20Getting%20started/06%20Textures/)和
+[GAMES101-纹理、Mipmap](https://www.bilibili.com/video/BV1X7411F744?p=9)和
+[GAMES202-SAT](https://www.bilibili.com/video/BV1YK4y1T7yY?p=4)
 
 ### 4.图形API介绍
 
@@ -123,7 +125,7 @@ Khronos定义了OpenGL，微软定义了DirectX；
 
 Windows系统支持DirectX和OpenGL，Linux/Mac(Unix)系统支持OpenGL。
 
-这两个链接可以查看对应的手机芯片支持的OpenGL es支持的版本：
+这两个链接可以查看对应的手机芯片支持的OpenGL ES支持的版本：
 [根据芯片查GPU](https://zh.wikipedia.org/wiki/%E9%AB%98%E9%80%9A%E9%A9%8D%E9%BE%8D%E5%85%83%E4%BB%B6%E5%88%97%E8%A1%A8#Snapdragon_888)
 [根据GPU查OpenGL ES版本](https://zh.wikipedia.org/wiki/Adreno)
 
