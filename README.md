@@ -104,7 +104,11 @@ Bloom（泛光）、HDR（高动态范围）；
 
 纹理太小：会显得很糊，需要双线性插值（Bilinear）、双三次插值（Bicubic）、*Qu´ılez的光滑曲线插值*；
 
-纹理太大：近处会有锯齿，远处会产生摩尔纹。需要Mipmap以及Ripmap（各向异性的Mipmap）、EWA过滤、*积分图（Summed-Area Table）*；
+纹理太大：近处会有锯齿，远处会产生摩尔纹。需要Mipmap以及Ripmap（各向异性的Mipmap）、EWA过滤、积分图（Summed-Area Table）；
+
+细讲Mipmap：根据某一个像素点与其周围像素点的距离，可以算出其对应的纹素点与其对应的纹素点的距离，通过这个距离可以画出一个以该纹素点为中心、边长为L的正方形，那么对应的Mipmap级数就是log<sub>2</sub>L。这样就能快速查询到某一像素的颜色值，而多出来的开销仅仅是原来的三分之一！
+
+细讲SAT：
 
 *CPU渲染优化常见方式：纹理图集/数组*；
 
@@ -115,7 +119,7 @@ Bloom（泛光）、HDR（高动态范围）；
 参考：
 [LearnOpenGL CN-纹理](https://learnopengl-cn.github.io/01%20Getting%20started/06%20Textures/)和
 [GAMES101-纹理、Mipmap](https://www.bilibili.com/video/BV1X7411F744?p=9)和
-[GAMES202-SAT](https://www.bilibili.com/video/BV1YK4y1T7yY?p=4)
+[GAMES202-SAT](https://www.bilibili.com/video/BV1YK4y1T7yY?p=4&t=4315)
 
 ### 4.图形API介绍
 
