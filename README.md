@@ -169,13 +169,45 @@ Windows系统支持DirectX和OpenGL，Linux/Mac(Unix)系统支持OpenGL。
 
 参考：[孙小磊-重心坐标(barycentric coordinates)详解及其作用](https://zhuanlan.zhihu.com/p/144360079)
 
-### 3.基础hlsl函数介绍：
+### 3.基础hlsl函数介绍
 
 参考：[HLSL内部函数](https://docs.microsoft.com/zh-cn/windows/win32/direct3dhlsl/dx-graphics-hlsl-intrinsic-functions?redirectedfrom=MSDN)
 
-### 4.传统经验光照模型：
+### 4.传统经验光照模型
 
-除了PBR以外的光照模型；
+按照时间轴：
+
+1970年：Lambert漫反射模型：color = C<sub>light</sub> * albedo * dot( **normal** , **L** )
+
+**1971：Gourand模型：** 以顶点为单位计算光量，再通过插值得到每个像素点的光亮度。在表现物体光滑性上有比较好的表现，但值不再是线性变化的时候，比如镜面高光，由于线性插值导致内插值不可能大于顶点值。因此高光只能出现在顶点。由于使用的颜色插值，会导致镜面高光蔓延到周边。
+
+**1975：Phone光照模型：** C<sub>final</sub> = A<sub>light</sub> * m<sub>diffuse</sub> + C<sub>light</sub> * (m<sub>diffuse</sub> * dot( **l** , **n** ) + m<sub>specular</sub> * dot( **v** , **r** )<sup>gloss</sup>)
+
+A<sub>light</sub>：环境光量； C<sub>light</sub>：入射光量；
+
+m<sub>diffuse</sub>：漫反射率；m<sub>specular</sub>：镜面反射率；gloss：高光度；
+
+**l** ：入射光向量（指向光源）；**n** ：物体表面法线； **r** ：反射光向量；
+
+**1977：Blinn-Phone模型：** C<sub>final</sub> = A<sub>light</sub> * m<sub>diffuse</sub> + C<sub>light</sub> * (m<sub>diffuse</sub> * dot( **l** , **n** ) + m<sub>specular</sub> * dot( **h** , **n** )<sup>gloss</sup>)
+
+**h** ：半程向量；
+
+还有一个Flat模型：平面着色模型，计算多边形的单个强度，每个三角形只有一个法线方向。以相同的光强度值显示多边形的所有点。通常适用于lowPoly风格的场景。
+
+下面的光照模型留到第五章~
+
+----------------------------
+
+1980：Whitted光线追踪模型
+
+1982年：Cook-Torrance模型（蒙特卡洛方法被引入）
+
+1986年： Kajiya统一了光照公式（蒙特卡洛的每个随机数只产生一条路径）
+
+----------------------------
+
+参考：[LearnOpenGL CN-基础光照](https://learnopengl-cn.github.io/02%20Lighting/02%20Basic%20Lighting/)
 
 5.BumpMap的改进：说清楚法线、视差、位移、浮雕的计算原理。
 
