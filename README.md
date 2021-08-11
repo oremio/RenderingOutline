@@ -179,9 +179,9 @@ Windows系统支持DirectX和OpenGL，Linux/Mac(Unix)系统支持OpenGL。
 
 1970年：Lambert漫反射模型：color = C<sub>light</sub> * albedo * dot( **normal** , **L** )
 
-**1971：Gourand模型：** 以顶点为单位计算光量，再通过插值得到每个像素点的光亮度。在表现物体光滑性上有比较好的表现，但值不再是线性变化的时候，比如镜面高光，由于线性插值导致内插值不可能大于顶点值。因此高光只能出现在顶点。由于使用的颜色插值，会导致镜面高光蔓延到周边。
+**1971年：Gourand模型：** 以顶点为单位计算光量，再通过插值得到每个像素点的光亮度。在表现物体光滑性上有比较好的表现，但值不再是线性变化的时候，比如镜面高光，由于线性插值导致内插值不可能大于顶点值。因此高光只能出现在顶点。由于使用的颜色插值，会导致镜面高光蔓延到周边。
 
-**1975：Phone光照模型：** C<sub>final</sub> = A<sub>light</sub> * m<sub>diffuse</sub> + C<sub>light</sub> * (m<sub>diffuse</sub> * dot(**l**, **n**) + m<sub>specular</sub> * dot(**v**, **r**)<sup>gloss</sup>)
+**1975年：Phone光照模型：** C<sub>final</sub> = A<sub>light</sub> * m<sub>diffuse</sub> + C<sub>light</sub> * (m<sub>diffuse</sub> * dot(**l**, **n**) + m<sub>specular</sub> * dot(**v**, **r**)<sup>gloss</sup>)
 
 A<sub>light</sub>：环境光量； C<sub>light</sub>：入射光量；
 
@@ -189,29 +189,31 @@ m<sub>diffuse</sub>：漫反射率；m<sub>specular</sub>：镜面反射率；gl
 
 **l**：入射光向量（指向光源）；**n**：物体表面法线；**r**：反射光向量；
 
-**1977：Blinn-Phone模型：** C<sub>final</sub> = A<sub>light</sub> * m<sub>diffuse</sub> + C<sub>light</sub> * (m<sub>diffuse</sub> * dot(**l**, **n**) + m<sub>specular</sub> * dot(**h**, **n**)<sup>gloss</sup>)
+**1977年：Blinn-Phone模型：** C<sub>final</sub> = A<sub>light</sub> * m<sub>diffuse</sub> + C<sub>light</sub> * (m<sub>diffuse</sub> * dot(**l**, **n**) + m<sub>specular</sub> * dot(**h**, **n**)<sup>gloss</sup>)
 
 **h**：半程向量；
 
 还有一个Flat模型：平面着色模型，计算多边形的单个强度，每个三角形只有一个法线方向。以相同的光强度值显示多边形的所有点。通常适用于lowPoly风格的场景。
 
-下面的光照模型留到第五章~
+下面的基于物理的光照模型留到第五章~
 
-----------------------------
-
-1980：Whitted光线追踪模型
+1980年：Whitted光线追踪模型
 
 1982年：Cook-Torrance模型（蒙特卡洛方法被引入）
 
 1986年： Kajiya统一了光照公式（蒙特卡洛的每个随机数只产生一条路径）
 
-----------------------------
-
 参考：[LearnOpenGL CN-基础光照](https://learnopengl-cn.github.io/02%20Lighting/02%20Basic%20Lighting/)
 
-5.BumpMap的改进：说清楚法线、视差、位移、浮雕的计算原理。
+### 5.BumpMap
 
-6.伽马矫正
+**法线贴图：** 根据经验光照模型的原理，引入一种叫做法线贴图的纹理。 法线贴图的法线向量需要定义在**切线空间**中，我们会定义一个**TBN矩阵**， 这三个字母分别代表tangent、bitangent和normal向量，这个矩阵可以把切线坐标空间的向量转换到世界坐标空间，不过我们一般是用其逆矩阵将向量从世界空间转换到切线空间，具体原因可参考[LearnOpenGL CN-法线贴图](https://learnopengl-cn.github.io/05%20Advanced%20Lighting/04%20Normal%20Mapping/)；
+
+**视差贴图：**  视差贴图属于位移贴图技术的一种，它会引入一种叫高度贴图（或反色高度贴图）的纹理，通过对纹理坐标进行位移来实现凹凸的效果，它会和法线贴图配合使用，保证光照能和位移相匹配。关于视差贴图的具体计算可以参考[LearnOpenGL CN-视差贴图](https://learnopengl-cn.github.io/05%20Advanced%20Lighting/05%20Parallax%20Mapping/)；陡峭视差映射通过增加采样的数量提高了位移的精确性，视差遮蔽映射通过对目标高度之间的两个高度层对应的纹理坐标进行插值来进一步提升精确性。
+
+**浮雕贴图：** 与使用插值的视差遮蔽映射不同，浮雕贴图则是通过二分查找来决定uv的偏移量。
+
+### 6.伽马矫正
 
 7.LDR与HDR
 
