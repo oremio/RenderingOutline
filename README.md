@@ -211,7 +211,7 @@ m<sub>diffuse</sub>：漫反射率；m<sub>specular</sub>：镜面反射率；gl
 
 **法线贴图：** 根据经验光照模型的原理，引入一种叫做法线贴图的纹理。 法线贴图的法线向量需要定义在**切线空间**中，我们会定义一个**TBN矩阵**， 这三个字母分别代表tangent、bitangent和normal向量，这个矩阵可以把切线坐标空间的向量转换到世界坐标空间，不过我们一般是用其逆矩阵将向量从世界空间转换到切线空间，具体原因可参考[LearnOpenGL CN-法线贴图](https://learnopengl-cn.github.io/05%20Advanced%20Lighting/04%20Normal%20Mapping/)；
 
-**视差贴图：**  视差贴图属于位移贴图技术的一种，它会引入一种叫高度贴图（或反色高度贴图）的纹理，通过对纹理坐标进行位移来实现凹凸的效果，它会和法线贴图配合使用，保证光照能和位移相匹配。关于视差贴图的具体计算可以参考[LearnOpenGL CN-视差贴图](https://learnopengl-cn.github.io/05%20Advanced%20Lighting/05%20Parallax%20Mapping/)；陡峭视差映射通过增加采样的数量提高了位移的精确性，视差遮蔽映射通过对目标高度之间的两个高度层对应的纹理坐标进行插值来进一步提升精确性。
+**视差贴图：** 视差贴图属于位移贴图技术的一种，它会引入一种叫高度贴图（或反色高度贴图）的纹理，通过对纹理坐标进行位移来实现凹凸的效果，它会和法线贴图配合使用，保证光照能和位移相匹配。关于视差贴图的具体计算可以参考[LearnOpenGL CN-视差贴图](https://learnopengl-cn.github.io/05%20Advanced%20Lighting/05%20Parallax%20Mapping/)；陡峭视差映射通过增加采样的数量提高了位移的精确性，视差遮蔽映射通过对目标高度之间的两个高度层对应的纹理坐标进行插值来进一步提升精确性。
 
 **浮雕贴图：** 与使用插值的视差遮蔽映射不同，浮雕贴图则是通过二分查找来决定uv的偏移量。
 
@@ -223,7 +223,7 @@ m<sub>diffuse</sub>：漫反射率；m<sub>specular</sub>：镜面反射率；gl
 
 **Gamma校正：** 图像经过gamma编码存储在硬盘中，将获取到的物理数据做一次gamma值约为0.45的映射，这样的过程叫做gamma编码，此时图像的像素比实际物理像素要更亮（注意，电压和亮度都是在0到1的区间）。而在显示图像时，**需要将每个像素做一次gamma值约为2.2的校正**，使最终的结果为正确的物理数据。
 
-具体应用：项目使用的是线性空间的贴图，则不需要勾选sRGB，否则，对于勾选了sRGB的贴图，会通过硬件特性采样时进行线性转换。不过，线性空间需要图形API的硬件支持，目前支持的平台如下：
+**具体应用：** 项目使用的是线性空间的贴图，则不需要勾选sRGB，否则，对于勾选了sRGB的贴图，会通过硬件特性采样时进行线性转换。不过，线性空间需要图形API的硬件支持，目前支持的平台如下：
 
 - Windows，Mac OS x 和Linux(Standalone)
 - Xbox One/Series
@@ -232,12 +232,27 @@ m<sub>diffuse</sub>：漫反射率；m<sub>specular</sub>：镜面反射率；gl
 - iOS(Metal)
 - WebGL
 
+参考：[LearnOpenGL CN-Gamma校正](https://learnopengl-cn.github.io/05%20Advanced%20Lighting/02%20Gamma%20Correction/)
 
 ### 7.LDR与HDR
 
-8.FlowMap的实现
+**基本概念：**
 
-9.待续
+- HDR = High Dynamic Range。远高于8位的精度、单通道可超过1，例如HDRI、真实世界
+- LDR = Low Dynamic Range。8位精度、单通道0-1，例如拾色器、一般的图片、电脑屏幕
+- 动态范围 = 最高亮度 / 最低亮度
+
+**为什么需要HDR？：** ①HDR能呈现更好的色彩，更高的动态范围和更丰富的细节,  并且有效的防止画面过曝；②只有HDR才有超过1的数值，才有光晕（bloom）的效果，高质量的bloom能体现画面的渲染品质。
+
+**色调映射（Tone Mapping）：** 一个损失很小的转换浮点颜色值至我们所需的LDR[0.0, 1.0]范围内的过程，通常会伴有特定的风格的色平衡（Stylistic Color Balance）。 ACES（Academy Color Encoding System 学院颜色编码系统）是现在最流行、最被广泛使用的Tonemapping映射曲线。
+
+**泛光（Bloom）：** 光晕效果，可以使用泛光这种后处理来实现，具体算法见4.1。
+
+参考：[LearnOpenGL CN-HDR](https://learnopengl-cn.github.io/05%20Advanced%20Lighting/06%20HDR/)
+
+### 8.FlowMap的实现
+
+
 
 ## 第三章 进阶应用
 
