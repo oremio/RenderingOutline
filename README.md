@@ -181,7 +181,7 @@ Windows系统支持DirectX和OpenGL，Linux/Mac(Unix)系统支持OpenGL。
 
 **1971年：Gourand模型：** 以顶点为单位计算光量，再通过插值得到每个像素点的光亮度。在表现物体光滑性上有比较好的表现，但值不再是线性变化的时候，比如镜面高光，由于线性插值导致内插值不可能大于顶点值。因此高光只能出现在顶点。由于使用的颜色插值，会导致镜面高光蔓延到周边。
 
-**1975年：Phone光照模型：** C<sub>final</sub> = A<sub>light</sub> * m<sub>diffuse</sub> + C<sub>light</sub> * (m<sub>diffuse</sub> * dot(**l**, **n**) + m<sub>specular</sub> * dot(**v**, **r**)<sup>gloss</sup>)
+**1975年：Phong光照模型：** C<sub>final</sub> = A<sub>light</sub> * m<sub>diffuse</sub> + C<sub>light</sub> * (m<sub>diffuse</sub> * dot(**l**, **n**) + m<sub>specular</sub> * dot(**v**, **r**)<sup>gloss</sup>)
 
 A<sub>light</sub>：环境光量； C<sub>light</sub>：入射光量；
 
@@ -189,7 +189,7 @@ m<sub>diffuse</sub>：漫反射率；m<sub>specular</sub>：镜面反射率；gl
 
 **l**：入射光向量（指向光源）；**n**：物体表面法线；**r**：反射光向量；
 
-**1977年：Blinn-Phone模型：** C<sub>final</sub> = A<sub>light</sub> * m<sub>diffuse</sub> + C<sub>light</sub> * (m<sub>diffuse</sub> * dot(**l**, **n**) + m<sub>specular</sub> * dot(**h**, **n**)<sup>gloss</sup>)
+**1977年：Blinn-Phong模型：** C<sub>final</sub> = A<sub>light</sub> * m<sub>diffuse</sub> + C<sub>light</sub> * (m<sub>diffuse</sub> * dot(**l**, **n**) + m<sub>specular</sub> * dot(**h**, **n**)<sup>gloss</sup>)
 
 **h**：半程向量；
 
@@ -292,9 +292,19 @@ m<sub>diffuse</sub>：漫反射率；m<sub>specular</sub>：镜面反射率；gl
 
 ## 第五章 物理世界
 
-1.PBR
+### 1.PBR
 
-2.光线追踪，路径追踪与光线投射
+#### 1.1 辐射度量学
+
+**为什么需要辐射度量学？：** 无论是Blinn-Phong模型，还是whited-style光线追踪，都存在较多经验成分。
+
+下面是三个重要概念的图解：
+
+![三个重要概念](https://pic1.zhimg.com/v2-039fbcb784ca5531560b50b69a9cca68_r.jpg)
+
+### 2.光线追踪
+
+
 
 3.体渲染
 
