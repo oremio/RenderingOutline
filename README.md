@@ -323,6 +323,10 @@ m<sub>diffuse</sub>：漫反射率；m<sub>specular</sub>：镜面反射率；gl
 
 ![三个重要概念](https://pic1.zhimg.com/v2-039fbcb784ca5531560b50b69a9cca68_r.jpg)
 
+#### 1.2 BRDF的定义与性质
+
+#### 1.3 PBR实现算法
+
 ### 2.光线追踪
 
 
