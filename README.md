@@ -1,6 +1,8 @@
 # RenderingOutline
 
-这是我进行渲染学习的一个大纲，之后可能会补上一些图形学相关算法或技术的（伪）代码。这个大纲基本是参考[技术美术百人计划](https://docs.qq.com/doc/DUFdKZE1oVFd3ZlBs)，同时补充上一些通俗且尽量简短的、同时至少我自己日后还能看懂的解释，保证所有知识点的"Why, What, How"都能在文字上解释清楚，即为什么会出现这种技术，这种技术的主要内容，这种技术的实现。
+这是我进行渲染学习的一个大纲（不是NPR里面的描边！虽然我学习图形学的初衷是NPR~），之后可能会补上一些图形学相关算法或技术的（伪）代码。
+
+这个大纲基本是参考[技术美术百人计划](https://docs.qq.com/doc/DUFdKZE1oVFd3ZlBs)，增加了“第七章 GPU逻辑管线”，同时会补充上一些通俗且尽量简短的、至少我自己日后还能看懂的解释，保证所有知识点的"Why, What, How"都能在文字上解释清楚，即为什么会出现这种技术，这种技术的主要内容，这种技术的实现。
 
 斜体字表示待学习、待补充的内容。
 
@@ -14,9 +16,20 @@
 
 《Real-Time Rendering》第4版
 
+## 全篇第一个"Why, What, How"
+
+**为什么学图形学？：** Computer Graphics is AWESOME!!!
+
+**图形学是什么？：** 计算机图形学是计算机科学的一个子领域，它研究数字合成和处理视觉内容的方法。 尽管该术语通常指的是对三维计算机图形的研究，但它也包括二维图形和图像处理。
+
+**图形学怎么学？：** 
+
+- 看：把中文网络的视频资料和开源项目先搜刮干净，积累必要的图形学相关的英语词汇，再去读图形学的几本经典，以及搜刮英文网络、日文网络……
+- 写：写代码，查文档，写代码，谷歌，写代码，写总结和笔记。
+
 ## 第一章 基础
 
-### 1.渲染管线简介
+### 1.渲染管线简介/Rendering Pipeline
 
 总参考：[GAMES101-渲染管线](https://www.bilibili.com/video/BV1X7411F744?p=8&t=1960)
 
@@ -76,7 +89,7 @@ Bloom（泛光）、HDR（高动态范围）；
 
 *FXAA、DepthOfView、边缘检测、径向模糊*
 
-### 2.数学基础
+### 2.数学基础/Math
 
 **微积分，线性代数，概率论**
 
@@ -99,7 +112,7 @@ Bloom（泛光）、HDR（高动态范围）；
 
 参考：[GAMES101-变换](https://www.bilibili.com/video/BV1X7411F744?p=4)
 
-### 3.纹理介绍
+### 3.纹理介绍/Texture
 
 **为什么选择纹理？：** 牺牲一些几何细节，能够大量减少建模的工作量，存储空间需求也能减少，读取速度也能增加。
 
@@ -123,7 +136,7 @@ Bloom（泛光）、HDR（高动态范围）；
 
 参考：[LearnOpenGL CN-纹理](https://learnopengl-cn.github.io/01%20Getting%20started/06%20Textures/)和[GAMES101-纹理、Mipmap](https://www.bilibili.com/video/BV1X7411F744?p=9)和[GAMES202-SAT](https://www.bilibili.com/video/BV1YK4y1T7yY?p=4&t=4315)
 
-### 4.图形API介绍
+### 4.图形API介绍/Graphics API
 
 Khronos定义了OpenGL，微软定义了DirectX；
 
@@ -137,7 +150,7 @@ Windows系统支持DirectX和OpenGL，Linux/Mac(Unix)系统支持OpenGL。
 
 ## 第二章 光照基础
 
-### 1.颜色空间
+### 1.颜色空间/Color Space
 
 我们常用的sRGB色彩空间，其构成为：
 
@@ -151,7 +164,7 @@ Windows系统支持DirectX和OpenGL，Linux/Mac(Unix)系统支持OpenGL。
 
 参考：[章佳杰-色彩空间基础](https://zhuanlan.zhihu.com/p/24214731)和[GAMES101-色彩与感知](https://www.bilibili.com/video/BV1X7411F744?p=20&t=2930)
 
-### 2.模型与材质
+### 2.模型与材质/Model&Materials
 
 **模型包含的信息：** 其每个顶点会包含法线，纹理坐标，顶点色等信息。
 
@@ -169,11 +182,11 @@ Windows系统支持DirectX和OpenGL，Linux/Mac(Unix)系统支持OpenGL。
 
 参考：[孙小磊-重心坐标(barycentric coordinates)详解及其作用](https://zhuanlan.zhihu.com/p/144360079)
 
-### 3.基础hlsl函数介绍
+### 3.基础hlsl函数介绍/HLSL Functions
 
 参考：[HLSL内部函数](https://docs.microsoft.com/zh-cn/windows/win32/direct3dhlsl/dx-graphics-hlsl-intrinsic-functions?redirectedfrom=MSDN)
 
-### 4.传统经验光照模型
+### 4.传统经验光照模型/Empirical Shading Model
 
 按照时间轴：
 
@@ -205,7 +218,7 @@ m<sub>diffuse</sub>：漫反射率；m<sub>specular</sub>：镜面反射率；gl
 
 参考：[LearnOpenGL CN-基础光照](https://learnopengl-cn.github.io/02%20Lighting/02%20Basic%20Lighting/)
 
-### 5.BumpMap
+### 5.凹凸贴图/Bump Mapping
 
 **为什么选择凹凸贴图？：** 减少建模的工作量，存储空间需求也能减少。
 
@@ -215,7 +228,7 @@ m<sub>diffuse</sub>：漫反射率；m<sub>specular</sub>：镜面反射率；gl
 
 **浮雕贴图：** 与使用插值的视差遮蔽映射不同，浮雕贴图则是通过二分查找来决定uv的偏移量。
 
-### 6.伽马校正
+### 6.伽马校正/Gamma Correction
 
 **为什么会出现伽马校正？：** 历史原因：早期我们使用的阴极射线显像管（CRT）的亮度与电压并不成线性关系，而是gamma值约为2.2类似幂律的关系；物理原因：人类对光的暗部变化更加敏感，需要使用更多位置去存储暗部值，所以利用设备的灰度系数（即gamma），能够让暗部使用更高精度保存，而亮部使用更低精度保存。
 
@@ -234,7 +247,7 @@ m<sub>diffuse</sub>：漫反射率；m<sub>specular</sub>：镜面反射率；gl
 
 参考：[LearnOpenGL CN-Gamma校正](https://learnopengl-cn.github.io/05%20Advanced%20Lighting/02%20Gamma%20Correction/)
 
-### 7.LDR与HDR
+### 7.LDR&HDR
 
 **基本概念：**
 
@@ -254,7 +267,7 @@ m<sub>diffuse</sub>：漫反射率；m<sub>specular</sub>：镜面反射率；gl
 
 ## 第三章 进阶应用
 
-### 1.深度与模板测试
+### 1.深度与模板测试/Depth Testing&Stencil Testing
 
 **模板测试：** 模板测试位于透明度测试之后、深度测试之前，与之相关的概念首先是模板缓冲，其中的每个模板值通常是8位的。模板缓冲允许我们在渲染片段时将模板缓冲设定为一个特定的值，我们可以**读取**这些值，来决定丢弃还是保留某个片段。总之，大体的步骤如下：
 
@@ -278,6 +291,8 @@ m<sub>diffuse</sub>：漫反射率；m<sub>specular</sub>：镜面反射率；gl
 - 按顺序（从后到前）绘制所有透明的物体。
 
 **深度测试的应用：** 基于深度的着色（湖水渲染）、阴影贴图、透明物体、粒子渲染、 透视X-Ray效果、切边效果
+
+参考：[LearnOpenGL CN-深度测试](https://learnopengl-cn.github.io/04%20Advanced%20OpenGL/01%20Depth%20testing/)和[LearnOpenGL CN-模板测试](https://learnopengl-cn.github.io/04%20Advanced%20OpenGL/02%20Stencil%20testing/)
 
 ### *2.混合模式及剔除*
 
@@ -325,7 +340,7 @@ PBR，即基于物理的渲染（Physically Based Rendering），它指的是一
 - 能量守恒。
 - 应用基于物理的BRDF。
 
-### 1.1 辐射度量学
+### 1.1 辐射度量学/Radiometry
 
 **为什么需要辐射度量学？：** 无论是Blinn-Phong模型，还是Whitted-style光线追踪，都存在较多经验成分。
 
@@ -432,7 +447,99 @@ F<sub>0</sub>表示平面的基础反射率，它是利用所谓折射指数（I
 
 5.待续
 
-## 第七章 其他
+## 第七章 GPU逻辑管线
+
+### 1.逻辑管线简介/GPU Logical Pipeline
+
+机会难得就直接用英文了。中间穿插一些中文注释，让人有种回到高中做英语阅读的感觉。
+
+![](https://developer.nvidia.com/sites/default/files/akamai/gameworks/images/lifeofatriangle/fermipipeline_begin.png)
+
+1.The program makes a **drawcall** in the graphics api (DX or GL). This reaches the driver at some point which does a bit of validation to check if things are "legal" and inserts the command in a GPU-readable encoding inside a **pushbuffer**. A lot of bottlenecks can happen here on the CPU side of things, which is why it is important programmers use apis well, and techniques that leverage the power of today's GPUs.
+
+2.After a while or explicit "flush" calls, the driver has buffered up enough work in a pushbuffer and sends it to be processed by the GPU (with some involvement of the OS). The **Host Interface** of the GPU picks up the commands which are processed via the **Front End**（前端）.
+
+3.We start our work distribution in the **Primitive Distributor**（ 图元分配器 ） by processing the indices in the indexbuffer and generating triangle work batches（批次） that we send out to multiple GPCs（Graphics Processing Cluster）.
+
+![](https://developer.nvidia.com/sites/default/files/akamai/gameworks/images/lifeofatriangle/fermipipeline_sm.png)
+
+4.Within a GPC, the **Poly Morph Engine**（多边形引擎） of one of the SMs（Stream Multiprocessor，流多处理器） takes care of fetching the vertex data from the triangle indices (**Vertex Fetch**).
+
+5.After the data has been fetched, warps（ 线程束 ） of 32 threads are scheduled inside the SM and will be working on the vertices. warp是典型的单指令多线程（SIMT，SIMD单指令多数据的升级）的实现，也就是32个线程同时执行的指令是一模一样的，只是线程数据不一样，这样的好处就是一个warp只需要一个套逻辑对指令进行解码和执行就可以了，芯片可以做的更小更快，之所以可以这么做是由于GPU需要处理的任务是天然并行的。 
+
+6.The SM's warp scheduler（warp调度器） issues the instructions for the entire warp in-order. The threads run each instruction in lock-step（锁步） and can be masked out（遮掩） individually if they should not actively execute it. There can be multiple reasons for requiring such masking. For example when the current instruction is part of the "if (true)" branch and the thread specific data evaluated "false", or when a loop's termination criteria was reached in one thread but not another（例如一条线程break了但是别的还在走）. Therefore having lots of branch divergence in a shader can increase the time spent for all threads in the warp significantly. Threads cannot advance individually, only as a warp! Warps, however, are independent of each other.
+
+7.The warp's instruction may be completed at once or may take several dispatch turns. For example the SM typically has less units for load/store than doing basic math operations.（确实是这样的，一个SM有16组加载存储单元，有2组共32个Core（运算核心））
+
+8.As some instructions take longer to complete than others, especially memory loads, the warp scheduler may simply switch to another warp that is not waiting for memory. This is the key concept how GPUs overcome latency of memory reads, they simply switch out groups of active threads. To make this switching very fast, all threads managed by the scheduler have their own registers in the register-file. The more registers a shader program needs, the less threads/warps have space. The less warps we can switch between, the less useful work we can do while waiting for instructions to complete (foremost memory fetches).
+
+![](https://developer.nvidia.com/sites/default/files/akamai/gameworks/images/lifeofatriangle/fermipipeline_memoryflow.png)
+
+9.Once the warp has completed all instructions of the vertex-shader, it's results are being processed by **Viewport Transform**. The triangle gets clipped by the clipspace volume and is ready for rasterization. We use L1 and L2 Caches for all this cross-task communication data.
+
+![](https://developer.nvidia.com/sites/default/files/akamai/gameworks/images/lifeofatriangle/fermipipeline_raster.png)
+
+10.Now it gets exciting, our triangle is about to be chopped up and potentially leaving the GPC it currently lives on. The bounding box of the triangle is used to decide which raster engines（光栅引擎） need to work on it, as each engine covers multiple tiles of the screen. It sends out the triangle to one or multiple GPCs via the **Work Distribution Crossbar**. We effectively split our triangle into lots of smaller jobs now.
+
+![](https://developer.nvidia.com/sites/default/files/akamai/gameworks/images/lifeofatriangle/fermipipeline_mid.png)
+
+11.**Attribute Setup** at the target SM will ensure that the interpolants (for example the outputs we generated in a vertex-shader) are in a pixel shader friendly format.
+
+12.The **Raster Engine** of a GPC works on the triangle it received and generates the pixel information for those sections that it is responsible for (also handles back-face culling and Z-cull).
+
+13.Again we batch up 32 pixel threads, or better say 8 times 2x2 pixel quads, which is the smallest unit we will always work with in pixel shaders. This 2x2 quad allows us to calculate derivatives（导数） for things like texture mip map filtering (big change in texture coordinates within quad causes higher mip). Those threads within the 2x2 quad whose sample locations are not actually covering the triangle, are masked out (gl_HelperInvocation). One of the local SM's warp scheduler will manage the pixel-shading task.
+
+14.The same warp scheduler instruction game, that we had in the vertex-shader logical stage, is now performed on the pixel-shader threads. The lock-step processing is particularly handy because we can access the values within a pixel quad almost for free, as all threads are guaranteed to have their data computed up to the same instruction point.
+
+![](https://developer.nvidia.com/sites/default/files/akamai/gameworks/images/lifeofatriangle/fermipipeline_end.png)
+
+15.Are we there yet? Almost, our pixel-shader has completed the calculation of the colors to be written to the rendertargets and we also have a depth value. At this point we have to take the original api ordering of triangles into account before we hand that data over to one of the ROP (render output unit) subsystems, which in itself has multiple ROP units. Here depth-testing, blending with the framebuffer and so on is performed. These operations need to happen atomically（原子操作） (one color/depth set at a time) to ensure we don't have one triangle's color and another triangle's depth value when both cover the same pixel. NVIDIA typically applies memory compression（内存压缩）, to reduce memory bandwidth requirements, which increases "effective" bandwidth (see GTX 980 pdf).
+
+参考：[Life of a triangle - NVIDIA's logical pipeline](https://developer.nvidia.com/content/life-triangle-nvidias-logical-pipeline)
+
+### 2.光栅化、插值、保守光栅化/Rasterization&Interpolation&Conservative Rasterization
+
+
+
+### 3.if，以及分支/if, and branch
+
+在 shader 中，尽量避免使用 if 已成为绝大多数开发者的共识，究其原因是人们认为 if 会打断 GPU 的 warp 内部的并行化。 
+
+![](https://files.catbox.moe/6ng7rh.jpg)
+
+从这张图片开始这个话题的讨论。 如上图，SM中有8个ALU（Core），由于SIMD的特性，每个ALU的数据不一样，导致 if-else 语句在某些ALU中执行的是 true 分支（橙色），有些ALU执行的是  false 分支（灰色），这样导致很多ALU的执行周期被浪费掉了，拉长了整个执行周期。最坏的情况，同一个SM中只有1/8（8是同一个SM的线程数，不同架构的GPU有所不同）的利用率。
+
+同样， for 循环也会导致类似的情形，例如以下shader代码：
+```
+void func(int count, int breakNum)
+{
+	for(int i=0; i < count; ++i) {
+		if (i == breakNum)
+			break;
+		else
+			// do something
+	}
+}
+```
+由于每个ALU的 count 不一样，加上有 break 分支，导致最快执行完shader的ALU可能是最慢的N分之一的时间，但由于SIMD的特性，最快的那个ALU依然要等待最慢的ALU执行完毕，才能接下一组指令的活！这就白白浪费了很多时间周期！
+
+如何优化呢？避免使用if、switch分支语句，for 循环语句（特别是循环次数可变的）是一方面，另一方面，我们还需要知道：if ≠ 分支！我们真正要规避的是分支，而不是 if。
+
+这是什么意思呢？事实上，对于简单逻辑的 if 而言，编译器大多生成的是一条现代GPU会硬件支持的 "select"（或称为 "conditional move"）指令，在D3D、PowerVR 等指令集中对应的就是一条 movc 指令。所以，if 有可能生成分支，也有可能生成 "select"。if 最终是否会生成和执行分支指令，取决于具体厂商的“编译器 + driver + GPU”。
+
+分支无法避免，如果最终生成了分支指令，能尝试做些什么？首先从渲染流水线的角度来看，我们使用最频繁的还是 vertex shader 和 pixel shader，所以我们仅考虑这两个 stage。
+
+而分支大体可以分为：
+
+- static branch：如判断变量为 uniform 类型；
+- dynamic branch & invariant（coherent）：如判断变量为 varying 类型，且在 warp 中有相关性甚至一致；
+- dynamic branch & variant（incoherent）：如判断变量为 varying 类型，但在 warp 中无任何相关性。
+
+静态分支性能上几乎无损，而 "ps + varaiant" 分支则是需要尽量避免的。如有可能，优化方向尽量从 "ps + variant" --> "ps + invariant" 或 "vs + variant" --> "vs + invariant"。
+
+参考：[YAO-Shader中的 if 和分支](https://zhuanlan.zhihu.com/p/122467342)
+
+## 第八章 其他
 
 1.体素
 
