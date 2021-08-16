@@ -471,7 +471,7 @@ F<sub>0</sub>表示平面的基础反射率，它是利用所谓折射指数（I
 
 **7.多次调度：** The warp's instruction may be completed at once or may take several dispatch turns. For example the SM typically has less units for load/store than doing basic math operations.（确实是这样的，一个SM有16组加载存储单元，有2组共32个Core（运算核心））
 
-**8.内存加载： **As some instructions take longer to complete than others, especially memory loads, the warp scheduler may simply switch to another warp that is not waiting for memory. This is the key concept how GPUs overcome latency of memory reads, they simply switch out groups of active threads. To make this switching very fast, all threads managed by the scheduler have their own registers in the register-file. The more registers a shader program needs, the less threads/warps have space. The less warps we can switch between, the less useful work we can do while waiting for instructions to complete (foremost memory fetches).
+**8.内存加载：** As some instructions take longer to complete than others, especially memory loads, the warp scheduler may simply switch to another warp that is not waiting for memory. This is the key concept how GPUs overcome latency of memory reads, they simply switch out groups of active threads. To make this switching very fast, all threads managed by the scheduler have their own registers in the register-file. The more registers a shader program needs, the less threads/warps have space. The less warps we can switch between, the less useful work we can do while waiting for instructions to complete (foremost memory fetches).
 
 ![](https://developer.nvidia.com/sites/default/files/akamai/gameworks/images/lifeofatriangle/fermipipeline_memoryflow.png)
 
@@ -497,11 +497,19 @@ F<sub>0</sub>表示平面的基础反射率，它是利用所谓折射指数（I
 
 参考：[Life of a triangle - NVIDIA's logical pipeline](https://developer.nvidia.com/content/life-triangle-nvidias-logical-pipeline)
 
-### 2.光栅化、插值、保守光栅化/Rasterization&Interpolation&Conservative Rasterization
+### 2.GPU硬件架构十三问
+
+参考：[深入GPU硬件架构及运行机制](https://www.cnblogs.com/timlly/p/11471507.html)。这篇文章写得非常不错！
+
+问题如下：
+
+![](https://files.catbox.moe/pe814r.png)
+
+### 3.光栅化、插值、保守光栅化/Rasterization&Interpolation&Conservative Rasterization
 
 
 
-### 3.if，以及分支/if, and branch
+### 4.if，以及分支/if, and branch
 
 在 shader 中，尽量避免使用 if 已成为绝大多数开发者的共识，究其原因是人们认为 if 会打断 GPU 的 warp 内部的并行化。 
 
@@ -550,3 +558,4 @@ void func(int count, int breakNum)
 4.空间分割加速
 
 5.通过法线2d渲3d的角色效果
+
