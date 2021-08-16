@@ -315,13 +315,45 @@ m<sub>diffuse</sub>：漫反射率；m<sub>specular</sub>：镜面反射率；gl
 
 ### 1.PBR
 
+PBR，即基于物理的渲染（Physically Based Rendering），它指的是一些在不同程度上都基于与现实世界的物理原理更相符的基本理论所构成的渲染技术的集合。
+
+基于物理的渲染目的是使用一种更符合物理学规律的方式来模拟光线，这种渲染方式与我们原来的Phong或者Blinn-Phong光照算法相比总体上看起来要更真实一些。而且，由于它与物理性质非常接近，因此美术师们可以直接以物理参数为依据来编写表面材质，而不必依靠粗劣的修改与调整来让光照效果看上去正常。使用基于物理参数的方法来编写材质还有一个更大的好处，就是不论光照条件如何，这些材质看上去都会是正确的。
+
+判断一种PBR光照模型是否是基于物理的，必须满足以下三个条件：
+
+- 基于微平面（Microfacet）的表面模型。
+- 能量守恒。
+- 应用基于物理的BRDF。
+
 #### 1.1 辐射度量学
 
-**为什么需要辐射度量学？：** 无论是Blinn-Phong模型，还是whited-style光线追踪，都存在较多经验成分。
+**为什么需要辐射度量学？：** 无论是Blinn-Phong模型，还是Whitted-style光线追踪，都存在较多经验成分。
+
+辐射能量(Radiant energy)，指电磁辐射的能量，单位为焦耳( J )，用符号 Q 表示。
+
+辐射功率(Radiant power)，或者称之为辐射通量(Radiant flux)，指每单位时间辐射而出的能量。
+$$
+\Phi\equiv\frac{dQ}{dt}
+$$
+Radiant intensity一句话来说就是从光源发出的每单位立体角上的功率，
+
+辐照度(Irradiance)，指每单位面积，单位时间所接收到的能量。
+$$
+E=\frac{d\Phi}{dA}
+$$
+辐出度(Radiance)，指每单位垂直面积，单位立体角，单位时间接受到的能量。
+$$
+L=\frac{d\Phi}{d\omega dA^\perp}
+$$
+辐照度与辐出度定义上单位面积的差异如下：
+
+![](https://pic4.zhimg.com/80/v2-f4069d6992189e1bd74eb8d4af371dbb_720w.jpg)
 
 下面是三个重要概念的图解：
 
-![三个重要概念](https://pic1.zhimg.com/v2-039fbcb784ca5531560b50b69a9cca68_r.jpg)
+![](https://pic1.zhimg.com/v2-039fbcb784ca5531560b50b69a9cca68_r.jpg)
+
+
 
 #### 1.2 BRDF的定义与性质
 
