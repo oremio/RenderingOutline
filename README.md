@@ -325,13 +325,13 @@ PBR，即基于物理的渲染（Physically Based Rendering），它指的是一
 - 能量守恒。
 - 应用基于物理的BRDF。
 
-#### 1.1 辐射度量学
+### 1.1 辐射度量学
 
 **为什么需要辐射度量学？：** 无论是Blinn-Phong模型，还是Whitted-style光线追踪，都存在较多经验成分。
 
-注：GitHub 的 markdown 渲染现在还不支持公式，请安装这个插件：[MathJax Plugin for Github](https://link.zhihu.com/?target=https%3A//chrome.google.com/webstore/detail/mathjax-plugin-for-github/ioemnmodlmafdkllaclgeombjnmnbima)。
+注：GitHub 的 markdown 渲染现在还不支持公式，请安装这个插件：[MathJax Plugin for Github](https://chrome.google.com/webstore/detail/mathjax-plugin-for-github/ioemnmodlmafdkllaclgeombjnmnbima)。
 
-辐射能量（Radiant energy），指电磁辐射的能量，单位为焦耳（J ），用符号 Q 表示。
+辐射能量（Radiant energy），指电磁辐射的能量，单位为焦耳（ J ），用符号 Q 表示。
 
 辐射功率（Radiant power），或者称之为辐射通量（Radiant flux），指每单位时间辐射而出的能量，单位为瓦特（W）。
 
@@ -365,15 +365,44 @@ $$
 
 注意！辐照度与辐出度定义中的单位面积可不是同一回事！下图一目了然：
 
-![](https://pic4.zhimg.com/80/v2-f4069d6992189e1bd74eb8d4af371dbb_720w.jpg)
+![](https://files.catbox.moe/qyse3f.jpg)
 
-所以，假设有一个斜方向的面光源照到平面上，此时的照射面积就要除以一个cosθ，即Irradiance要乘上一个cosθ（有一点绕！看下图及其文字，出自：[计算机图形学十四：基于物理渲染的基础知识(辐射度量学，BRDF和渲染方程)](https://zhuanlan.zhihu.com/p/145410416)，解释得比较清晰）
+所以，假设有一个斜方向的面光源照到平面上，此时的照射面积就要除以一个cosθ，即Irradiance要乘上一个cosθ（有一点绕！可以看看这篇文章：[计算机图形学十四：基于物理渲染的基础知识(辐射度量学，BRDF和渲染方程)](https://zhuanlan.zhihu.com/p/145410416)，解释得更加清晰）
 
-![](https://files.catbox.moe/0q3qd6.png)
+由上面的最后一个公式，我们可以推导出反射率方程，它其实是kajiya的渲染方程的特化版本。
 
-#### 1.2 BRDF的定义与性质
+$$
+L_o(p,\omega_o) = \int\limits_{\Omega} f_r(p,\omega_i,\omega_o) L_i(p,\omega_i) n \cdot \omega_i  d\omega_i
+$$
 
-#### 1.3 PBR实现算法
+### 1.2 BRDF
+
+**微表面（Microfacet）模型：** 在宏观上看上去是平的，但在微观上看去会看到各种各样的微表面，这些微表面的朝向，也就是法线各不相同，这些微表面法线的分布导致不同的材质渲染出的结果各不相同，这就是微表面模型。
+
+**微表面BRDF：** ：我们先直接给出它的表达式：
+$$
+f = \frac{DFG}{4(\omega_o \cdot n)(\omega_i \cdot n)}
+$$
+
+表达式的分子包含三个函数，此外分母部分还有一个标准化因子 。字母D，F与G分别代表着一种类型的函数，各个函数分别用来近似地计算出表面反射特性的一个特定部分。三个函数分别为**法线分布函数**（Normal Distribution Function）（**注意！不要翻译成正态分布函数！**），**菲涅尔项**（Fresnel Term）和**几何项**（Geometry Term）。下面对其依次展开描述：
+
+**菲涅尔项：** 表示观察角度与反射的关系。由于光路的可逆性，我们可以认为眼睛看过去的方向就是光线入射方向。有多少能量被反射取决于入射光的角度，当入射方向接近掠射角度（grazing angle）的时候，光线是被反射的最多的。
+
+菲涅尔项的推导要考虑光线的S极化和P极化效果，公式比较复杂，一个对其简单的近似是：Schlick’s approximation：
+
+$$
+F_{Schlick}(h, v, F_0) = F_0 + (1 - F_0) ( 1 - (h \cdot v))^5
+$$
+
+其中：
+
+$$
+F_0 = \frac{(n_1 - n_2)^2}{(n_1 + n_2)^2}
+$$
+
+F<sub>0</sub>表示平面的基础反射率，它是利用所谓折射指数（Indices of Refraction）计算得出的。但是对于导体（conductor）表面，使用它们的折射指数来计算基础反射率往往并不能得出正确的结果，所以需要我们预计算出它们的基础反射率，一些常见材质的数值我们可以参考Naty Hoffman的课程讲义：[Physics and Math of Shading](https://blog.selfshadow.com/publications/s2015-shading-course/hoffman/s2015_pbs_physics_math_slides.pdf)。
+
+### 1.3 PBR实现算法
 
 ### 2.光线追踪
 
