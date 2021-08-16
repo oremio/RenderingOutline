@@ -315,9 +315,9 @@ m<sub>diffuse</sub>：漫反射率；m<sub>specular</sub>：镜面反射率；gl
 
 ### 1.PBR
 
-PBR，即基于物理的渲染（Physically Based Rendering），它指的是一些在不同程度上都基于与现实世界的物理原理更相符的基本理论所构成的渲染技术的集合。
+PBR，即基于物理的渲染（Physically Based Rendering），它指的是一些在不同程度上都基于**与现实世界的物理原理更相符的**基本理论所构成的渲染技术的集合。在实时渲染中，我们提到PBR，往往指的是PBR材质。
 
-基于物理的渲染目的是使用一种更符合物理学规律的方式来模拟光线，这种渲染方式与我们原来的Phong或者Blinn-Phong光照算法相比总体上看起来要更真实一些。而且，由于它与物理性质非常接近，因此美术师们可以直接以物理参数为依据来编写表面材质，而不必依靠粗劣的修改与调整来让光照效果看上去正常。使用基于物理参数的方法来编写材质还有一个更大的好处，就是不论光照条件如何，这些材质看上去都会是正确的。
+基于物理的渲染目的是使用一种更符合物理学规律的方式来模拟光线，这种渲染方式与我们原来的Phong或者Blinn-Phong光照算法相比总体上看起来要更真实一些。而且，由于它与物理性质非常接近，因此美术师们可以直接以物理参数为依据来编写表面材质，因此，不论光照条件如何，这些材质看上去都会是十分正确的。
 
 判断一种PBR光照模型是否是基于物理的，必须满足以下三个条件：
 
@@ -329,39 +329,53 @@ PBR，即基于物理的渲染（Physically Based Rendering），它指的是一
 
 **为什么需要辐射度量学？：** 无论是Blinn-Phong模型，还是Whitted-style光线追踪，都存在较多经验成分。
 
-辐射能量(Radiant energy)，指电磁辐射的能量，单位为焦耳( J )，用符号 Q 表示。
+注：GitHub 的 markdown 渲染现在还不支持公式，请安装这个插件：[MathJax Plugin for Github](https://link.zhihu.com/?target=https%3A//chrome.google.com/webstore/detail/mathjax-plugin-for-github/ioemnmodlmafdkllaclgeombjnmnbima)。
 
-辐射功率(Radiant power)，或者称之为辐射通量(Radiant flux)，指每单位时间辐射而出的能量。
-$$
-\Phi\equiv\frac{dQ}{dt}
-$$
-Radiant intensity一句话来说就是从光源发出的每单位立体角上的功率，
+辐射能量（Radiant energy），指电磁辐射的能量，单位为焦耳（J ），用符号 Q 表示。
 
-辐照度(Irradiance)，指每单位面积，单位时间所接收到的能量。
+辐射功率（Radiant power），或者称之为辐射通量（Radiant flux），指每单位时间辐射而出的能量，单位为瓦特（W）。
+
 $$
-E=\frac{d\Phi}{dA}
+\Phi = \frac{dQ}{dt}
 $$
-辐出度(Radiance)，指每单位垂直面积，单位立体角，单位时间接受到的能量。
+
+立体角（solid angle），就是二维空间中圆的弧度在三维空间中球上的拓展。
+
 $$
-L=\frac{d\Phi}{d\omega dA^\perp}
+\omega = \frac{A}{r^2}
 $$
-辐照度与辐出度定义上单位面积的差异如下：
+
+辐射强度（Radiant Intensity），指每单位立体角，单位时间所接收到的能量。
+
+$$
+I = \frac{d\Phi}{d\omega}
+$$
+
+辐照度（Irradiance），指每单位面积，单位时间所接收到的能量。
+
+$$
+E = \frac{d\Phi}{dA}
+$$
+
+辐出度（Radiance），指每单位**垂直**面积，单位立体角，单位时间接受到的能量。
+
+$$
+L = \frac{d^2\Phi}{d\omega dA^\perp} = \frac{dE}{d\omega \cos\theta}
+$$
+
+注意！辐照度与辐出度定义中的单位面积可不是同一回事！下图一目了然：
 
 ![](https://pic4.zhimg.com/80/v2-f4069d6992189e1bd74eb8d4af371dbb_720w.jpg)
 
-下面是三个重要概念的图解：
+所以，假设有一个斜方向的面光源照到平面上，此时的照射面积就要除以一个cosθ，即Irradiance要乘上一个cosθ（有一点绕！看下图及其文字，出自：[计算机图形学十四：基于物理渲染的基础知识(辐射度量学，BRDF和渲染方程)](https://zhuanlan.zhihu.com/p/145410416)，解释得比较清晰）
 
-![](https://pic1.zhimg.com/v2-039fbcb784ca5531560b50b69a9cca68_r.jpg)
-
-
+![](https://files.catbox.moe/0q3qd6.png)
 
 #### 1.2 BRDF的定义与性质
 
 #### 1.3 PBR实现算法
 
 ### 2.光线追踪
-
-
 
 3.体渲染
 
