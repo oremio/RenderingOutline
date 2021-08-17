@@ -396,14 +396,14 @@ $$
 
 **微表面BRDF：** ：我们先直接给出它的表达式：
 $$
-f = \frac{DFG}{4(\omega_o \cdot n)(\omega_i \cdot n)}
+f_r(\omega_i,\omega_o) = \frac{F(\omega_i,h)G(\omega_i,\omega_o,h)D(h)}{4(\omega_i \cdot n)(\omega_o \cdot n)}
 $$
 
-表达式的分子包含三个函数，此外分母部分还有一个标准化因子 。字母D，F与G分别代表着一种类型的函数，各个函数分别用来近似地计算出表面反射特性的一个特定部分。三个函数分别为**法线分布函数**（Normal Distribution Function）（**注意！不要翻译成正态分布函数！**），**菲涅尔项**（Fresnel Term）和**几何项**（Geometry Term）。下面对其依次展开描述：
+表达式的分子包含三个函数，此外分母部分还有一个标准化因子 。字母D，F与G分别代表着一种类型的函数，各个函数分别用来近似地计算出表面反射特性的一个特定部分。三个函数分别为**菲涅尔项**（Fresnel Term），**几何项**（Geometry Term）和**法线分布函数**（Normal Distribution Function）（**注意！不要翻译成正态分布函数！**）。下面对其依次展开描述：
 
 **菲涅尔项：** 表示观察角度与反射的关系。由于光路的可逆性，我们可以认为眼睛看过去的方向就是光线入射方向。有多少能量被反射取决于入射光的角度，当入射方向接近掠射角度（grazing angle）的时候，光线是被反射的最多的。
 
-菲涅尔项的推导要考虑光线的S极化和P极化效果，公式比较复杂，一个对其简单的近似是：Schlick’s approximation：
+菲涅尔项的推导要考虑光线的S极化和P极化效果，公式比较复杂，一个对其简单的近似是：**Schlick’s approximation**：
 
 $$
 F_{Schlick}(h, v, F_0) = F_0 + (1 - F_0) ( 1 - (h \cdot v))^5
@@ -417,7 +417,67 @@ $$
 
 F<sub>0</sub>表示平面的基础反射率，它是利用所谓折射指数（Indices of Refraction）计算得出的。但是对于导体（conductor）表面，使用它们的折射指数来计算基础反射率往往并不能得出正确的结果，所以需要我们预计算出它们的基础反射率，一些常见材质的数值我们可以参考Naty Hoffman的课程讲义：[Physics and Math of Shading](https://blog.selfshadow.com/publications/s2015-shading-course/hoffman/s2015_pbs_physics_math_slides.pdf)。
 
-### 1.3 PBR实现算法
+**法线分布函数：** 决定这一项的是不同微表面朝向的法线分布。当朝向比较集中的时候会得到glossy的结果，如果朝向特别集中指向时认为是 specular 的。当分布杂乱无章时候，得到的结果也就类似diffuse。我们有很多不同的模型来描述法线分布，常用的有 **Beckmann，GGX** 等模型，值得一提的是，闫老师自己也有一系列模型。下面给出 GGX 的公式：
+$$
+NDF_{GGX TR}(n, h, \alpha) = \frac{\alpha^2}{\pi((n \cdot h)^2 (\alpha^2 - 1) + 1)^2}
+$$
+
+α表示表面粗糙度，h可以当成是不同粗糙度参数下，平面法向量和光线方向向量之间的中间向量。
+
+相同的粗糙程度下，由于长尾（long tail）性质，GGX 的效果会更加自然，它的高光到非高光有一个柔和的过渡状态，而 Beckmann 的高光则是到达 grazing angle 后就戛然而止。大多数时候我们希望的是像 GGX 一样的效果。
+
+**几何项：** 几何项又叫 **Shadiowing-Masking** ，它所解决的就是微表面之间的自遮挡问题。与NDF类似，它采用一个材料的粗糙度参数作为输入参数，粗糙度较高的表面其微平面间相互遮蔽的概率就越高。我们将要使用的几何函数是 GGX 与 Schlick-Beckmann 近似的结合体，因此又称为 **Schlick-GGX** ：
+$$
+G_{SchlickGGX}(n, v, k) = \frac{n \cdot v}{(n \cdot v)(1 - k) + k }
+$$
+
+这里的 k 是 α 基于几何函数是针对直接光照还是针对IBL光照的重映射（Remapping）：
+
+$$
+k_{direct} = \frac{(\alpha + 1)^2}{8}
+$$
+
+$$
+k_{IBL} = \frac{\alpha^2}{2}
+$$
+
+为了有效的估算几何部分，需要将观察方向（产生几何遮蔽，即Masking）和光线方向向量（产生几何阴影，即Shadowing）都考虑进去。我们可以使用**史密斯法（Smith’s method）**来把两者都纳入其中：
+
+$$
+G(n, v, l, k) = G_{sub}(n, v, k) G_{sub}(n, l, k)
+$$
+
+**能量守恒：** 即使当我们正确考虑了以上三项，仍然会出现问题，如下图所示：随着粗糙程度变大，我们渲染得到的结果却越暗，即使认为最左边是抛光，最右边的是哑光，这个结果也是错误的，因此再怎么哑光也不能让白金变成跟石头一样的光泽！
+
+![](https://files.catbox.moe/9sg4yx.png)
+
+这是因为我们没有考虑光线在表面上的**多次弹射**，只考虑了微表面遮挡的情况，当粗糙度越来越大的时候，能量是不守恒的，因此才导致了粗糙度增大引起了能量损失这一现象。因此我们需要把丢失的能量补回去！在离线渲染中，考虑多次bounce就需要在微表面用一个类似光线追踪的方法；在实时渲染，我们的核心思路是将反射光看作两种情况:
+
+- 当不被遮挡的时候，这些光就会被看到；
+- 当反射光被微表面遮挡的时候，认为这些被挡住的光将进行后续的弹射，直到能被看到。
+
+于是就有了 **The Kulla-Conty Approximation**。不过关于这个知识点，即使是在英文网络搜索相关信息，查到的也都是 GAMES202 相关笔记等资料，所以这里先按下不表。
+
+**工业界现在使用的近似方法（闫老师评价：COMPLETELY WRONG; COULDN'T BE WORSE; I NEVER TAUGHT YOU SO）：** 即Cook-Torrance BRDF模型，它兼有漫反射和镜面反射两个部分：
+$$
+f_r = k_d f_{lambert} +  k_s f_{cook-torrance}
+$$
+
+这里的k<sub>d</sub>是入射光线中被折射部分的能量所占的比率，而k<sub>s</sub>是被反射部分的比率。BRDF的左侧表示的是漫反射部分，这里用f<sub>lambert</sub>来表示。它被称为Lambertian漫反射，这和漫反射着色中使用的常数因子类似，用如下的公式来表示：
+
+$$
+f_{lambert} = \frac{c}{\pi}
+$$
+
+c表示表面颜色（回想一下漫反射表面纹理）。除以π是为了对漫反射光进行标准化，因为前面含有BRDF的积分方程是受π影响的。
+
+我们现在可以将Cook-Torrance BRDF模型纳入到最终的反射率方程当中去了：这个方程现在完整的描述了一个基于物理的渲染模型，它现在可以认为就是我们一般意义上理解的基于物理的渲染也就是PBR。
+
+$$
+L_o(p,\omega_o) = \int\limits_{\Omega} (k_d\frac{c}{\pi} + k_s\frac{DFG}{4(\omega_o \cdot n)(\omega_i \cdot n)})L_i(p,\omega_i) n \cdot \omega_i  d\omega_i
+$$
+
+### *1.3 PBR实现算法*
 
 ### 2.光线追踪
 
