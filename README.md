@@ -467,7 +467,7 @@ F<sub>0</sub>表示平面的基础反射率，它是利用所谓折射指数（I
 
 **5.warp调度：** After the data has been fetched, warps（ 线程束 ） of 32 threads are scheduled inside the SM and will be working on the vertices. warp是典型的单指令多线程（SIMT，SIMD单指令多数据的升级）的实现，也就是32个线程同时执行的指令是一模一样的，只是线程数据不一样，这样的好处就是一个warp只需要一个套逻辑对指令进行解码和执行就可以了，芯片可以做的更小更快，之所以可以这么做是由于GPU需要处理的任务是天然并行的。 
 
-**6.warp执行：** The SM's warp scheduler（warp调度器） issues the instructions for the entire warp in-order. The threads run each instruction in lock-step（锁步） and can be masked out（遮掩） individually if they should not actively execute it. There can be multiple reasons for requiring such masking. For example when the current instruction is part of the "if (true)" branch and the thread specific data evaluated "false", or when a loop's termination criteria was reached in one thread but not another（例如一条线程break了但是别的还在走）. Therefore having lots of branch divergence in a shader can increase the time spent for all threads in the warp significantly. Threads cannot advance individually, only as a warp! Warps, however, are independent of each other.
+**6.warp执行：** The SM's warp scheduler（warp调度器） issues the instructions for the entire warp in-order. The threads run each instruction in lock-step（锁步递进） and can be masked out（遮掩） individually if they should not actively execute it. There can be multiple reasons for requiring such masking. For example when the current instruction is part of the "if (true)" branch and the thread specific data evaluated "false", or when a loop's termination criteria was reached in one thread but not another（例如一条线程break了但是别的还在走）. Therefore having lots of branch divergence in a shader can increase the time spent for all threads in the warp significantly. Threads cannot advance individually, only as a warp! Warps, however, are independent of each other.
 
 **7.多次调度：** The warp's instruction may be completed at once or may take several dispatch turns. For example the SM typically has less units for load/store than doing basic math operations.（确实是这样的，一个SM有16组加载存储单元，有2组共32个Core（运算核心））
 
@@ -555,11 +555,39 @@ Context是一个对象，是GPU使用的最小数据集，越多Context可用就
 
 13、造成渲染瓶颈的问题很可能有哪些？该如何避免或优化它们？
 
-见7.?节。
+见7.5节。
 
-### 3.光栅化、插值、保守光栅化/Rasterization&Interpolation&Conservative Rasterization
+### 3.光栅化与透视矫正插值/Rasterization&Perspective-Correct Interpolation
 
+**直线光栅化算法：** ①DDA数值微分算法（我的软渲染就是用的这个方法）；②中点Bresenham算法。
 
+**三角形光栅化算法：** 
+
+像素点网格会被划分为2X2的组，这样的组叫做 **Quad**。使用贴图LOD时，我们是需要计算UV的微分值的，因此渲染三角形时，都是以Quad作为最小单位的（这在7.1节中也提到过）。也就是说，一个三角形，即使只覆盖了一个Quad中的一个像素，整个Quad中的四个像素都会被光栅化，这样需要额外光栅化的像素点叫做 **Helper Pixel/辅助像素**。这样，如果是比较小的三角形，在渲染时，辅助像素的比例就越高，造成性能浪费。辅助像素的数量也叫做 **quad over-shading**。
+
+如何判断一个像素的中心点是否在三角形内部呢？比较好理解的方式就是使用**叉乘**，例如， 我们事先知道想要光栅化的三角形的三个顶点P0，P1，P2，以及检测点Q。只要分别计算 P<sub>0</sub>P<sub>1</sub> x P<sub>0</sub>Q，P<sub>1</sub>P<sub>2</sub> x P<sub>1</sub>Q，P<sub>2</sub>P<sub>0</sub> x P<sub>2</sub>Q，如果三者同号则代表点P在三条线段的同一边，那么必然处于三角形内部，如果不同号则代表该点一定在三角形外部。
+
+当像素的中心点刚好在某条边上时，就需要一些特殊的处理方案。比如现在有两个三角形共享一条边，如果像素中心刚好在这条共享边上，就需要决定这个像素点是归哪侧所有。首先肯定不能是同时属于两个三角形的，这样会导致像素被计算两次。我们需要自己制定一些规则来决定这些像素点属于哪个三角形，例如DirectX 的 **top-left 规则**：[Rasterization Rules (Windows)](https://docs.microsoft.com/zh-cn/windows/win32/direct3d11/d3d10-graphics-programming-guide-rasterizer-stage-rules?redirectedfrom=MSDN#Triangle)，这在软渲染中也有用到。
+
+为了提高效率，通常我们会使用**级联（hierarchical）** 方式来遍历三角形。硬件会先算出整个三角形的AABB，然后测试每个 tile 和AABB是否相交，再测试 tile 是否和三角形相交。测试 AABB 和 tile 相交比较简单。测试 tile 和三角形相交的方式如下，可以直接选择 tile 四个顶点中距离边最近的那个进行测试。如下图中的 4x4的 tile，和边进行相交测试时，只需要判断黑色的顶点是否在边的**正半空间**内。如果测试 tile 都在三条边外侧，则认为 tile 中的像素都不在三角形内。
+
+![](https://files.catbox.moe/nt3i65.jpg)
+
+**透视矫正插值：** 我们的重心坐标往往都是在屏幕空间下所得到的，但如果直接使用屏幕空间下的重心坐标进行插值会造成一定的误差。这里我们省略推导过程，直接给出矫正后的结论：
+
+透视投影下重心坐标任意属性的正确插值是：
+
+$$
+I_t = (\alpha \frac{I_A}{Z_A} + \beta \frac{I_B}{Z_B} + \gamma \frac{I_C}{Z_C}) / \frac{1}{Z_t}
+$$
+
+其中：Z代表深度值，且
+
+$$
+Z_t = \frac{1}{\frac{\alpha}{Z_A} + \frac{\beta}{Z_B} + \frac{\gamma}{Z_C}}
+$$
+
+参考：[孙小磊-计算机图形学三：直线光栅化的数值微分算法,中点Brensenham算法和三角形的光栅化](https://zhuanlan.zhihu.com/p/144330664)和[孙小磊-计算机图形学六：透视矫正插值和图形渲染管线总结](https://zhuanlan.zhihu.com/p/144331875)和[TC130-图形学硬件拾遗(一)](https://zhuanlan.zhihu.com/p/371469482)
 
 ### 4.if，以及分支/if, and branch
 
@@ -598,6 +626,8 @@ void func(int count, int breakNum)
 静态分支性能上几乎无损，而 "ps + varaiant" 分支则是需要尽量避免的。如有可能，优化方向尽量从 "ps + variant" --> "ps + invariant" 或 "vs + variant" --> "vs + invariant"。
 
 参考：[YAO-Shader中的 if 和分支](https://zhuanlan.zhihu.com/p/122467342)
+
+### 5.渲染优化建议
 
 ## 第八章 其他
 
