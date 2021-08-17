@@ -441,7 +441,7 @@ $$
 k_{IBL} = \frac{\alpha^2}{2}
 $$
 
-为了有效的估算几何部分，需要将观察方向（产生几何遮蔽，即Masking）和光线方向向量（产生几何阴影，即Shadowing）都考虑进去。我们可以使用**史密斯法（Smith’s method）**来把两者都纳入其中：
+为了有效的估算几何部分，需要将观察方向（产生几何遮蔽，即Masking）和光线方向向量（产生几何阴影，即Shadowing）都考虑进去。我们可以使用**史密斯法（Smith’s method）** 来把两者都纳入其中：
 
 $$
 G(n, v, l, k) = G_{sub}(n, v, k) G_{sub}(n, l, k)
@@ -458,12 +458,12 @@ $$
 
 于是就有了 **The Kulla-Conty Approximation**。不过关于这个知识点，即使是在英文网络搜索相关信息，查到的也都是 GAMES202 相关笔记等资料，所以这里先按下不表。
 
-**工业界现在使用的近似方法（闫老师评价：COMPLETELY WRONG; COULDN'T BE WORSE; I NEVER TAUGHT YOU SO）：** 即Cook-Torrance BRDF模型，它兼有漫反射和镜面反射两个部分：
+**工业界现在使用的近似方法（闫老师评价：COMPLETELY WRONG; COULDN'T BE WORSE; I NEVER TAUGHT YOU SO）：** 即Cook-Torrance 镜面模型结合 Lambert 漫反射：
 $$
 f_r = k_d f_{lambert} +  k_s f_{cook-torrance}
 $$
 
-这里的k<sub>d</sub>是入射光线中被折射部分的能量所占的比率，而k<sub>s</sub>是被反射部分的比率。BRDF的左侧表示的是漫反射部分，这里用f<sub>lambert</sub>来表示。它被称为Lambertian漫反射，这和漫反射着色中使用的常数因子类似，用如下的公式来表示：
+这里的k<sub>d</sub>是入射光线中被折射部分的能量所占的比率，而k<sub>s</sub>是被反射部分的比率。BRDF的左侧表示的是漫反射部分，这里用f<sub>lambert</sub>来表示，这和漫反射着色中使用的常数因子类似，用如下的公式来表示：
 
 $$
 f_{lambert} = \frac{c}{\pi}
@@ -471,11 +471,13 @@ $$
 
 c表示表面颜色（回想一下漫反射表面纹理）。除以π是为了对漫反射光进行标准化，因为前面含有BRDF的积分方程是受π影响的。
 
-我们现在可以将Cook-Torrance BRDF模型纳入到最终的反射率方程当中去了：这个方程现在完整的描述了一个基于物理的渲染模型，它现在可以认为就是我们一般意义上理解的基于物理的渲染也就是PBR。
+现在我们将这个 BRDF 模型纳入到最终的反射率方程当中：这个方程完整的描述了一个基于物理的渲染模型，它现在可以认为就是我们一般意义上理解的基于物理的渲染，也就是PBR。
 
 $$
 L_o(p,\omega_o) = \int\limits_{\Omega} (k_d\frac{c}{\pi} + k_s\frac{DFG}{4(\omega_o \cdot n)(\omega_i \cdot n)})L_i(p,\omega_i) n \cdot \omega_i  d\omega_i
 $$
+
+参考：[LearnOpenGL CN-PBR理论](https://learnopengl-cn.github.io/07%20PBR/01%20Theory/)和[GAMES202-基于物理的材质](https://www.bilibili.com/video/BV1YK4y1T7yY?p=10)
 
 ### *1.3 PBR实现算法*
 
