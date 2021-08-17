@@ -503,7 +503,59 @@ F<sub>0</sub>表示平面的基础反射率，它是利用所谓折射指数（I
 
 问题如下：
 
-![](https://files.catbox.moe/pe814r.png)
+1、GPU是如何与CPU协调工作的？
+
+分离式架构（PC、智能手机）、耦合式架构（游戏主机）。
+
+2、GPU也有缓存机制吗？有几层？它们的速度差异多少？
+
+部分架构的GPU与CPU类似，也有多级缓存结构：寄存器、L1缓存、L2缓存、GPU显存、系统内存，它们的存取速度从寄存器到系统内存依次变慢。
+
+3、GPU的渲染流程有哪些阶段？它们的功能分别是什么？
+
+见7.1节。
+
+4、Early-Z技术是什么？发生在哪个阶段？这个阶段还会发生什么？会产生什么问题？如何解决？
+
+略略略。Early-Z技术会导致一个问题：深度数据冲突（depth data hazard），避免深度数据冲突的方法之一是在写入深度值之前，再次与frame buffer的值进行对比。
+
+5、SIMD和SIMT是什么？它们的好处是什么？co-issue呢？
+
+SIMD（Single Instruction Multiple Data）是单指令多数据，SIMT（Single Instruction Multiple Threads，单指令多线程）是SIMD的升级版，co-issue可以解决SIMD运算单元无法充分利用的问题。
+
+6、GPU是并行处理的么？若是，硬件层是如何设计和实现的？
+
+略。
+
+7、GPC、TPC、SM是什么？Warp又是什么？它们和Core、Thread之间的关系如何？
+
+GPC（Graphics Processing Cluster，图形处理簇），TPC（Texture/Processor Cluster，纹理处理簇），SM（Stream Multiprocessor，流多处理器），Warp（线程束），Warp包含Core（运算核心），每个Core处理一个线程。
+
+8、顶点着色器（VS）和像素着色器（PS）可以是同一处理单元吗？为什么？
+
+对于统一着色器架构（Unified shader Architecture）的GPU，VS和PS用的都是相同的Core。也就是，同一个Core既可以是VS又可以是PS。
+
+9、像素着色器（PS）的最小处理单位是1像素吗？为什么？会带来什么影响？
+
+不是。在像素着色器中，会将相邻的四个像素作为不可分隔的一组，送入同一个SM内4个不同的Core。
+
+10、Shader中的if、for等语句会降低渲染效率吗？为什么？
+
+见7.4节。
+
+11、如下图，渲染相同面积的图形，三角形数量少（左）的还是数量多（右）的效率更快？为什么？
+
+![](https://img2018.cnblogs.com/blog/1617944/201909/1617944-20190906000232145-1801159116.png)
+
+上面的参考文章的后半部分利用扩展进行了一个有趣的实验，从实验结论中我们容易知道：相同面积的区域，如果所属的三角形越多，就会导致分配给SM的次数越多，消耗的渲染性能也越多。
+
+12、GPU Context是什么？有什么作用？
+
+Context是一个对象，是GPU使用的最小数据集，越多Context可用就越可以提升运算单元的吞吐量。
+
+13、造成渲染瓶颈的问题很可能有哪些？该如何避免或优化它们？
+
+见7.?节。
 
 ### 3.光栅化、插值、保守光栅化/Rasterization&Interpolation&Conservative Rasterization
 
