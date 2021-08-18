@@ -228,6 +228,8 @@ m<sub>diffuse</sub>：漫反射率；m<sub>specular</sub>：镜面反射率；gl
 
 **浮雕贴图：** 与使用插值的视差遮蔽映射不同，浮雕贴图则是通过二分查找来决定uv的偏移量。
 
+（demo）
+
 ### 6.伽马校正/Gamma Correction
 
 **为什么会出现伽马校正？：** 历史原因：早期我们使用的阴极射线显像管（CRT）的亮度与电压并不成线性关系，而是gamma值约为2.2类似幂律的关系；物理原因：人类对光的暗部变化更加敏感，需要使用更多位置去存储暗部值，所以利用设备的灰度系数（即gamma），能够让暗部使用更高精度保存，而亮部使用更低精度保存。
@@ -263,7 +265,9 @@ m<sub>diffuse</sub>：漫反射率；m<sub>specular</sub>：镜面反射率；gl
 
 参考：[LearnOpenGL CN-HDR](https://learnopengl-cn.github.io/05%20Advanced%20Lighting/06%20HDR/)
 
-### *8.FlowMap的实现*
+### 8.FlowMap的实现
+
+（demo）
 
 ## 第三章 进阶应用
 
@@ -294,37 +298,83 @@ m<sub>diffuse</sub>：漫反射率；m<sub>specular</sub>：镜面反射率；gl
 
 参考：[LearnOpenGL CN-深度测试](https://learnopengl-cn.github.io/04%20Advanced%20OpenGL/01%20Depth%20testing/)和[LearnOpenGL CN-模板测试](https://learnopengl-cn.github.io/04%20Advanced%20OpenGL/02%20Stencil%20testing/)
 
-### *2.混合模式及剔除*
+（demo）
 
-3.曲面细分着色器与几何着色器
+### 2.混合模式及剔除
 
-4.延迟渲染原理介绍
+https://docs.unity3d.com/cn/2018.4/Manual/SL-Blend.html
 
-5.early-Z与Z Press
+http://wordpress.notargs.com/blog/blog/2015/09/24/unity5%E7%A0%B4%E9%8C%A0%E3%81%97%E3%81%AA%E3%81%84%E5%8D%8A%E9%80%8F%E6%98%8E%E6%8F%8F%E7%94%BB%E3%82%92%E8%A1%8C%E3%81%86/
 
-6.纹理压缩
+（demo）
 
-7.现代移动端的TBR和TBR渲染管线以及Cbuffer
+### 3.曲面细分着色器与几何着色器
 
-8.DepthPeeling 深度剥离
+（demo）
+
+### 4.延迟渲染原理介绍
+
+（demo）
+
+### 5.early-Z与Z Press
+
+
+
+### 6.纹理压缩
+
+
+
+### 7.现代移动端的TBR和TBR渲染管线以及Cbuffer
+
+https://www.jianshu.com/p/dbba97339e75
+
+https://www.sohu.com/a/83561143_119711
+
+https://cloud.tencent.com/developer/news/102132
+
+### 8.DepthPeeling 深度剥离
+
+（demo）
 
 ## 第四章 高级扩展
 
-1.Bloom算法
+### 1.Bloom算法
 
-2.SSAO算法
+（demo）
 
-3.阴影的各类实现方法
+### 2.SSAO算法
 
-4.抗锯齿之FXAA、MSAA
+（demo）
 
-5.DOF景深算法
+### 3.阴影的各类实现方法
 
-6.运动模糊
+（demo）
 
-7.雾效实现方法
+### 4.抗锯齿之FXAA、MSAA
 
-8.基于屏幕空间的溶解
+（demo）
+
+### 5.DOF景深算法
+
+（demo）
+
+### 6.运动模糊
+
+（demo）
+
+### 7.雾效实现方法
+
+unity的实现方法；后处理的实现方法；
+
+（demo）
+
+### 8.基于屏幕空间的溶解
+
+https://www.jianshu.com/p/c71076676fe6
+
+https://www.jianshu.com/p/1bef38552775
+
+（demo）
 
 ## 第五章 物理世界
 
@@ -479,35 +529,61 @@ $$
 
 参考：[LearnOpenGL CN-PBR理论](https://learnopengl-cn.github.io/07%20PBR/01%20Theory/)和[GAMES202-基于物理的材质](https://www.bilibili.com/video/BV1YK4y1T7yY?p=10)
 
-### *1.3 PBR实现算法*
+### 1.3 PBR实现算法
+
+（demo）
 
 ### 2.光线追踪
 
-3.体渲染
+Ray Casting; Ray Tracing; Path Tracing;
 
-4.体积云的生成
+### 3.体渲染
 
-5.水体渲染
+数学原理；SDF；Raymarching；体积光；
 
-6.毛发模拟
+### 4.体积云的生成
 
-7.屏幕空间反射
+3D体纹理的制作；噪波的生成；引擎中实现体积云；
 
-8.渲染加速与性能优化概述
+（demo）
 
-9.皮肤渲染
+### 5.水体渲染
+
+
+
+### 6.毛发模拟
+
+
+
+### 7.屏幕空间反射
+
+
+
+### 8.渲染加速与性能优化概述
+
+
+
+### 9.皮肤渲染
+
+
 
 ## 第六章 卡通渲染
 
-1.NPR与卡通渲染的风格流派
+### 1.NPR与卡通渲染的风格流派
 
-2.卡通渲染描边方案
 
-3.卡通渲染着色方案
 
-4.卡通渲染案例讲解
+### 2.卡通渲染描边方案
 
-5.待续
+
+
+### 3.卡通渲染着色方案
+
+
+
+### 4.卡通渲染案例讲解
+
+（demo）
 
 ## 第七章 GPU逻辑管线
 
@@ -689,7 +765,9 @@ void func(int count, int breakNum)
 
 参考：[YAO-Shader中的 if 和分支](https://zhuanlan.zhihu.com/p/122467342)
 
-### 5.渲染优化建议
+### 5.基于GPU架构的渲染优化建议
+
+
 
 ## 第八章 其他
 
