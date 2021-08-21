@@ -1,6 +1,6 @@
 # RenderingOutline
 
-这是我进行渲染学习的一个大纲（不是NPR里面的描边！虽然我学习图形学的初衷是NPR~），之后可能会补上一些图形学相关算法或技术的（伪）代码。
+这是我进行渲染学习的一个大纲（不是描边！），之后可能会补上一些图形学相关算法或技术的（伪）代码。
 
 这个大纲基本是参考[技术美术百人计划](https://docs.qq.com/doc/DUFdKZE1oVFd3ZlBs)，增加了“第七章 GPU逻辑管线”，同时会补充上一些通俗且尽量简短的、至少我自己日后还能看懂的解释，保证所有知识点的"Why, What, How"都能在文字上解释清楚，即为什么会出现这种技术，这种技术的主要内容，这种技术的实现。
 
@@ -320,7 +320,9 @@ http://wordpress.notargs.com/blog/blog/2015/09/24/unity5%E7%A0%B4%E9%8C%A0%E3%81
 - Tessellation Primitive Generation（不可编程）：进行细分操作；
 - Domain Shader（可编程）：对细分后的点进行处理，从重心空间（Barycentric coordinate system）转换到屏幕空间；
 
-**几何着色器：** 输入：图元（三角形，矩形，线等）。根据图元的不同，shader中会出现对应数量的顶点；输出：同样为图元，一个或多个，需要自己从顶点构建，构建顺序很重要
+**几何着色器：** 输入：图元（三角形，矩形，线等）。根据图元的不同，shader中会出现对应数量的顶点；输出：同样为图元，一个或多个，需要自己从顶点构建（构建顺序很重要）。
+
+参考：[LearnOpenGL CN-几何着色器](https://learnopengl-cn.github.io/04%20Advanced%20OpenGL/09%20Geometry%20Shader/)
 
 （demo）
 
@@ -541,13 +543,27 @@ $$
 
 参考：[LearnOpenGL CN-PBR理论](https://learnopengl-cn.github.io/07%20PBR/01%20Theory/)和[GAMES202-基于物理的材质](https://www.bilibili.com/video/BV1YK4y1T7yY?p=10)
 
+一个不错的总结：[TC130-彻底看懂PBR/BRDF方程](https://zhuanlan.zhihu.com/p/158025828)
+
 ### 1.3 PBR实现算法
 
 （demo）
 
 ### 2.光线追踪
 
-Ray Casting; Ray Tracing; Path Tracing;
+**还是先按时间轴介绍：** 
+
+1968年：Ray Casting
+
+1980年：Whitted 光线追踪：Whitted，Kay和Greenberg 提出了使用递归的光线追踪来描绘准确的折射和反射。
+
+1984年：分布式光线追踪：Cook 等人提出了分布式光线追踪，其和 path tracing 都使用了蒙特卡洛方法。
+
+1986年：路径追踪：Kajiya将积分输运方程（integral transport equation）称为渲染方程（rendering equation）。他提出的渲染方程成了至今为止几乎所有的全局光照算法的数学依据，在同篇论文中他也提出了最原始路径追踪算法。
+
+再往后的先按下不表。
+
+参考：[GAMES101-Ray Tracing 1~4](https://www.bilibili.com/video/BV1X7411F744?p=13)和[papalqi-光线追踪](https://zhuanlan.zhihu.com/p/72673165)和[孙小磊-重要性采样和多重重要性采样在路径追踪中的应用](https://zhuanlan.zhihu.com/p/360420413)
 
 ### 3.体渲染
 
@@ -791,9 +807,13 @@ void func(int count, int breakNum)
 
 4.空间分割加速
 
-5.通过法线2d渲3d的角色效果
+5.裁切技术
 
-### 6.渲染常用术语整理
+6.层次细节/LOD
+
+7.通过法线2d渲3d的角色效果
+
+### 8.渲染常用术语整理
 
 英文|缩写|补充说明
 :-:|:-:|-
