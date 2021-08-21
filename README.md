@@ -224,7 +224,7 @@ m<sub>diffuse</sub>：漫反射率；m<sub>specular</sub>：镜面反射率；gl
 
 **法线贴图：** 根据经验光照模型的原理，引入一种叫做法线贴图的纹理。法线纹理的 RGB 通道存储了在每个顶点各自法线方向的**映射值**（因为纹理每个通道的值范围在(0, 1)！例如：法线值(0, 0, 1)实际上对应了法线纹理中RGB的值为(0.5, 0.5, 1)）。法线贴图的法线向量需要定义在**切线空间**中，我们会定义一个**TBN矩阵**， 这三个字母分别代表tangent、bitangent和normal向量，这个矩阵可以把切线坐标空间的向量转换到世界坐标空间，不过我们一般是用其逆矩阵将向量从世界空间转换到切线空间，具体原因可参考[LearnOpenGL CN-法线贴图](https://learnopengl-cn.github.io/05%20Advanced%20Lighting/04%20Normal%20Mapping/)；
 
-**细讲TBN矩阵：** 法线贴图存储的是TBN空间中的一个向量，TBN矩阵的构造很简单，以**顶点法线**为Z轴，利用三角形的位置和纹理坐标，以公式：E1 = △U1T + △V1B 和 E2 = △U2T + △V2B 计算得到TB的**中间值**，再通过公式 T = normalize(T - dot(T, N) * N) 算出最终的T，B可由N叉乘T得到。参考：[切线空间（Tangent Space）完全解析](https://zhuanlan.zhihu.com/p/139593847)；
+**细讲TBN矩阵：** 法线贴图存储的是TBN空间中的一个向量，TBN矩阵的构造很简单，以**顶点法线**为Z轴，利用三角形的位置和纹理坐标，以公式：E1 = △U1T + △V1B 和 E2 = △U2T + △V2B 计算得到TB的**中间值**，再通过公式 T = normalize(T - dot(T, N) * N) 算出最终的T，B可由N叉乘T得到。参考：[谜之裙摆-切线空间（Tangent Space）完全解析](https://zhuanlan.zhihu.com/p/139593847)；
 
 **视差贴图：** 视差贴图属于位移贴图技术的一种，它会引入一种叫高度贴图（或反色高度贴图）的纹理，通过对纹理坐标进行位移来实现凹凸的效果，它会和法线贴图配合使用，保证光照能和位移相匹配。关于视差贴图的具体计算可以参考[LearnOpenGL CN-视差贴图](https://learnopengl-cn.github.io/05%20Advanced%20Lighting/05%20Parallax%20Mapping/)；陡峭视差映射通过增加采样的数量提高了位移的精确性，视差遮蔽映射通过对目标高度之间的两个高度层对应的纹理坐标进行插值来进一步提升精确性。
 
@@ -311,6 +311,16 @@ http://wordpress.notargs.com/blog/blog/2015/09/24/unity5%E7%A0%B4%E9%8C%A0%E3%81
 （demo）
 
 ### 3.曲面细分着色器与几何着色器
+
+**曲面细分着色器：** 输入：Patch, 可以看成是多个顶点的集合，包含每个顶点的属性，可以指定一个Patch包含的顶点数以及自己的属性；功能：将图元细分（可以是三角形，矩形等）；输出：细分后的顶点；
+
+**具体流程：** 
+
+- HULL Shader（可编程）：1. 决定细分的数量（设定Tessellation factor以及Inside Tessellation factor）；2. 对输入的Patch参数进行改变（如果需要）；
+- Tessellation Primitive Generation（不可编程）：进行细分操作；
+- Domain Shader（可编程）：对细分后的点进行处理，从重心空间（Barycentric coordinate system）转换到屏幕空间；
+
+**几何着色器：** 输入：图元（三角形，矩形，线等）。根据图元的不同，shader中会出现对应数量的顶点；输出：同样为图元，一个或多个，需要自己从顶点构建，构建顺序很重要
 
 （demo）
 
@@ -782,4 +792,43 @@ void func(int count, int breakNum)
 4.空间分割加速
 
 5.通过法线2d渲3d的角色效果
+
+### 6.渲染常用术语整理
+
+英文|缩写|补充说明
+:-:|:-:|-
+Physically Based Rendering|PBR|大型3D游戏常用的一种渲染流程，有利于保证画面效果的真实感。
+Local Illumination||光源直接作用于模型表面的光照效果。
+Global Illumation|GI|光源与环境中所有的表面相互作用（光线在物体表面反射、透射，产生新的光线）产生的光照效果，即真实的光照效果，相关算法：辐射度算法（Radiosity）、光线追踪算法（Ray Tracing）
+Image-Based Lighting|IBL|使用预处理的环境光贴图来做光源的间接照明方案。
+Deferred Rendering|DR|将不接受光照的场景先渲染到Gbuffer，再对Gbuffer应用光照的一种技术，根据实现方式的不同，可以分为两类：Deferred Shading和Deferred Lighting。
+Forward Rendering|FR|传统的渲染技术，逐像素点计算光照，当光源较多且场景较复杂时渲染效率较低，但能够比较方便地渲染透明物体。
+Anti-Aliasing|AA|Aliasing的实际意义是”采样频率过低导致的图形失真”，学名为”混叠”，具体现象包括图形边缘产生锯齿、画面抖动等。目前主流的AA方法有：（1） MSAA：Multi-Sampling Anti-Aliasing，多重采样抗锯齿（2） FXAA：Fast Approximate Anti-Aliasing，快速近似抗锯齿（3） TXAA：Temporal Anti-Aliasing，时间性抗锯齿（4） SSAA：Super Sampling Anti-Aliasing，超级采样抗锯齿
+Tile-based Rendering|TBR|当前移动设备显卡的主流渲染优化方式，将帧缓冲分割为一小块一小块，然后逐块进行渲染。
+Precomputed Radiance Transfer|PRT|预处理场景中的光线相互作用，从而实现实时全局光照效果。核心实现原理是利用蒙特卡洛积分和球谐函数对光照信息进行编码。
+Spherical Harmonics|SH|球谐函数是定义在单位球表面的基函数，在PRT方法中被用于优化光照计算。
+Bidirectional Reflectance Distribution Function|BRDF|描述入射光线经过某个表面反射后如何在各个出射方向上分布的函数表达式。
+Bidirectional Transmittance Distribution Function|BTDF|描述入射光线经过某个表面透射后如何在各个出射方向上分布的函数表达式。
+Bidirectional Scattering Distribution Function|BSDF|描述入射光线经过某个表面散射后如何在各个出射方向上分布的函数表达式。BSDF = BRDF + BTDF。
+Ambient Occlusion|AO|全局光照效果中物体缝隙处的柔和阴影。
+Screen Space Ambient Occlusion|SSAO|一种用于模拟环境光遮蔽的近似算法。
+Cascaded Shadow Map|CSM|目前大型游戏引擎中采用的主流实时阴影技术。
+Parallel-Split Shadow Map|PSSM|CSM的一种实现方式。
+Rendering Hardware Interface|RHI|常见的RHI：DirectX 和 OpenGL
+Schmidt Orthogonalization||将三维空间内任意线性无关向量组转化为正交向量组的方法。
+BlendShape / Morph Animation||顶点混合动画，即多个拓扑结构相同的模型之间根据时间插值产生的动画。
+Render to Texture|RTT|将纹理设置为渲染目标，再执行渲染操作，将图元渲染到纹理上。
+Level of Detail|LOD|大型3D游戏用于保证游戏帧率的一种优化方式。
+Displacement Map|DMAP|用于表示材质表面沿法线方向高度细节的纹理贴图
+Pass||指代输入数据（顶点、纹理、常量）经过GPU流水线（VertexShader、PixelShader）的处理后，输出到缓冲（BackBuffer / DepthBuffer / StencilBuffer）中的过程。
+Multiple Render Target|MRT|允许像素着色器将计算结果输出到多个不同的缓冲，PC平台中使用Deffered Rendering所必须的一种硬件支持。
+Occlusion Culling|OC|通过剔除视锥体内被遮挡的模型网格，达到降低GPU负载的目的。
+Depth of Field|DoF|
+Circle of Confusion|CoC|在透镜系统中，处于聚焦范围外的物体上的像素点成像会变成一个模糊圈，这是一个非线性映射过程。
+Digital Content Creation Tools|DCC Tools|美术创建模型、纹理等资源使用的工具软件，如：3ds Max、Maya、Photoshop等。
+Signed Distance Field|SDF|到物体（2D或3D的多边形网格）表面最近距离的采样纹理或网格。通常使用负值表示物体内部到表面的距离，使用正值表示物体外部到表面的距离。SDF常见的应用领域：布料动画碰撞检测、多物体动力学计算、字体渲染等。
+Screen Space Reflection|SSR|实时渲染中用于模拟“光滑物体表面反射场景对象”的一种后处理技术
+Subsurface Scattering|SSS|光线在材质内部不断折射而形成的视觉效果，常见于玉石、牛奶、人类皮肤等材质中。
+Separable Subsurface Scattering|SSSS|模拟次表面散射效果的一种方式
+Screen Space Subsurface Scattering|SSSSS|模拟次表面散射效果的一种后处理技术
 
