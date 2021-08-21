@@ -1,3 +1,5 @@
+// .fs
+
 float cosTheta = dot(lightDir, N);  
 
 // Fresnel Schlick

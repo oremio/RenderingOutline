@@ -222,7 +222,9 @@ m<sub>diffuse</sub>：漫反射率；m<sub>specular</sub>：镜面反射率；gl
 
 **为什么选择凹凸贴图？：** 减少建模的工作量，存储空间需求也能减少。
 
-**法线贴图：** 根据经验光照模型的原理，引入一种叫做法线贴图的纹理。 法线贴图的法线向量需要定义在**切线空间**中，我们会定义一个**TBN矩阵**， 这三个字母分别代表tangent、bitangent和normal向量，这个矩阵可以把切线坐标空间的向量转换到世界坐标空间，不过我们一般是用其逆矩阵将向量从世界空间转换到切线空间，具体原因可参考[LearnOpenGL CN-法线贴图](https://learnopengl-cn.github.io/05%20Advanced%20Lighting/04%20Normal%20Mapping/)；
+**法线贴图：** 根据经验光照模型的原理，引入一种叫做法线贴图的纹理。法线纹理的 RGB 通道存储了在每个顶点各自法线方向的**映射值**（因为纹理每个通道的值范围在(0, 1)！例如：法线值(0, 0, 1)实际上对应了法线纹理中RGB的值为(0.5, 0.5, 1)）。法线贴图的法线向量需要定义在**切线空间**中，我们会定义一个**TBN矩阵**， 这三个字母分别代表tangent、bitangent和normal向量，这个矩阵可以把切线坐标空间的向量转换到世界坐标空间，不过我们一般是用其逆矩阵将向量从世界空间转换到切线空间，具体原因可参考[LearnOpenGL CN-法线贴图](https://learnopengl-cn.github.io/05%20Advanced%20Lighting/04%20Normal%20Mapping/)；
+
+**细讲TBN矩阵：** 法线贴图存储的是TBN空间中的一个向量，TBN矩阵的构造很简单，以**顶点法线**为Z轴，利用三角形的位置和纹理坐标，以公式：E1 = △U1T + △V1B 和 E2 = △U2T + △V2B 计算得到TB的**中间值**，再通过公式 T = normalize(T - dot(T, N) * N) 算出最终的T，B可由N叉乘T得到。参考：[切线空间（Tangent Space）完全解析](https://zhuanlan.zhihu.com/p/139593847)；
 
 **视差贴图：** 视差贴图属于位移贴图技术的一种，它会引入一种叫高度贴图（或反色高度贴图）的纹理，通过对纹理坐标进行位移来实现凹凸的效果，它会和法线贴图配合使用，保证光照能和位移相匹配。关于视差贴图的具体计算可以参考[LearnOpenGL CN-视差贴图](https://learnopengl-cn.github.io/05%20Advanced%20Lighting/05%20Parallax%20Mapping/)；陡峭视差映射通过增加采样的数量提高了位移的精确性，视差遮蔽映射通过对目标高度之间的两个高度层对应的纹理坐标进行插值来进一步提升精确性。
 
@@ -294,7 +296,7 @@ m<sub>diffuse</sub>：漫反射率；m<sub>specular</sub>：镜面反射率；gl
 - 对所有透明的物体排序。
 - 按顺序（从后到前）绘制所有透明的物体。
 
-**深度测试的应用：** 基于深度的着色（湖水渲染）、阴影贴图、透明物体、粒子渲染、 透视X-Ray效果、切边效果
+**深度测试的应用：** 基于深度的着色（湖水渲染）、阴影贴图、透明物体、粒子渲染、透视X-Ray效果、切边效果
 
 参考：[LearnOpenGL CN-深度测试](https://learnopengl-cn.github.io/04%20Advanced%20OpenGL/01%20Depth%20testing/)和[LearnOpenGL CN-模板测试](https://learnopengl-cn.github.io/04%20Advanced%20OpenGL/02%20Stencil%20testing/)
 
