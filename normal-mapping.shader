@@ -1,6 +1,6 @@
 // 用TBN矩阵的逆矩阵将所有相关的世界空间向量转变到采样所得法线向量的空间
 
-// .fs
+// .vs
 
 #version 330 core
 layout (location = 0) in vec3 aPos;
