@@ -305,7 +305,7 @@ m<sub>diffuse</sub>：漫反射率；m<sub>specular</sub>：镜面反射率；gl
 **混合：** 混合通过下面这个方程实现：
 
 $$
-\bar{C}_{result} = \bar{\color{green}C}_{source} * \color{green}F_{source} + \bar{\color{red}C}_{destination} * \color{red}F_{destination}
+{C}_{result} = {\color{green}C}_{source} * {\color{green}F}_{source} + {\color{red}C}_{destination} * {\color{red}F}_{destination}
 $$
 
 其中：
