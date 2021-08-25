@@ -267,6 +267,8 @@ m<sub>diffuse</sub>：漫反射率；m<sub>specular</sub>：镜面反射率；gl
 
 ### 8.FlowMap的实现
 
+（待补充）
+
 （demo）
 
 ## 第三章 进阶应用
@@ -319,7 +321,7 @@ $$
 
 **剔除：** 剔除是游戏引擎中非常重要的技术：现代引擎需要在十几毫秒的预算里，渲染出数以万计的物体，场景复杂度往往是数千万面的级别，同时还需要处理千计盏灯光和数百种材质。对于开放世界类型的游戏更是如此：场景动辄就是数十公里的延伸，想要通过暴力穷举地方法逐一绘制这些物体是不现实的。因此，如何有效地减少不必要的绘制就显得格外重要。
 
-硬件层面的剔除：
+**硬件层面的剔除：** 
 
 **裁剪&面剔除：** Clipping是当一个三角形的顶点位置被变换到NDC后，针对NDC外的三角形和穿过NDC的三角形，会执行剔除或者裁剪的操作；Backface Culling，则是在图元装配阶段结束之后，根据用户指定的手向，把面向摄像机或者背对摄像机（一般是背对摄像机）的三角形剔除，剔除后的三角形就不会再进入到 Pixel Shader 和 Rasteriaztion 的流程里。
 
@@ -329,7 +331,7 @@ $$
 
 现代引擎基本都会利用 Z-Cull 和 Early-Z 的特性去减少SM的计算压力，具体方法是执行一个 Z-Prepass（不论是foward，forward+ 还是 deferred 管线都一样）：先将不透明物体按照距离摄像机从前向后的顺序排序，然后只开启Z-Buffer write和 compare，不执行 Pixel Shader 进行一遍渲染。在执行完 Z-Prepass 后，关闭 Z-Buffer 的写入，将 compare function 改为 equal ，然后执行后续复杂 Pixel Shader（前向渲染的光照计算或者延迟渲染的G-Buffer填充）。
 
-算法层面的剔除：
+**算法层面的剔除：** 
 
 **视锥剔除：** 判断一个物体是否位于视锥棱台内。在实践中，由于模型往往是比较复杂的，很难精确计算它和视锥体的交集，因此一般是用**轴对齐包围盒**（AABB），**有向包围盒**（OBB）或者**包围球**（BSphere）代替模型本身进行相交计算。
 
@@ -340,6 +342,10 @@ $$
 参考：[TC130-游戏中的透明渲染](https://zhuanlan.zhihu.com/p/149982810)和[洛城-剔除：从软件到硬件](https://zhuanlan.zhihu.com/p/66407205)和[TC130-游戏中的遮挡剔除/Occlusion Culling](https://zhuanlan.zhihu.com/p/363277669)
 
 （demo）
+
+https://docs.unity3d.com/cn/2018.4/Manual/SL-Blend.html
+
+http://wordpress.notargs.com/blog/blog/2015/09/24/unity5%E7%A0%B4%E9%8C%A0%E3%81%97%E3%81%AA%E3%81%84%E5%8D%8A%E9%80%8F%E6%98%8E%E6%8F%8F%E7%94%BB%E3%82%92%E8%A1%8C%E3%81%86/
 
 ### 3.曲面细分着色器与几何着色器/ts&gs
 
@@ -397,7 +403,11 @@ https://cloud.tencent.com/developer/news/102132
 
 ### 8.DepthPeeling 深度剥离
 
+（待补充）
+
 （demo）
+
+https://zhuanlan.zhihu.com/p/127399447
 
 ## 第四章 高级扩展
 
