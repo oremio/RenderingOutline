@@ -418,7 +418,17 @@ http://wordpress.notargs.com/blog/blog/2015/09/24/unity5%E7%A0%B4%E9%8C%A0%E3%81
 
 ### 5.early-Z与Z-Prepass
 
+**early-Z失效的情况：** 1.开启 Alpha Test 或 clip/discard 等手动丢弃片元操作；2.手动修改GPU插值得到的深度；3.开启 Alpha Blend；4.关闭深度测试；
 
+**如何高效利用early-Z：** 
+
+1.将物体由近到远排序 → 问题：场景十分复杂的时候，频繁的排序操作将消耗cpu的性能！
+
+2.使用Z-Prepass：我们对每个物体设置两个Pass。在第一个Pass即Z-Prepass中仅仅只写入深度，不计算输出任何颜色，相当于自动形成了一个最小深度的深度缓冲区。在第二个Pass中关闭深度写入，并且将深度比较函数设置为相等。 → 问题：一个拥有 a multi-pass shader 的物体是无法进行动态批处理的
+
+3.上面的改进方案：将原先第一个Pass单独分离为一个Shader，并先使用这个Shader将整个场景的不透明的物体从前向后渲染一遍。
+
+**Z-Prepass的使用场合：** 1.一个场景有非常多的OverDraw，而且不能很好的将不透明物体从前往后进行排序；2.Z-Prepass也是透明渲染的一种解决方案。
 
 ### 6.纹理压缩
 
@@ -470,6 +480,26 @@ SSAO的流程，下图一目了然，显然它和延迟渲染结合得很好：
 
 ### 3.阴影的各类实现方法
 
+1.平面映射
+
+（待补充）
+
+2.Shadow Volumes
+
+（待补充）
+
+**3.Shadow Map：** 
+
+从光源处出发向光照的方向渲染需要产生阴影的物体，得到保存最近处物体的深度值的 shdow map。
+
+对于 directional light 使用一个足够大的 orthographic projection frustum 包住所有需要渲染的物体，spot light 使用一个和自己光照范围相当的frustrum，omini light 沿六个方向生成类似于 cubic environment mapping 的 omnidirectional shadow maps。
+
+渲染物体光照时，将像素点代入到光照的矩阵中，和 shadow map 中该点的深度值比较，如果深度值大于 shadow map 中深度值，说明该点在阴影中。
+
+**4.改进Shadow Map：** 1.阴影偏移；2.修复悬浮（Peter Panning）；3.Cascaded Shadow Maps（CSM）；4.Percentage-Closer Filtering（PCF）5.（待补充）
+
+（待补充）
+
 （demo）
 
 ### 4.抗锯齿之FXAA、MSAA
@@ -486,9 +516,25 @@ SSAO的流程，下图一目了然，显然它和延迟渲染结合得很好：
 
 ### 7.雾效实现方法
 
-unity的实现方法；后处理的实现方法；
+**DepthFog：**
 
-（demo）
+在每个像素计算的正常颜色基础上，根据距离混合一个雾的颜色。
+
+最常用的三种计算雾强度的公式:
+
+Linear : factor = (end-z)/(end-start)
+
+Exp: factor = exp(-density*z)
+
+Exp2: factor = exp(-(density*z)^2)
+
+unity中的全局雾设置和宏APPLY_FOG就是使用这种方式。
+
+**PostProcessing Fog：**
+
+和 Depth Fog 基本上是一样的，区别在于 PostProcessing 的 Fog 通过在 PostProcessing 时根据 depth texture 反推计算出摄影机到目标像素点的距离。除了用距离作为上述公式的参数，还可以根据高度作为参数，或者高度*距离这样的形式来作为参数。
+
+参考：[TC130-游戏中的Volumetric Rendering](https://zhuanlan.zhihu.com/p/102114679)
 
 ### 8.基于屏幕空间的溶解
 
@@ -677,7 +723,7 @@ $$
 
 ### 3.体渲染
 
-数学原理；SDF；Raymarching；体积光；
+数学物理原理；SDF；Raymarching；体积光；
 
 ### 4.体积云的生成
 
