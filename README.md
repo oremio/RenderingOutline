@@ -146,6 +146,24 @@ Windows系统支持DirectX和OpenGL，Linux/Mac(Unix)系统支持OpenGL。
 
 这篇文章对OpenGL介绍得相当不错：[柯灵杰-20分钟让你了解OpenGL——OpenGL全流程详细解读](https://zhuanlan.zhihu.com/p/56693625)
 
+### 5.图形API坐标系对比/Coordinate System
+
+渲染从3D到2D的过程中，经历了不少的坐标系。主要可以认为有以下几种。
+
+**世界坐标系：** 在DirectX的**教程**中，一般倾向于使用左手坐标系。在OpenGL的**教程**中，则一般倾向于右手坐标系。这两种情况，都是Y轴表示向上，只有Z不一样。
+
+**观察坐标系：** 在DirectX的教程中，一般观察空间的坐标系统和OpenGL就已经统一了，都是一模一样的左手系坐标系。具体来说，就是摄像机观察的反方向（z）、上向量（y）、前者叉乘后者i.e.右向量（x）。
+
+在现代管线中，世界坐标系和View坐标系是游戏引擎可以**自行选择**的，因为world view矩阵计算与硬件无关，交给了引擎来处理。 引擎在这里，只要选择一种 World+View 方案即可，DirectX 或 OpenGL风格都可以。当然，也可以选择自己更自由的设定，比如Z轴向上。
+
+**NDC坐标系和NDC空间：** 一部分View坐标系中的点通过投影矩阵(Projection)，并进行透视除法后，我们的点变换到了NDC空间中。DirectX、OpenGL、Metal这些图形API，NDC坐标系都和View坐标系的手性是一致的。Vulkan中，NDC坐标系跟View坐标系的手性不一致，Y轴颠倒了。
+
+**FrameBuffer坐标系：** FrameBuffer坐标系，是一个2D坐标系。我们主要从它的Y的不同来考虑。 在DirectX、Metal、Vulkan中，FrameBuffer的坐标系都是非常传统的。左上角是原点，Y轴朝下。 在OpenGL中，该坐标系的左下角是原点。 这也是很多纹理在OpenGL 模式下要Flip Y过来的原因了。
+
+**纹理坐标系：** 其实纹理没有坐标系，我们这里说的是纹理的第一个像素的sampler(0, 0)表示这张纹理的左上角还是左下角。这个因为图片格式都是定死了，每个平台都是一样的，表示的都是图片的左上角。
+
+参考：[露米 Lumi-Vulkan集成：图形API坐标系对比及解决方案](https://zhuanlan.zhihu.com/p/339295068)
+
 ## 第二章 光照基础
 
 ### 1.颜色空间/Color Space
@@ -236,7 +254,17 @@ m<sub>diffuse</sub>：漫反射率；m<sub>specular</sub>：镜面反射率；gl
 
 **传递函数：** OETF：光转电传递函数，负责把场景线性光转到非线性视频信号值；EOTF：电转光传递函数，负责把非线性视频信号值转换成显示光亮度。
 
-**Gamma校正：** 图像经过gamma编码存储在硬盘中，将获取到的物理数据做一次gamma值约为0.45的映射，这样的过程叫做gamma编码，此时图像的像素比实际物理像素要更亮（注意，电压和亮度都是在0到1的区间）。而在显示图像时，**需要将每个像素做一次gamma值约为2.2的校正**，使最终的结果为正确的物理数据。
+**Gamma校正：** 步骤如下：
+
+第一步，输入的纹理如果是sRGB（Gamma0.45），那我们要进行一个操作转换到线性空间。这个操作叫做Remove Gamma Correction，在数学上是一个2.2的幂运算。如果输入不是sRGB，而是已经在线性空间的纹理了呢？那就可以跳过Remove Gamma Correction了。
+
+注：美术输出资源时都是在sRGB空间的，但Normal Map等其他电脑计算出来的纹理则一般在线性空间，即Linear Texture。
+
+第二步，现在输入已经在线性空间了，那么进行Shader中光照、插值等计算后就是比较真实的结果了（上文解释了哦~），如果不对sRGB进行Remove Gamma Correction直接就进入Shader计算，那算出来的就会不自然，就像前面那两张球的光照结果一样。
+
+第三步，Shader计算完成后，需要进行Gamma Correction，从线性空间变换到Gamma0.45空间，在数学上是一个约为0.45的幂运算。如果不进行Gamma Correction输出会怎么样？那显示器就会将颜色从线性空间转换到Gamma2.2空间，接着再被你看到，结果会更暗。
+
+第四步，经过了前面的Gamma Correction，显示器输出在了线性空间，这就和人眼看物理世界的过程是一样的了！
 
 **具体应用：** 项目使用的是线性空间的贴图，则不需要勾选sRGB，否则，对于勾选了sRGB的贴图，会通过硬件特性采样时进行线性转换。不过，线性空间需要图形API的硬件支持，目前支持的平台如下：
 
@@ -247,7 +275,8 @@ m<sub>diffuse</sub>：漫反射率；m<sub>specular</sub>：镜面反射率；gl
 - iOS(Metal)
 - WebGL
 
-参考：[LearnOpenGL CN-Gamma校正](https://learnopengl-cn.github.io/05%20Advanced%20Lighting/02%20Gamma%20Correction/)
+参考：[LearnOpenGL CN-Gamma校正](https://learnopengl-cn.github.io/05%20Advanced%20Lighting/02%20Gamma%20Correction/)和[PZZZB-Gamma、Linear、sRGB 和Unity Color Space，你真懂了吗？
+](https://zhuanlan.zhihu.com/p/66558476)
 
 ### 7.LDR&HDR
 
