@@ -108,7 +108,7 @@ Bloom（泛光）、HDR（高动态范围）、FXAA、DepthOfView、边缘检测
 
 参考：[GAMES101-变换](https://www.bilibili.com/video/BV1X7411F744?p=4)
 
-### 3.纹理介绍/Texture
+### 3.纹理/Texture
 
 **为什么选择纹理？：** 牺牲一些几何细节，能够大量减少建模的工作量，存储空间需求也能减少，读取速度也能增加。
 
@@ -132,7 +132,7 @@ GPU渲染优化常见方式：纹理压缩；
 
 参考：[LearnOpenGL CN-纹理](https://learnopengl-cn.github.io/01%20Getting%20started/06%20Textures/)和[GAMES101-纹理、Mipmap](https://www.bilibili.com/video/BV1X7411F744?p=9)和[GAMES202-SAT](https://www.bilibili.com/video/BV1YK4y1T7yY?p=4&t=4315)
 
-### 4.图形API介绍/Graphics API
+### 4.图形API/Graphics API
 
 Khronos定义了OpenGL，微软定义了DirectX；
 
@@ -296,7 +296,9 @@ m<sub>diffuse</sub>：漫反射率；m<sub>specular</sub>：镜面反射率；gl
 
 ### 8.FlowMap的实现
 
-（待补充）
+实现流程：对FlowMap进行采样，可以得到一个值在0~1之间的向量场，将它转换到-1~1后，我们还需要构造两个周期相同、相位相差半个周期的波形函数，利用偏移向量和两个波形函数，我们对纹理采样两次并进行一个线性插值，就可以得到一个循环平滑的流动。
+
+参考：[【技术美术百人计划】图形 2.8 flowmap的实现——流动效果实现](https://www.bilibili.com/video/BV1Zq4y157c9?p=2)
 
 （demo）
 
