@@ -180,7 +180,7 @@ Windows系统支持DirectX和OpenGL，Linux/Mac(Unix)系统支持OpenGL。
 
 参考：[章佳杰-色彩空间基础](https://zhuanlan.zhihu.com/p/24214731)和[GAMES101-色彩与感知](https://www.bilibili.com/video/BV1X7411F744?p=20&t=2930)
 
-### 2.模型与材质/Model&Materials
+### 2.模型与材质/Model & Materials
 
 **模型包含的信息：** 其每个顶点会包含法线，纹理坐标，顶点色等信息。
 
@@ -304,7 +304,7 @@ m<sub>diffuse</sub>：漫反射率；m<sub>specular</sub>：镜面反射率；gl
 
 ## 第三章 进阶应用
 
-### 1.深度与模板测试/Depth Testing&Stencil Testing
+### 1.深度与模板测试/Depth Testing & Stencil Testing
 
 **模板测试：** 模板测试位于透明度测试之后、深度测试之前，与之相关的概念首先是模板缓冲，其中的每个模板值通常是8位的。模板缓冲允许我们在渲染片段时将模板缓冲设定为一个特定的值，我们可以**读取**这些值，来决定丢弃还是保留某个片段。总之，大体的步骤如下：
 
@@ -333,7 +333,7 @@ m<sub>diffuse</sub>：漫反射率；m<sub>specular</sub>：镜面反射率；gl
 
 （demo）
 
-### 2.混合模式及剔除/Blending&Culling
+### 2.混合模式及剔除/Blending & Culling
 
 **混合：** 混合通过下面这个方程实现：
 
@@ -378,7 +378,7 @@ https://docs.unity3d.com/cn/2018.4/Manual/SL-Blend.html
 
 http://wordpress.notargs.com/blog/blog/2015/09/24/unity5%E7%A0%B4%E9%8C%A0%E3%81%97%E3%81%AA%E3%81%84%E5%8D%8A%E9%80%8F%E6%98%8E%E6%8F%8F%E7%94%BB%E3%82%92%E8%A1%8C%E3%81%86/
 
-### 3.曲面细分着色器与几何着色器/ts&gs
+### 3.曲面细分着色器与几何着色器/ts & gs
 
 **曲面细分着色器：** 输入：Patch, 可以看成是多个顶点的集合，包含每个顶点的属性，可以指定一个Patch包含的顶点数以及自己的属性；功能：将图元细分（可以是三角形，矩形等）；输出：细分后的顶点；
 
@@ -416,7 +416,7 @@ http://wordpress.notargs.com/blog/blog/2015/09/24/unity5%E7%A0%B4%E9%8C%A0%E3%81
 
 （demo）
 
-### 5.early-Z与Z-Prepass
+### 5.early-Z & Z-Prepass
 
 **early-Z失效的情况：** 1.开启 Alpha Test 或 clip/discard 等手动丢弃片元操作；2.手动修改GPU插值得到的深度；3.开启 Alpha Blend；4.关闭深度测试；
 
@@ -424,23 +424,94 @@ http://wordpress.notargs.com/blog/blog/2015/09/24/unity5%E7%A0%B4%E9%8C%A0%E3%81
 
 1.将物体由近到远排序 → 问题：场景十分复杂的时候，频繁的排序操作将消耗cpu的性能！
 
-2.使用Z-Prepass：我们对每个物体设置两个Pass。在第一个Pass即Z-Prepass中仅仅只写入深度，不计算输出任何颜色，相当于自动形成了一个最小深度的深度缓冲区。在第二个Pass中关闭深度写入，并且将深度比较函数设置为相等。 → 问题：一个拥有 a multi-pass shader 的物体是无法进行动态批处理的
+2.使用Z-Prepass：我们对每个物体设置两个 Pass。在第一个 Pass 即 Z-Prepass 中仅仅只写入深度，不计算输出任何颜色，相当于自动形成了一个最小深度的深度缓冲区。在第二个Pass中关闭深度写入，并且将深度比较函数设置为相等。 → 问题：一个拥有 a multi-pass shader 的物体是无法进行动态批处理的
 
-3.上面的改进方案：将原先第一个Pass单独分离为一个Shader，并先使用这个Shader将整个场景的不透明的物体从前向后渲染一遍。
+3.上面的改进方案：将原先第一个Pass单独分离为一个 Shader，并先使用这个 Shader 将整个场景的不透明的物体从前向后渲染一遍。
 
-**Z-Prepass的使用场合：** 1.一个场景有非常多的OverDraw，而且不能很好的将不透明物体从前往后进行排序；2.Z-Prepass也是透明渲染的一种解决方案。
+**Z-Prepass的使用场合：** 1.一个场景有非常多的 OverDraw，而且不能很好的将不透明物体从前往后进行排序；2.Z-Prepass也是透明渲染的一种解决方案。
 
 ### 6.纹理压缩
 
-
+（待补充）
 
 ### 7.现代移动端的TBR和TBR渲染管线以及Cbuffer
 
-https://www.jianshu.com/p/dbba97339e75
+参考：[【技术美术百人计划】图形 3.7 移动端TB(D)R架构基础](https://www.bilibili.com/video/BV1Bb4y167zU)
 
-https://www.sohu.com/a/83561143_119711
+### 7.1 名词解释
 
-https://cloud.tencent.com/developer/news/102132
+**System on Chip（Soc）：** Soc是把CPU、GPU、内存、通信基带、GPS模块等等整合在一起的芯片的称呼。常见有A系Soc（苹果），骁龙Soc（高通），麒麟Soc（华为），联发科Soc，猎户座Soc（三星），去年苹果推出的M系Soc，暂用于Mac，但这说明手机、笔记本和PC的通用芯片已经出现了。
+
+**物理内存：** Soc中GPU和CPU共用一块片内LPDDR物理内存，就是我们常说的手机内存，也叫System Memory，大概几个G。此外CPU和GPU还分别有自己的高速SRAM的Cache缓存，也叫On-chip Memory，一般几百K~几M。不同距离的内存访问存在不同的时间消耗，距离越近消耗越低，读取System Memory的时间消耗大概是On-chip Memory的几倍到几十倍。
+
+**On-Chip Buffer：** 在TB(D)R架构下会存储Tile的颜色、深度和模板缓冲，读写修改都非常快。如果Load/Store指令中缓冲需要被Preserve，将会被写入一份到System Memory中。
+
+**Stall：** 当一个GPU核心的两次计算结果之间有依赖关系而必须串行时，等待的过程便是Stall。
+
+**FillRate：** 像素填充率 = ROP运行的时钟频率 x ROP的个数 x 每个时钟ROP可以处理的像素个数。
+
+**TBR（Tile-Based (Deferred) Rendering）：** 是目前主流的移动GPU渲染架构，对应一般PC上的GPU渲染架构则是IMR（Immediate Mode Rendering ）。
+
+### 7.2 IMR & TBR
+
+直接用伪代码表示，一目了然：
+
+**IMR：**
+
+```
+for draw in renderPass:
+	for primitive in draw:
+		for vertex in primitive:
+			execute_vertex_shader(vertex)
+		if primitive not culled:
+			for fragment in primitive:
+				execute_fragment_shader(fragment)
+```
+
+**TBR：**
+
+```
+# Pass one
+for draw in renderPass:
+	for primitive in draw:
+		for vertex in primitive:
+			execute_vertex_shader(vertex)
+		if primitive not culled
+			append_tile_list(primitive)
+# Pass two
+for tile in renderPass:
+	for primitive in tile:
+		for fragment in primitive:
+			execute_fragment_shader(fragment)
+```
+
+下面这张图则展示了两者在内存管理上的不同点：
+
+![](https://files.catbox.moe/g5j52f.png)
+
+上面的TBR最终会将颜色、深度、模板缓冲都刷到片上内存里，体现了一种 cached friendly的优点，可以降低带宽、减小功耗。
+
+### 7.3 TBR的优化策略
+
+不使用Framebuffer的时候记得clear或者discard：清空积存在tile buff上的 frame Data，所以在unity里面对render texture的使用也特别说明了一下，当不再使用这个rt之前，调用一次Discard。在OpenGL ES上善用glClear，gllnvalidateFrameBuffer避免不必要的Resolve（刷system memory）行为。
+
+不要在一帧里面频繁的切换framebuffer的绑定：本质上就是减少tile buffer 和system memory之间的 的 stall 操作。
+
+手机上必须要做Alpha Test，可以利用Depth prepass。
+
+图片尽量压缩，例如:ASTC、ETC2；图片尽量走 mipmap。
+
+尽量使用从 Vertex Shader 传来的 Varying 变量UV值采样贴图（连续的），不要在 FragmentShader 里动态计算贴图的UV值（非连续的），否则 CacheMiss。
+
+在延迟渲染尽量利用 Tile Buffer 存储数据。
+
+少在FS 中使用 discard 函数，调用 gl_FragDepth 从而打断 Early-DT（HLSL中为Clip，GLSL中为discard）。
+
+尽可能的在 Shader 里使用 Half Float，如果 Shader 中仅有少量 FP16 的运算，且 FP1 6需和 FP32 混合计算，则统一使用 Float，好处：（1）带宽用量减少；（2）GPU中使用的周期数减少，因为着色器编译器可以优化你的代码以提高并行化程度；（3）要求的统一变量寄存器数量减少，这反过来又降低了寄存器数量溢出风险。具体有哪些数据类型适合用 half 或者 float 或者 fix。具体可参考：[熊大的优化建议](http://www.xionggf.com/post/unity3d/shader/u3d_shader_optimization/)
+
+在移动端的 TB(D)R 架构中，顶点处理部分，容易成为瓶颈，避免使用曲面细分shader，置换贴图等负操作，提倡使用模型LOD,本质上减少 FrameData 的压力。
+
+### 7.4 Cbuffer
 
 ### 8.DepthPeeling 深度剥离
 
@@ -879,7 +950,7 @@ Context是一个对象，是GPU使用的最小数据集，越多Context可用就
 
 见7.5节。
 
-### 3.光栅化与透视矫正插值/Rasterization&Perspective-Correct Interpolation
+### 3.光栅化与透视矫正插值/Rasterization & Perspective-Correct Interpolation
 
 **直线光栅化算法：** ①DDA数值微分算法（我的软渲染就是用的这个算法）；②中点Bresenham算法。
 
