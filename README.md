@@ -14,6 +14,8 @@
 
 《Real-Time Rendering》第4版
 
+anything about game：[ComputerGraphics && Shading](https://github.com/killop/anything_about_game#computergraphics--shading)
+
 ## 全篇第一个"Why, What, How"
 
 **为什么学图形学？：** Computer Graphics is AWESOME!!!
