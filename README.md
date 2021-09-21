@@ -32,9 +32,7 @@
 &emsp;&emsp;<a href="#24">6.纹理压缩</a>  
 &emsp;&emsp;<a href="#25">7.现代移动端的TBR和TBR渲染管线以及Cbuffer</a>  
 &emsp;&emsp;<a href="#26">7.1 名词解释</a>  
-&emsp;&emsp;<a href="#27">7.2 IMR & TBR</a>  
-<a href="#28">Pass one</a>  
-<a href="#29">Pass two</a>  
+&emsp;&emsp;<a href="#27">7.2 IMR & TBR</a>   
 &emsp;&emsp;<a href="#30">7.3 TBR的优化策略</a>  
 &emsp;&emsp;<a href="#31">7.4 Cbuffer</a>  
 &emsp;&emsp;<a href="#32">8.DepthPeeling 深度剥离</a>  
@@ -567,14 +565,14 @@ for draw in renderPass:
 **TBR：**
 
 ```
-# <a name="28">Pass one</a><a style="float:right;text-decoration:none;" href="#index">[Top]</a>
+# Pass one
 for draw in renderPass:
 	for primitive in draw:
 		for vertex in primitive:
 			execute_vertex_shader(vertex)
 		if primitive not culled
 			append_tile_list(primitive)
-# <a name="29">Pass two</a><a style="float:right;text-decoration:none;" href="#index">[Top]</a>
+# Pass two
 for tile in renderPass:
 	for primitive in tile:
 		for fragment in primitive:
