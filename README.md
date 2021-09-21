@@ -581,9 +581,7 @@ SSAO的流程，下图一目了然，显然它和延迟渲染结合得很好：
 
 渲染物体光照时，将像素点代入到光照的矩阵中，和 shadow map 中该点的深度值比较，如果深度值大于 shadow map 中深度值，说明该点在阴影中。
 
-**4.改进Shadow Map：** 1.阴影偏移；2.修复悬浮（Peter Panning）；3.Cascaded Shadow Maps（CSM）；4.Percentage-Closer Filtering（PCF）5.（待补充）
-
-（待补充）
+**4.改进Shadow Map：** 1.阴影偏移；2.修复悬浮（Peter Panning）；3.Cascaded Shadow Maps（CSM）；4.Percentage-Closer Filtering（PCF）5.（待补充：PCSS(Percentage Closer Soft Shadows)、VSSM(Variance soft shadow mapping)、SDF方法）
 
 （demo）
 
@@ -806,35 +804,39 @@ $$
 
 参考：[GAMES101-Ray Tracing 1~4](https://www.bilibili.com/video/BV1X7411F744?p=13)和[papalqi-光线追踪](https://zhuanlan.zhihu.com/p/72673165)和[孙小磊-重要性采样和多重重要性采样在路径追踪中的应用](https://zhuanlan.zhihu.com/p/360420413)
 
-### 3.体渲染
+### 3.Real-time Environment Mapping
+
+The split sum approximation; Precomputed radiance transfer;
+
+### 4.Real-time GLobal Illumination (in 3D)
+
+Reflective Shadow Map(RSM);
+
+Light Propagation Volumes(LPV); Voxel Global Illumination(VXGI);
+
+### 5.Real-time GLobal Illumination (screen space)
+
+Screen Space Ambient Occlusion(SSAO); Screen Space Directional Occlusion(SSDO); Screen Space Reflection(SSR)
+
+### 6.体渲染
 
 数学物理原理；SDF；Raymarching；体积光；
 
-### 4.体积云的生成
+### 7.体积云的生成
 
 3D体纹理的制作；噪波的生成；引擎中实现体积云；
 
 （demo）
 
-### 5.水体渲染
+### 8.水体渲染
 
+FFT；
 
+### 9.毛发模拟
 
-### 6.毛发模拟
+### 10.渲染加速与性能优化概述
 
-
-
-### 7.屏幕空间反射
-
-
-
-### 8.渲染加速与性能优化概述
-
-
-
-### 9.皮肤渲染
-
-
+### 11.皮肤渲染
 
 ## 第六章 卡通渲染
 
@@ -1040,7 +1042,7 @@ void func(int count, int breakNum)
 
 ## 第八章 其他
 
-1.体素
+### 1.体素
 
 ### 2.三维旋转：欧拉角、四元数、旋转矩阵、轴角
 
@@ -1109,15 +1111,15 @@ $$
 
 参考：[鸡哥-三维旋转：欧拉角、四元数、旋转矩阵、轴角之间的转换](https://zhuanlan.zhihu.com/p/45404840)
 
-3.球谐光照
+### 3.球谐光照
 
-4.空间分割加速
+### 4.空间分割加速
 
-5.裁切技术
+### 5.裁切技术
 
-6.层次细节/LOD
+### 6.层次细节/LOD
 
-7.通过法线2d渲3d的角色效果
+### 7.通过法线2d渲3d的角色效果
 
 ### 8.渲染常用术语整理
 
