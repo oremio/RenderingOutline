@@ -1066,9 +1066,9 @@ $$
 \mathbf{v'}=
 \left[
 \begin{matrix}
-1-2c^2-2d^2 & 2bc-2ad & 2ac+2bd \\\
-2bc+2ad & 1-2b^2-2d^2 & 2cd-2ab \\\
-2bd-2ac & 2ab+2cd & 1-2b^2-2c^2 \\\
+1-2c^2-2d^2 & 2bc-2ad & 2ac+2bd \\\\
+2bc+2ad & 1-2b^2-2d^2 & 2cd-2ab \\\\
+2bd-2ac & 2ab+2cd & 1-2b^2-2c^2 \\\\
 \end{matrix} \right]
 \mathbf{v}
 $$
