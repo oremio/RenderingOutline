@@ -1,92 +1,10 @@
-# <a name="0">RenderingOutline</a><a style="float:right;text-decoration:none;" href="#index">[Top]</a>
+# RenderingOutline
 
 这是我进行渲染学习的一个大纲（~不是NPR里的描边~），之后可能会补上一些图形学相关算法或技术的（伪）代码。
 
 这个大纲基本是参考[技术美术百人计划](https://docs.qq.com/doc/DUFdKZE1oVFd3ZlBs)，增加了“第七章 GPU逻辑管线”，同时会补充上一些通俗且尽量简短的、至少我自己日后还能看懂的解释，保证所有知识点的"Why, What, How"都能在文字上解释清楚，即为什么会出现这种技术，这种技术的主要内容，这种技术的实现。
 
-<a name="index">**目录**</a>
-<a href="#0">RenderingOutline</a>  
-&emsp;<a href="#1">渲染的一些参考资料</a>  
-&emsp;<a href="#2">全篇第一个"Why, What, How"</a>  
-&emsp;<a href="#3">第一章 基础</a>  
-&emsp;&emsp;<a href="#4">1.渲染管线简介/Rendering Pipeline</a>  
-&emsp;&emsp;<a href="#5">2.数学基础/Math</a>  
-&emsp;&emsp;<a href="#6">3.纹理/Texture</a>  
-&emsp;&emsp;<a href="#7">4.图形API/Graphics API</a>  
-&emsp;&emsp;<a href="#8">5.图形API坐标系对比/Coordinate System</a>  
-&emsp;<a href="#9">第二章 光照基础</a>  
-&emsp;&emsp;<a href="#10">1.颜色空间/Color Space</a>  
-&emsp;&emsp;<a href="#11">2.模型与材质/Model & Materials</a>  
-&emsp;&emsp;<a href="#12">3.基础hlsl函数介绍/HLSL Functions</a>  
-&emsp;&emsp;<a href="#13">4.传统经验光照模型/Empirical Shading Model</a>  
-&emsp;&emsp;<a href="#14">5.凹凸贴图/Bump Mapping</a>  
-&emsp;&emsp;<a href="#15">6.伽马校正/Gamma Correction</a>  
-&emsp;&emsp;<a href="#16">7.LDR&HDR</a>  
-&emsp;&emsp;<a href="#17">8.FlowMap的实现</a>  
-&emsp;<a href="#18">第三章 进阶应用</a>  
-&emsp;&emsp;<a href="#19">1.深度与模板测试/Depth Testing & Stencil Testing</a>  
-&emsp;&emsp;<a href="#20">2.混合模式及剔除/Blending & Culling</a>  
-&emsp;&emsp;<a href="#21">3.曲面细分着色器与几何着色器/ts & gs</a>  
-&emsp;&emsp;<a href="#22">4.延迟渲染原理介绍/Deferred Rendering</a>  
-&emsp;&emsp;<a href="#23">5.early-Z & Z-Prepass</a>  
-&emsp;&emsp;<a href="#24">6.纹理压缩</a>  
-&emsp;&emsp;<a href="#25">7.现代移动端的TBR和TBR渲染管线以及Cbuffer</a>  
-&emsp;&emsp;<a href="#26">7.1 名词解释</a>  
-&emsp;&emsp;<a href="#27">7.2 IMR & TBR</a>  
-<a href="#28">Pass one</a>  
-<a href="#29">Pass two</a>  
-&emsp;&emsp;<a href="#30">7.3 TBR的优化策略</a>  
-&emsp;&emsp;<a href="#31">7.4 Cbuffer</a>  
-&emsp;&emsp;<a href="#32">8.DepthPeeling 深度剥离</a>  
-&emsp;<a href="#33">第四章 高级扩展</a>  
-&emsp;&emsp;<a href="#34">1.Bloom算法</a>  
-&emsp;&emsp;<a href="#35">2.SSAO算法</a>  
-&emsp;&emsp;<a href="#36">3.阴影的各类实现方法</a>  
-&emsp;&emsp;<a href="#37">4.抗锯齿之FXAA、MSAA</a>  
-&emsp;&emsp;<a href="#38">5.DOF景深算法</a>  
-&emsp;&emsp;<a href="#39">6.运动模糊</a>  
-&emsp;&emsp;<a href="#40">7.雾效实现方法</a>  
-&emsp;&emsp;<a href="#41">8.基于屏幕空间的溶解</a>  
-&emsp;<a href="#42">第五章 物理世界</a>  
-&emsp;&emsp;<a href="#43">1.PBR</a>  
-&emsp;&emsp;<a href="#44">1.1 辐射度量学/Radiometry</a>  
-&emsp;&emsp;<a href="#45">1.2 BRDF</a>  
-&emsp;&emsp;<a href="#46">1.3 PBR实现算法</a>  
-&emsp;&emsp;<a href="#47">2.光线追踪</a>  
-&emsp;&emsp;<a href="#48">3.Real-time Environment Mapping</a>  
-&emsp;&emsp;<a href="#49">4.Real-time GLobal Illumination (in 3D)</a>  
-&emsp;&emsp;<a href="#50">5.Real-time GLobal Illumination (screen space)</a>  
-&emsp;&emsp;<a href="#51">6.体渲染</a>  
-&emsp;&emsp;<a href="#52">7.体积云的生成</a>  
-&emsp;&emsp;<a href="#53">8.水体渲染</a>  
-&emsp;&emsp;<a href="#54">9.毛发模拟</a>  
-&emsp;&emsp;<a href="#55">10.渲染加速与性能优化概述</a>  
-&emsp;&emsp;<a href="#56">11.皮肤渲染</a>  
-&emsp;<a href="#57">第六章 卡通渲染</a>  
-&emsp;&emsp;<a href="#58">1.NPR与卡通渲染的风格流派</a>  
-&emsp;&emsp;<a href="#59">2.卡通渲染描边方案</a>  
-&emsp;&emsp;<a href="#60">3.卡通渲染着色方案</a>  
-&emsp;&emsp;<a href="#61">4.卡通渲染案例讲解</a>  
-&emsp;<a href="#62">第七章 GPU逻辑管线</a>  
-&emsp;&emsp;<a href="#63">1.逻辑管线简介/GPU Logical Pipeline</a>  
-&emsp;&emsp;<a href="#64">2.GPU硬件架构十三问/GPU Q&A</a>  
-&emsp;&emsp;<a href="#65">3.光栅化与透视矫正插值/Rasterization & Perspective-Correct Interpolation</a>  
-&emsp;&emsp;<a href="#66">4.if，以及分支/if, and branch</a>  
-&emsp;&emsp;<a href="#67">5.基于GPU架构的渲染优化建议</a>  
-&emsp;<a href="#68">第八章 其他</a>  
-&emsp;&emsp;<a href="#69">1.体素</a>  
-&emsp;&emsp;<a href="#70">2.三维旋转：欧拉角、四元数、旋转矩阵、轴角</a>  
-&emsp;&emsp;<a href="#71">2.1 欧拉角基础</a>  
-&emsp;&emsp;<a href="#72">2.2 四元数基础</a>  
-&emsp;&emsp;<a href="#73">2.3 转换</a>  
-&emsp;&emsp;<a href="#74">3.球谐光照</a>  
-&emsp;&emsp;<a href="#75">4.空间分割加速</a>  
-&emsp;&emsp;<a href="#76">5.裁切技术</a>  
-&emsp;&emsp;<a href="#77">6.层次细节/LOD</a>  
-&emsp;&emsp;<a href="#78">7.通过法线2d渲3d的角色效果</a>  
-&emsp;&emsp;<a href="#79">8.渲染常用术语整理</a>  
-
-## <a name="1">渲染的一些参考资料</a><a style="float:right;text-decoration:none;" href="#index">[Top]</a>
+## 渲染的一些参考资料
 
 最容易入门的图形学教程：[LearnOpenGL CN](https://learnopengl-cn.github.io/)
 
@@ -98,7 +16,7 @@
 
 anything about game：[ComputerGraphics && Shading](https://github.com/killop/anything_about_game#computergraphics--shading)
 
-## <a name="2">全篇第一个"Why, What, How"</a><a style="float:right;text-decoration:none;" href="#index">[Top]</a>
+## 全篇第一个"Why, What, How"
 
 **为什么学图形学？：** Computer Graphics is AWESOME!!!
 
@@ -109,9 +27,9 @@ anything about game：[ComputerGraphics && Shading](https://github.com/killop/an
 - 看：把中文网络的视频资料和开源项目先搜刮干净，积累必要的图形学相关的英语词汇，再去读图形学的几本经典，以及搜刮英文网络、日文网络……
 - 写：写代码，查文档，写代码，谷歌，写代码，写总结和笔记。
 
-## <a name="3">第一章 基础</a><a style="float:right;text-decoration:none;" href="#index">[Top]</a>
+## 第一章 基础
 
-### <a name="4">1.渲染管线简介/Rendering Pipeline</a><a style="float:right;text-decoration:none;" href="#index">[Top]</a>
+### 1.渲染管线简介/Rendering Pipeline
 
 总参考：[GAMES101-渲染管线](https://www.bilibili.com/video/BV1X7411F744?p=8&t=1960)
 
@@ -163,7 +81,7 @@ anything about game：[ComputerGraphics && Shading](https://github.com/killop/an
 
 Bloom（泛光）、HDR（高动态范围）、FXAA、DepthOfView、边缘检测、径向模糊；
 
-### <a name="5">2.数学基础/Math</a><a style="float:right;text-decoration:none;" href="#index">[Top]</a>
+### 2.数学基础/Math
 
 **微积分，线性代数，概率论**
 
@@ -186,7 +104,7 @@ Bloom（泛光）、HDR（高动态范围）、FXAA、DepthOfView、边缘检测
 
 参考：[GAMES101-变换](https://www.bilibili.com/video/BV1X7411F744?p=4)
 
-### <a name="6">3.纹理/Texture</a><a style="float:right;text-decoration:none;" href="#index">[Top]</a>
+### 3.纹理/Texture
 
 **为什么选择纹理？：** 牺牲一些几何细节，能够大量减少建模的工作量，存储空间需求也能减少，读取速度也能增加。
 
@@ -210,7 +128,7 @@ GPU渲染优化常见方式：纹理压缩；
 
 参考：[LearnOpenGL CN-纹理](https://learnopengl-cn.github.io/01%20Getting%20started/06%20Textures/)和[GAMES101-纹理、Mipmap](https://www.bilibili.com/video/BV1X7411F744?p=9)和[GAMES202-SAT](https://www.bilibili.com/video/BV1YK4y1T7yY?p=4&t=4315)
 
-### <a name="7">4.图形API/Graphics API</a><a style="float:right;text-decoration:none;" href="#index">[Top]</a>
+### 4.图形API/Graphics API
 
 Khronos定义了OpenGL，微软定义了DirectX；
 
@@ -224,7 +142,7 @@ Windows系统支持DirectX和OpenGL，Linux/Mac(Unix)系统支持OpenGL。
 
 这篇文章对OpenGL介绍得相当不错：[柯灵杰-20分钟让你了解OpenGL——OpenGL全流程详细解读](https://zhuanlan.zhihu.com/p/56693625)
 
-### <a name="8">5.图形API坐标系对比/Coordinate System</a><a style="float:right;text-decoration:none;" href="#index">[Top]</a>
+### 5.图形API坐标系对比/Coordinate System
 
 渲染从3D到2D的过程中，经历了不少的坐标系。主要可以认为有以下几种。
 
@@ -242,9 +160,9 @@ Windows系统支持DirectX和OpenGL，Linux/Mac(Unix)系统支持OpenGL。
 
 参考：[露米 Lumi-Vulkan集成：图形API坐标系对比及解决方案](https://zhuanlan.zhihu.com/p/339295068)
 
-## <a name="9">第二章 光照基础</a><a style="float:right;text-decoration:none;" href="#index">[Top]</a>
+## 第二章 光照基础
 
-### <a name="10">1.颜色空间/Color Space</a><a style="float:right;text-decoration:none;" href="#index">[Top]</a>
+### 1.颜色空间/Color Space
 
 我们常用的sRGB色彩空间，其构成为：
 
@@ -258,7 +176,7 @@ Windows系统支持DirectX和OpenGL，Linux/Mac(Unix)系统支持OpenGL。
 
 参考：[章佳杰-色彩空间基础](https://zhuanlan.zhihu.com/p/24214731)和[GAMES101-色彩与感知](https://www.bilibili.com/video/BV1X7411F744?p=20&t=2930)
 
-### <a name="11">2.模型与材质/Model & Materials</a><a style="float:right;text-decoration:none;" href="#index">[Top]</a>
+### 2.模型与材质/Model & Materials
 
 **模型包含的信息：** 其每个顶点会包含法线，纹理坐标，顶点色等信息。
 
@@ -276,11 +194,11 @@ Windows系统支持DirectX和OpenGL，Linux/Mac(Unix)系统支持OpenGL。
 
 参考：[孙小磊-重心坐标(barycentric coordinates)详解及其作用](https://zhuanlan.zhihu.com/p/144360079)
 
-### <a name="12">3.基础hlsl函数介绍/HLSL Functions</a><a style="float:right;text-decoration:none;" href="#index">[Top]</a>
+### 3.基础hlsl函数介绍/HLSL Functions
 
 参考：[HLSL内部函数](https://docs.microsoft.com/zh-cn/windows/win32/direct3dhlsl/dx-graphics-hlsl-intrinsic-functions?redirectedfrom=MSDN)
 
-### <a name="13">4.传统经验光照模型/Empirical Shading Model</a><a style="float:right;text-decoration:none;" href="#index">[Top]</a>
+### 4.传统经验光照模型/Empirical Shading Model
 
 按照时间轴：
 
@@ -312,7 +230,7 @@ m<sub>diffuse</sub>：漫反射率；m<sub>specular</sub>：镜面反射率；gl
 
 参考：[LearnOpenGL CN-基础光照](https://learnopengl-cn.github.io/02%20Lighting/02%20Basic%20Lighting/)
 
-### <a name="14">5.凹凸贴图/Bump Mapping</a><a style="float:right;text-decoration:none;" href="#index">[Top]</a>
+### 5.凹凸贴图/Bump Mapping
 
 **为什么选择凹凸贴图？：** 减少建模的工作量，存储空间需求也能减少。
 
@@ -326,7 +244,7 @@ m<sub>diffuse</sub>：漫反射率；m<sub>specular</sub>：镜面反射率；gl
 
 （demo）
 
-### <a name="15">6.伽马校正/Gamma Correction</a><a style="float:right;text-decoration:none;" href="#index">[Top]</a>
+### 6.伽马校正/Gamma Correction
 
 **为什么会出现伽马校正？：** 历史原因：早期我们使用的阴极射线显像管（CRT）的亮度与电压并不成线性关系，而是gamma值约为2.2类似幂律的关系；物理原因：人类对光的暗部变化更加敏感，需要使用更多位置去存储暗部值，所以利用设备的灰度系数（即gamma），能够让暗部使用更高精度保存，而亮部使用更低精度保存。
 
@@ -356,7 +274,7 @@ m<sub>diffuse</sub>：漫反射率；m<sub>specular</sub>：镜面反射率；gl
 参考：[LearnOpenGL CN-Gamma校正](https://learnopengl-cn.github.io/05%20Advanced%20Lighting/02%20Gamma%20Correction/)和[PZZZB-Gamma、Linear、sRGB 和Unity Color Space，你真懂了吗？
 ](https://zhuanlan.zhihu.com/p/66558476)
 
-### <a name="16">7.LDR&HDR</a><a style="float:right;text-decoration:none;" href="#index">[Top]</a>
+### 7.LDR&HDR
 
 **基本概念：**
 
@@ -372,7 +290,7 @@ m<sub>diffuse</sub>：漫反射率；m<sub>specular</sub>：镜面反射率；gl
 
 参考：[LearnOpenGL CN-HDR](https://learnopengl-cn.github.io/05%20Advanced%20Lighting/06%20HDR/)
 
-### <a name="17">8.FlowMap的实现</a><a style="float:right;text-decoration:none;" href="#index">[Top]</a>
+### 8.FlowMap的实现
 
 实现流程：对FlowMap进行采样，可以得到一个值在0 ~ 1之间的向量场，将它转换到-1 ~ 1后，我们还需要构造两个周期相同、相位相差半个周期的波形函数，利用偏移向量和两个波形函数，我们对纹理采样两次并进行一个线性插值，就可以得到一个循环平滑的流动。
 
@@ -380,9 +298,9 @@ m<sub>diffuse</sub>：漫反射率；m<sub>specular</sub>：镜面反射率；gl
 
 （demo）
 
-## <a name="18">第三章 进阶应用</a><a style="float:right;text-decoration:none;" href="#index">[Top]</a>
+## 第三章 进阶应用
 
-### <a name="19">1.深度与模板测试/Depth Testing & Stencil Testing</a><a style="float:right;text-decoration:none;" href="#index">[Top]</a>
+### 1.深度与模板测试/Depth Testing & Stencil Testing
 
 **模板测试：** 模板测试位于透明度测试之后、深度测试之前，与之相关的概念首先是模板缓冲，其中的每个模板值通常是8位的。模板缓冲允许我们在渲染片段时将模板缓冲设定为一个特定的值，我们可以**读取**这些值，来决定丢弃还是保留某个片段。总之，大体的步骤如下：
 
@@ -411,7 +329,7 @@ m<sub>diffuse</sub>：漫反射率；m<sub>specular</sub>：镜面反射率；gl
 
 （demo）
 
-### <a name="20">2.混合模式及剔除/Blending & Culling</a><a style="float:right;text-decoration:none;" href="#index">[Top]</a>
+### 2.混合模式及剔除/Blending & Culling
 
 **混合：** 混合通过下面这个方程实现：
 
@@ -474,7 +392,7 @@ https://docs.unity3d.com/cn/2018.4/Manual/SL-Blend.html
 
 http://wordpress.notargs.com/blog/blog/2015/09/24/unity5%E7%A0%B4%E9%8C%A0%E3%81%97%E3%81%AA%E3%81%84%E5%8D%8A%E9%80%8F%E6%98%8E%E6%8F%8F%E7%94%BB%E3%82%92%E8%A1%8C%E3%81%86/
 
-### <a name="21">3.曲面细分着色器与几何着色器/ts & gs</a><a style="float:right;text-decoration:none;" href="#index">[Top]</a>
+### 3.曲面细分着色器与几何着色器/ts & gs
 
 **曲面细分着色器：** 输入：Patch, 可以看成是多个顶点的集合，包含每个顶点的属性，可以指定一个Patch包含的顶点数以及自己的属性；功能：将图元细分（可以是三角形，矩形等）；输出：细分后的顶点；
 
@@ -490,7 +408,7 @@ http://wordpress.notargs.com/blog/blog/2015/09/24/unity5%E7%A0%B4%E9%8C%A0%E3%81
 
 （demo）
 
-### <a name="22">4.延迟渲染原理介绍/Deferred Rendering</a><a style="float:right;text-decoration:none;" href="#index">[Top]</a>
+### 4.延迟渲染原理介绍/Deferred Rendering
 
 **前向渲染：** 我们渲染物体的一种非常直接的方式，在场景中我们根据所有光源照亮一个物体，之后再渲染下一个物体，以此类推。它非常容易理解，也很容易实现，但是同时它对程序性能的影响也很大，因为对于每一个需要渲染的物体，程序都要对每一个光源每一个需要渲染的片段进行迭代，这会浪费大量的片段着色器运行时间。
 
@@ -512,7 +430,7 @@ http://wordpress.notargs.com/blog/blog/2015/09/24/unity5%E7%A0%B4%E9%8C%A0%E3%81
 
 （demo）
 
-### <a name="23">5.early-Z & Z-Prepass</a><a style="float:right;text-decoration:none;" href="#index">[Top]</a>
+### 5.early-Z & Z-Prepass
 
 **early-Z失效的情况：** 1.开启 Alpha Test 或 clip/discard 等手动丢弃片元操作；2.手动修改GPU插值得到的深度；3.开启 Alpha Blend；4.关闭深度测试；
 
@@ -526,15 +444,15 @@ http://wordpress.notargs.com/blog/blog/2015/09/24/unity5%E7%A0%B4%E9%8C%A0%E3%81
 
 **Z-Prepass的使用场合：** 1.一个场景有非常多的 OverDraw，而且不能很好的将不透明物体从前往后进行排序；2.Z-Prepass也是透明渲染的一种解决方案。
 
-### <a name="24">6.纹理压缩</a><a style="float:right;text-decoration:none;" href="#index">[Top]</a>
+### 6.纹理压缩
 
 （待补充）
 
-### <a name="25">7.现代移动端的TBR和TBR渲染管线以及Cbuffer</a><a style="float:right;text-decoration:none;" href="#index">[Top]</a>
+### 7.现代移动端的TBR和TBR渲染管线以及Cbuffer
 
 参考：[【技术美术百人计划】图形 3.7 移动端TB(D)R架构基础](https://www.bilibili.com/video/BV1Bb4y167zU)
 
-### <a name="26">7.1 名词解释</a><a style="float:right;text-decoration:none;" href="#index">[Top]</a>
+### 7.1 名词解释
 
 **System on Chip（Soc）：** Soc是把CPU、GPU、内存、通信基带、GPS模块等等整合在一起的芯片的称呼。常见有A系Soc（苹果），骁龙Soc（高通），麒麟Soc（华为），联发科Soc，猎户座Soc（三星），去年苹果推出的M系Soc，暂用于Mac，但这说明手机、笔记本和PC的通用芯片已经出现了。
 
@@ -548,7 +466,7 @@ http://wordpress.notargs.com/blog/blog/2015/09/24/unity5%E7%A0%B4%E9%8C%A0%E3%81
 
 **TBR（Tile-Based (Deferred) Rendering）：** 是目前主流的移动GPU渲染架构，对应一般PC上的GPU渲染架构则是IMR（Immediate Mode Rendering ）。
 
-### <a name="27">7.2 IMR & TBR</a><a style="float:right;text-decoration:none;" href="#index">[Top]</a>
+### 7.2 IMR & TBR
 
 直接用伪代码表示，一目了然：
 
@@ -567,14 +485,14 @@ for draw in renderPass:
 **TBR：**
 
 ```
-# <a name="28">Pass one</a><a style="float:right;text-decoration:none;" href="#index">[Top]</a>
+# Pass one
 for draw in renderPass:
 	for primitive in draw:
 		for vertex in primitive:
 			execute_vertex_shader(vertex)
 		if primitive not culled
 			append_tile_list(primitive)
-# <a name="29">Pass two</a><a style="float:right;text-decoration:none;" href="#index">[Top]</a>
+# Pass two
 for tile in renderPass:
 	for primitive in tile:
 		for fragment in primitive:
@@ -587,7 +505,7 @@ for tile in renderPass:
 
 上面的TBR最终会将颜色、深度、模板缓冲都刷到片上内存里，体现了一种 cached friendly的优点，可以降低带宽、减小功耗。
 
-### <a name="30">7.3 TBR的优化策略</a><a style="float:right;text-decoration:none;" href="#index">[Top]</a>
+### 7.3 TBR的优化策略
 
 不使用Framebuffer的时候记得clear或者discard：清空积存在tile buff上的 frame Data，所以在unity里面对render texture的使用也特别说明了一下，当不再使用这个rt之前，调用一次Discard。在OpenGL ES上善用glClear，gllnvalidateFrameBuffer避免不必要的Resolve（刷system memory）行为。
 
@@ -607,9 +525,9 @@ for tile in renderPass:
 
 在移动端的 TB(D)R 架构中，顶点处理部分，容易成为瓶颈，避免使用曲面细分shader，置换贴图等负操作，提倡使用模型LOD,本质上减少 FrameData 的压力。
 
-### <a name="31">7.4 Cbuffer</a><a style="float:right;text-decoration:none;" href="#index">[Top]</a>
+### 7.4 Cbuffer
 
-### <a name="32">8.DepthPeeling 深度剥离</a><a style="float:right;text-decoration:none;" href="#index">[Top]</a>
+### 8.DepthPeeling 深度剥离
 
 （待补充）
 
@@ -617,13 +535,13 @@ for tile in renderPass:
 
 https://zhuanlan.zhihu.com/p/127399447
 
-## <a name="33">第四章 高级扩展</a><a style="float:right;text-decoration:none;" href="#index">[Top]</a>
+## 第四章 高级扩展
 
-### <a name="34">1.Bloom算法</a><a style="float:right;text-decoration:none;" href="#index">[Top]</a>
+### 1.Bloom算法
 
 （demo）
 
-### <a name="35">2.SSAO算法</a><a style="float:right;text-decoration:none;" href="#index">[Top]</a>
+### 2.SSAO算法
 
 **环境光遮蔽（Ambient Occlusion）：** 环境遮挡是创建逼真的周围环境的关键因素。它提供了我们期望从全局照明和其他更复杂的间接照明技术中获得的柔和阴影。未完全暴露于环境的表面上的光照需要适当地衰减，以使它们不能获得周围环境光的全部贡献。
 
@@ -645,7 +563,7 @@ SSAO的流程，下图一目了然，显然它和延迟渲染结合得很好：
 
 （demo）
 
-### <a name="36">3.阴影的各类实现方法</a><a style="float:right;text-decoration:none;" href="#index">[Top]</a>
+### 3.阴影的各类实现方法
 
 1.平面映射
 
@@ -667,19 +585,19 @@ SSAO的流程，下图一目了然，显然它和延迟渲染结合得很好：
 
 （demo）
 
-### <a name="37">4.抗锯齿之FXAA、MSAA</a><a style="float:right;text-decoration:none;" href="#index">[Top]</a>
+### 4.抗锯齿之FXAA、MSAA
 
 （demo）
 
-### <a name="38">5.DOF景深算法</a><a style="float:right;text-decoration:none;" href="#index">[Top]</a>
+### 5.DOF景深算法
 
 （demo）
 
-### <a name="39">6.运动模糊</a><a style="float:right;text-decoration:none;" href="#index">[Top]</a>
+### 6.运动模糊
 
 （demo）
 
-### <a name="40">7.雾效实现方法</a><a style="float:right;text-decoration:none;" href="#index">[Top]</a>
+### 7.雾效实现方法
 
 **DepthFog：**
 
@@ -701,7 +619,7 @@ unity中的全局雾设置和宏APPLY_FOG就是使用这种方式。
 
 参考：[TC130-游戏中的Volumetric Rendering](https://zhuanlan.zhihu.com/p/102114679)
 
-### <a name="41">8.基于屏幕空间的溶解</a><a style="float:right;text-decoration:none;" href="#index">[Top]</a>
+### 8.基于屏幕空间的溶解
 
 https://www.jianshu.com/p/c71076676fe6
 
@@ -709,9 +627,9 @@ https://www.jianshu.com/p/1bef38552775
 
 （demo）
 
-## <a name="42">第五章 物理世界</a><a style="float:right;text-decoration:none;" href="#index">[Top]</a>
+## 第五章 物理世界
 
-### <a name="43">1.PBR</a><a style="float:right;text-decoration:none;" href="#index">[Top]</a>
+### 1.PBR
 
 PBR，即基于物理的渲染（Physically Based Rendering），它指的是一些在不同程度上都基于**与现实世界的物理原理更相符的**基本理论所构成的渲染技术的集合。在实时渲染中，我们提到PBR，往往指的是PBR材质。
 
@@ -723,7 +641,7 @@ PBR，即基于物理的渲染（Physically Based Rendering），它指的是一
 - 能量守恒。
 - 应用基于物理的BRDF。
 
-### <a name="44">1.1 辐射度量学/Radiometry</a><a style="float:right;text-decoration:none;" href="#index">[Top]</a>
+### 1.1 辐射度量学/Radiometry
 
 **为什么需要辐射度量学？：** 无论是Blinn-Phong模型，还是Whitted-style光线追踪，都存在较多经验成分。
 
@@ -773,7 +691,7 @@ $$
 L_o(p,\omega_o) = \int\limits_{\Omega} f_r(p,\omega_i,\omega_o) L_i(p,\omega_i) n \cdot \omega_i  d\omega_i
 $$
 
-### <a name="45">1.2 BRDF</a><a style="float:right;text-decoration:none;" href="#index">[Top]</a>
+### 1.2 BRDF
 
 **微表面（Microfacet）模型：** 在宏观上看上去是平的，但在微观上看去会看到各种各样的微表面，这些微表面的朝向，也就是法线各不相同，这些微表面法线的分布导致不同的材质渲染出的结果各不相同，这就是微表面模型。
 
@@ -864,11 +782,11 @@ $$
 
 一个不错的总结：[TC130-彻底看懂PBR/BRDF方程](https://zhuanlan.zhihu.com/p/158025828)
 
-### <a name="46">1.3 PBR实现算法</a><a style="float:right;text-decoration:none;" href="#index">[Top]</a>
+### 1.3 PBR实现算法
 
 （demo）
 
-### <a name="47">2.光线追踪</a><a style="float:right;text-decoration:none;" href="#index">[Top]</a>
+### 2.光线追踪
 
 **还是先按时间轴介绍：** 
 
@@ -886,61 +804,61 @@ $$
 
 参考：[GAMES101-Ray Tracing 1~4](https://www.bilibili.com/video/BV1X7411F744?p=13)和[papalqi-光线追踪](https://zhuanlan.zhihu.com/p/72673165)和[孙小磊-重要性采样和多重重要性采样在路径追踪中的应用](https://zhuanlan.zhihu.com/p/360420413)
 
-### <a name="48">3.Real-time Environment Mapping</a><a style="float:right;text-decoration:none;" href="#index">[Top]</a>
+### 3.Real-time Environment Mapping
 
 The split sum approximation; Precomputed radiance transfer;
 
-### <a name="49">4.Real-time GLobal Illumination (in 3D)</a><a style="float:right;text-decoration:none;" href="#index">[Top]</a>
+### 4.Real-time GLobal Illumination (in 3D)
 
 Reflective Shadow Map(RSM);
 
 Light Propagation Volumes(LPV); Voxel Global Illumination(VXGI);
 
-### <a name="50">5.Real-time GLobal Illumination (screen space)</a><a style="float:right;text-decoration:none;" href="#index">[Top]</a>
+### 5.Real-time GLobal Illumination (screen space)
 
 Screen Space Ambient Occlusion(SSAO); Screen Space Directional Occlusion(SSDO); Screen Space Reflection(SSR)
 
-### <a name="51">6.体渲染</a><a style="float:right;text-decoration:none;" href="#index">[Top]</a>
+### 6.体渲染
 
 数学物理原理；SDF；Raymarching；体积光；
 
-### <a name="52">7.体积云的生成</a><a style="float:right;text-decoration:none;" href="#index">[Top]</a>
+### 7.体积云的生成
 
 3D体纹理的制作；噪波的生成；引擎中实现体积云；
 
 （demo）
 
-### <a name="53">8.水体渲染</a><a style="float:right;text-decoration:none;" href="#index">[Top]</a>
+### 8.水体渲染
 
 FFT；
 
-### <a name="54">9.毛发模拟</a><a style="float:right;text-decoration:none;" href="#index">[Top]</a>
+### 9.毛发模拟
 
-### <a name="55">10.渲染加速与性能优化概述</a><a style="float:right;text-decoration:none;" href="#index">[Top]</a>
+### 10.渲染加速与性能优化概述
 
-### <a name="56">11.皮肤渲染</a><a style="float:right;text-decoration:none;" href="#index">[Top]</a>
+### 11.皮肤渲染
 
-## <a name="57">第六章 卡通渲染</a><a style="float:right;text-decoration:none;" href="#index">[Top]</a>
+## 第六章 卡通渲染
 
-### <a name="58">1.NPR与卡通渲染的风格流派</a><a style="float:right;text-decoration:none;" href="#index">[Top]</a>
-
-
-
-### <a name="59">2.卡通渲染描边方案</a><a style="float:right;text-decoration:none;" href="#index">[Top]</a>
+### 1.NPR与卡通渲染的风格流派
 
 
 
-### <a name="60">3.卡通渲染着色方案</a><a style="float:right;text-decoration:none;" href="#index">[Top]</a>
+### 2.卡通渲染描边方案
 
 
 
-### <a name="61">4.卡通渲染案例讲解</a><a style="float:right;text-decoration:none;" href="#index">[Top]</a>
+### 3.卡通渲染着色方案
+
+
+
+### 4.卡通渲染案例讲解
 
 （demo）
 
-## <a name="62">第七章 GPU逻辑管线</a><a style="float:right;text-decoration:none;" href="#index">[Top]</a>
+## 第七章 GPU逻辑管线
 
-### <a name="63">1.逻辑管线简介/GPU Logical Pipeline</a><a style="float:right;text-decoration:none;" href="#index">[Top]</a>
+### 1.逻辑管线简介/GPU Logical Pipeline
 
 懒了，直接上英文了。
 
@@ -988,7 +906,7 @@ FFT；
 
 参考：[Life of a triangle - NVIDIA's logical pipeline](https://developer.nvidia.com/content/life-triangle-nvidias-logical-pipeline)
 
-### <a name="64">2.GPU硬件架构十三问/GPU Q&A</a><a style="float:right;text-decoration:none;" href="#index">[Top]</a>
+### 2.GPU硬件架构十三问/GPU Q&A
 
 参考：[深入GPU硬件架构及运行机制](https://www.cnblogs.com/timlly/p/11471507.html)。这篇文章写得非常不错！
 
@@ -1048,7 +966,7 @@ Context是一个对象，是GPU使用的最小数据集，越多Context可用就
 
 见7.5节。
 
-### <a name="65">3.光栅化与透视矫正插值/Rasterization & Perspective-Correct Interpolation</a><a style="float:right;text-decoration:none;" href="#index">[Top]</a>
+### 3.光栅化与透视矫正插值/Rasterization & Perspective-Correct Interpolation
 
 **直线光栅化算法：** ①DDA数值微分算法（我的软渲染就是用的这个算法）；②中点Bresenham算法。
 
@@ -1080,7 +998,7 @@ $$
 
 参考：[孙小磊-计算机图形学三：直线光栅化的数值微分算法,中点Brensenham算法和三角形的光栅化](https://zhuanlan.zhihu.com/p/144330664)和[孙小磊-计算机图形学六：透视矫正插值和图形渲染管线总结](https://zhuanlan.zhihu.com/p/144331875)和[TC130-图形学硬件拾遗(一)](https://zhuanlan.zhihu.com/p/371469482)
 
-### <a name="66">4.if，以及分支/if, and branch</a><a style="float:right;text-decoration:none;" href="#index">[Top]</a>
+### 4.if，以及分支/if, and branch
 
 在 shader 中，尽量避免使用 if 已成为绝大多数开发者的共识，究其原因是人们认为 if 会打断 GPU 的 warp 内部的并行化。 
 
@@ -1118,17 +1036,17 @@ void func(int count, int breakNum)
 
 参考：[YAO-Shader中的 if 和分支](https://zhuanlan.zhihu.com/p/122467342)
 
-### <a name="67">5.基于GPU架构的渲染优化建议</a><a style="float:right;text-decoration:none;" href="#index">[Top]</a>
+### 5.基于GPU架构的渲染优化建议
 
 
 
-## <a name="68">第八章 其他</a><a style="float:right;text-decoration:none;" href="#index">[Top]</a>
+## 第八章 其他
 
-### <a name="69">1.体素</a><a style="float:right;text-decoration:none;" href="#index">[Top]</a>
+### 1.体素
 
-### <a name="70">2.三维旋转：欧拉角、四元数、旋转矩阵、轴角</a><a style="float:right;text-decoration:none;" href="#index">[Top]</a>
+### 2.三维旋转：欧拉角、四元数、旋转矩阵、轴角
 
-### <a name="71">2.1 欧拉角基础</a><a style="float:right;text-decoration:none;" href="#index">[Top]</a>
+### 2.1 欧拉角基础
 
 欧拉角(Euler Angle)是可以表示3D空间中任何旋转的3个值，由莱昂哈德·欧拉(Leonhard Euler)在18世纪提出。一共有3种欧拉角：俯仰角(Pitch)、偏航角(Yaw)和滚转角(Roll)，下面的图片展示了它们的含义：
 
@@ -1138,7 +1056,7 @@ void func(int count, int breakNum)
 
 （待补充）
 
-### <a name="72">2.2 四元数基础</a><a style="float:right;text-decoration:none;" href="#index">[Top]</a>
+### 2.2 四元数基础
 
 四元数的定义和复数非常类似，唯一的区别就是四元数一共有三个虚部，而复数只有一个。所有的四元数 q ∈ H（H代表四元数的发现者William Rowan Hamilton）都可以写成下面这种形式：
 
@@ -1156,7 +1074,7 @@ Graßmann积：𝑞1𝑞2 = [𝑎𝑒 − **v** · **u**, 𝑎**u** + 𝑒**v** 
 
 （待补充的部分：四元数插值）
 
-### <a name="73">2.3 转换</a><a style="float:right;text-decoration:none;" href="#index">[Top]</a>
+### 2.3 转换
 
 ![](https://files.catbox.moe/zpdy30.png)
 
@@ -1193,17 +1111,17 @@ $$
 
 参考：[鸡哥-三维旋转：欧拉角、四元数、旋转矩阵、轴角之间的转换](https://zhuanlan.zhihu.com/p/45404840)
 
-### <a name="74">3.球谐光照</a><a style="float:right;text-decoration:none;" href="#index">[Top]</a>
+### 3.球谐光照
 
-### <a name="75">4.空间分割加速</a><a style="float:right;text-decoration:none;" href="#index">[Top]</a>
+### 4.空间分割加速
 
-### <a name="76">5.裁切技术</a><a style="float:right;text-decoration:none;" href="#index">[Top]</a>
+### 5.裁切技术
 
-### <a name="77">6.层次细节/LOD</a><a style="float:right;text-decoration:none;" href="#index">[Top]</a>
+### 6.层次细节/LOD
 
-### <a name="78">7.通过法线2d渲3d的角色效果</a><a style="float:right;text-decoration:none;" href="#index">[Top]</a>
+### 7.通过法线2d渲3d的角色效果
 
-### <a name="79">8.渲染常用术语整理</a><a style="float:right;text-decoration:none;" href="#index">[Top]</a>
+### 8.渲染常用术语整理
 
 英文|缩写|补充说明
 :-:|:-:|-
