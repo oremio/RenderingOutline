@@ -4,7 +4,7 @@
 
 这个大纲基本是参考[技术美术百人计划](https://docs.qq.com/doc/DUFdKZE1oVFd3ZlBs)，增加了“第七章 GPU逻辑管线”，同时会补充上一些通俗且尽量简短的、至少我自己日后还能看懂的解释，保证所有知识点的"Why, What, How"都能在文字上解释清楚，即为什么会出现这种技术，这种技术的主要内容，这种技术的实现。
 
-<a name="index">**目录**</a>
+## <a name="index">**目录**</a>
 
 &emsp;<a href="#1">渲染的一些参考资料</a>  
 &emsp;<a href="#2">全篇第一个"Why, What, How"</a>  
@@ -31,10 +31,10 @@
 &emsp;&emsp;<a href="#23">5.early-Z & Z-Prepass</a>  
 &emsp;&emsp;<a href="#24">6.纹理压缩</a>  
 &emsp;&emsp;<a href="#25">7.现代移动端的TBR和TBR渲染管线以及Cbuffer</a>  
-&emsp;&emsp;<a href="#26">7.1 名词解释</a>  
-&emsp;&emsp;<a href="#27">7.2 IMR & TBR</a>   
-&emsp;&emsp;<a href="#30">7.3 TBR的优化策略</a>  
-&emsp;&emsp;<a href="#31">7.4 Cbuffer</a>  
+&emsp;&emsp;&emsp;<a href="#26">7.1 名词解释</a>  
+&emsp;&emsp;&emsp;<a href="#27">7.2 IMR & TBR</a>   
+&emsp;&emsp;&emsp;<a href="#30">7.3 TBR的优化策略</a>  
+&emsp;&emsp;&emsp;<a href="#31">7.4 Cbuffer</a>  
 &emsp;&emsp;<a href="#32">8.DepthPeeling 深度剥离</a>  
 &emsp;<a href="#33">第四章 高级扩展</a>  
 &emsp;&emsp;<a href="#34">1.Bloom算法</a>  
@@ -47,9 +47,9 @@
 &emsp;&emsp;<a href="#41">8.基于屏幕空间的溶解</a>  
 &emsp;<a href="#42">第五章 物理世界</a>  
 &emsp;&emsp;<a href="#43">1.PBR</a>  
-&emsp;&emsp;<a href="#44">1.1 辐射度量学/Radiometry</a>  
-&emsp;&emsp;<a href="#45">1.2 BRDF</a>  
-&emsp;&emsp;<a href="#46">1.3 PBR实现算法</a>  
+&emsp;&emsp;&emsp;<a href="#44">1.1 辐射度量学/Radiometry</a>  
+&emsp;&emsp;&emsp;<a href="#45">1.2 BRDF</a>  
+&emsp;&emsp;&emsp;<a href="#46">1.3 PBR实现算法</a>  
 &emsp;&emsp;<a href="#47">2.光线追踪</a>  
 &emsp;&emsp;<a href="#48">3.Real-time Environment Mapping</a>  
 &emsp;&emsp;<a href="#49">4.Real-time GLobal Illumination (in 3D)</a>  
@@ -74,9 +74,9 @@
 &emsp;<a href="#68">第八章 其他</a>  
 &emsp;&emsp;<a href="#69">1.体素</a>  
 &emsp;&emsp;<a href="#70">2.三维旋转：欧拉角、四元数、旋转矩阵、轴角</a>  
-&emsp;&emsp;<a href="#71">2.1 欧拉角基础</a>  
-&emsp;&emsp;<a href="#72">2.2 四元数基础</a>  
-&emsp;&emsp;<a href="#73">2.3 转换</a>  
+&emsp;&emsp;&emsp;<a href="#71">2.1 欧拉角基础</a>  
+&emsp;&emsp;&emsp;<a href="#72">2.2 四元数基础</a>  
+&emsp;&emsp;&emsp;<a href="#73">2.3 转换</a>  
 &emsp;&emsp;<a href="#74">3.球谐光照</a>  
 &emsp;&emsp;<a href="#75">4.空间分割加速</a>  
 &emsp;&emsp;<a href="#76">5.裁切技术</a>  
