@@ -5,6 +5,7 @@
 这个大纲基本是参考[技术美术百人计划](https://docs.qq.com/doc/DUFdKZE1oVFd3ZlBs)，增加了“第七章 GPU逻辑管线”，同时会补充上一些通俗且尽量简短的、至少我自己日后还能看懂的解释，保证所有知识点的"Why, What, How"都能在文字上解释清楚，即为什么会出现这种技术，这种技术的主要内容，这种技术的实现。
 
 <a name="index">**目录**</a>
+
 &emsp;<a href="#1">渲染的一些参考资料</a>  
 &emsp;<a href="#2">全篇第一个"Why, What, How"</a>  
 &emsp;<a href="#3">第一章 基础</a>  
