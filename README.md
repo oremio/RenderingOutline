@@ -1042,9 +1042,50 @@ void func(int count, int breakNum)
 
 1.体素
 
-2.球谐光照
+### 2.三维旋转：欧拉角、四元数、旋转矩阵、轴角
 
-3.欧拉旋转与四元变换
+### 2.1 欧拉角基础
+
+### 2.2 四元数基础
+
+### 2.3 转换
+
+![](https://files.catbox.moe/zpdy30.png)
+
+①欧拉角 ----> 旋转矩阵：欧拉角旋转序列(Euler Angle Rotational Sequence)一共有12种顺规，[维基百科-欧拉角](https://en.wikipedia.org/wiki/Euler_angles)给出了12种顺规乘出来的旋转矩阵，这些矩阵采用列主向量和外旋（绕世界坐标系的轴旋转）的约定。
+
+②旋转矩阵 ----> 欧拉角：我们可以用旋转矩阵元素的相乘、相除、反三角函数等操作去“凑”出欧拉角。具体公式可以参考下面的链接。
+
+③四元数 ----> 旋转矩阵：
+
+任意向量 **v** 沿着以单位向量定义的旋转轴 **u** 旋转 θ 度之后的 **v′** 可以使用四元数乘法来获得。令 v = [0, **v**]，q = [cos(θ/2), sin(θ/2)**u**]，那么：v' = qvq* = qvq<sup>-1</sup>
+
+任意向量 **v** 沿着以单位向量定义的旋转轴 **u** 旋转 θ 角度之后的 **v′** 还可以使用矩阵乘法来获得。令 a = cos(θ/2)，b = sin(θ/2)u<sub>x</sub>，c = sin(θ/2)u<sub>y</sub>，d = sin(θ/2)u<sub>z</sub>，那么：
+
+$$
+\mathbf{v'}=
+\left[
+\begin{matrix}
+1-2c^2-2d^2 & 2bc-2ad & 2ac+2bd \\
+2bc+2ad & 1-2b^2-2d^2 & 2cd-2ab \\
+2bd-2ac & 2ab+2cd & 1-2b^2-2c^2
+\end{matrix} \right]
+\mathbf{v}
+$$
+
+④旋转矩阵 ----> 四元数：依然是观察矩阵元素，凑出四元数的四个分量。具体公式可以参考下面的链接。
+
+⑤欧拉角 ----> 四元数：欧拉角构造四元数，跟欧拉角构造旋转矩阵一样，依然就是把三个基础旋转(Elemental Rotation)组合在一起。具体公式可以查看[维基百科-四元数与欧拉角之间的转换](https://en.wikipedia.org/wiki/Conversion_between_quaternions_and_Euler_angles#Euler_Angles_to_Quaternion_Conversion)。
+
+⑥四元数 ----> 欧拉角：直接转换有点硬核，比较舒服的思路还是四元数-->旋转矩阵-->欧拉角。
+
+⑦轴角 ----> 四元数：q = [cos(θ/2), sin(θ/2)**u**]。
+
+⑧轴角 ----> 旋转矩阵：罗德里格斯旋转公式(Rodrigues’ Rotation Formula)：3D 空间中任意一个 **v** 沿着单位向量 **u** 旋转 θ 角度之后的 **v′** 为：**v′** = cos(θ)**v** + (1 − cos(θ))(**u** · **v**)**u** + sin(θ)(**u** × **v**)。矩阵形式参考下面的链接吧。
+
+参考：[鸡哥-三维旋转：欧拉角、四元数、旋转矩阵、轴角之间的转换](https://zhuanlan.zhihu.com/p/45404840)
+
+3.球谐光照
 
 4.空间分割加速
 
