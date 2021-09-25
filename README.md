@@ -11,7 +11,7 @@
 &emsp;<a href="#3">第一章 基础</a>  
 &emsp;&emsp;<a href="#4">1.渲染管线简介/Rendering Pipeline</a>  
 &emsp;&emsp;<a href="#5">2.数学基础/Math</a>  
-&emsp;&emsp;<a href="#29">3.采样理论</a>  
+&emsp;&emsp;<a href="#29">3.采样理论/Sampling Theory</a>  
 &emsp;&emsp;<a href="#6">4.纹理/Texture</a>  
 &emsp;&emsp;<a href="#7">5.图形API/Graphics API</a>  
 &emsp;&emsp;<a href="#8">6.图形API坐标系对比/Coordinate System</a>  
