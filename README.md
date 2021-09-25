@@ -11,18 +11,20 @@
 &emsp;<a href="#3">第一章 基础</a>  
 &emsp;&emsp;<a href="#4">1.渲染管线简介/Rendering Pipeline</a>  
 &emsp;&emsp;<a href="#5">2.数学基础/Math</a>  
-&emsp;&emsp;<a href="#6">3.纹理/Texture</a>  
-&emsp;&emsp;<a href="#7">4.图形API/Graphics API</a>  
-&emsp;&emsp;<a href="#8">5.图形API坐标系对比/Coordinate System</a>  
+&emsp;&emsp;<a href="#29">3.采样理论</a>  
+&emsp;&emsp;<a href="#6">4.纹理/Texture</a>  
+&emsp;&emsp;<a href="#7">5.图形API/Graphics API</a>  
+&emsp;&emsp;<a href="#8">6.图形API坐标系对比/Coordinate System</a>  
 &emsp;<a href="#9">第二章 光照基础</a>  
 &emsp;&emsp;<a href="#10">1.颜色空间/Color Space</a>  
 &emsp;&emsp;<a href="#11">2.模型与材质/Model & Materials</a>  
 &emsp;&emsp;<a href="#12">3.基础hlsl函数介绍/HLSL Functions</a>  
 &emsp;&emsp;<a href="#13">4.传统经验光照模型/Empirical Shading Model</a>  
-&emsp;&emsp;<a href="#14">5.凹凸贴图/Bump Mapping</a>  
-&emsp;&emsp;<a href="#15">6.伽马校正/Gamma Correction</a>  
-&emsp;&emsp;<a href="#16">7.LDR&HDR</a>  
-&emsp;&emsp;<a href="#17">8.FlowMap的实现</a>  
+&emsp;&emsp;<a href="#28">5.光源/Light Source</a>  
+&emsp;&emsp;<a href="#14">6.凹凸贴图/Bump Mapping</a>  
+&emsp;&emsp;<a href="#15">7.伽马校正/Gamma Correction</a>  
+&emsp;&emsp;<a href="#16">8.LDR&HDR</a>  
+&emsp;&emsp;<a href="#17">9.流动贴图/FlowMap</a>  
 &emsp;<a href="#18">第三章 进阶应用</a>  
 &emsp;&emsp;<a href="#19">1.深度与模板测试/Depth Testing & Stencil Testing</a>  
 &emsp;&emsp;<a href="#20">2.混合模式及剔除/Blending & Culling</a>  
@@ -51,7 +53,7 @@
 &emsp;&emsp;&emsp;<a href="#45">1.2 BRDF</a>  
 &emsp;&emsp;&emsp;<a href="#46">1.3 PBR实现算法</a>  
 &emsp;&emsp;<a href="#47">2.光线追踪</a>  
-&emsp;&emsp;<a href="#48">3.Real-time Environment Mapping</a>  
+&emsp;&emsp;<a href="#48">3.基于图像照明/Image-based Lighting</a>  
 &emsp;&emsp;<a href="#49">4.Real-time GLobal Illumination (in 3D)</a>  
 &emsp;&emsp;<a href="#50">5.Real-time GLobal Illumination (screen space)</a>  
 &emsp;&emsp;<a href="#51">6.体渲染</a>  
@@ -151,7 +153,7 @@ anything about game：[ComputerGraphics && Shading](https://github.com/killop/an
 
 ①三角形设置与遍历：抗锯齿；
 
-②像素着色器：插值；
+②像素着色器
 
 ③颜色混合：透明度测试，模板测试，深度测试，混合；
 
@@ -184,7 +186,13 @@ Bloom（泛光）、HDR（高动态范围）、FXAA、DepthOfView、边缘检测
 
 参考：[GAMES101-变换](https://www.bilibili.com/video/BV1X7411F744?p=4)
 
-### <a name="6">3.纹理/Texture</a><a style="float:right;text-decoration:none;" href="#index">[Top]</a>
+### <a name="29">3.采样理论/Sampling Theory</a><a style="float:right;text-decoration:none;" href="#index">[Top]</a>
+
+（待补充）
+
+参考：[杨鼎超-图形学基础 - 着色 - 采样理论](https://zhuanlan.zhihu.com/p/361383661)和[杨鼎超-图形学基础 - 着色 - 空间抗锯齿技术](https://zhuanlan.zhihu.com/p/363624370)和[杨鼎超-图形学基础 - 着色 - TAA抗锯齿](https://zhuanlan.zhihu.com/p/366494818)
+
+### <a name="6">4.纹理/Texture</a><a style="float:right;text-decoration:none;" href="#index">[Top]</a>
 
 **为什么选择纹理？：** 牺牲一些几何细节，能够大量减少建模的工作量，存储空间需求也能减少，读取速度也能增加。
 
@@ -208,7 +216,7 @@ GPU渲染优化常见方式：纹理压缩；
 
 参考：[LearnOpenGL CN-纹理](https://learnopengl-cn.github.io/01%20Getting%20started/06%20Textures/)和[GAMES101-纹理、Mipmap](https://www.bilibili.com/video/BV1X7411F744?p=9)和[GAMES202-SAT](https://www.bilibili.com/video/BV1YK4y1T7yY?p=4&t=4315)
 
-### <a name="7">4.图形API/Graphics API</a><a style="float:right;text-decoration:none;" href="#index">[Top]</a>
+### <a name="7">5.图形API/Graphics API</a><a style="float:right;text-decoration:none;" href="#index">[Top]</a>
 
 Khronos定义了OpenGL，微软定义了DirectX；
 
@@ -222,7 +230,7 @@ Windows系统支持DirectX和OpenGL，Linux/Mac(Unix)系统支持OpenGL。
 
 这篇文章对OpenGL介绍得相当不错：[柯灵杰-20分钟让你了解OpenGL——OpenGL全流程详细解读](https://zhuanlan.zhihu.com/p/56693625)
 
-### <a name="8">5.图形API坐标系对比/Coordinate System</a><a style="float:right;text-decoration:none;" href="#index">[Top]</a>
+### <a name="8">6.图形API坐标系对比/Coordinate System</a><a style="float:right;text-decoration:none;" href="#index">[Top]</a>
 
 渲染从3D到2D的过程中，经历了不少的坐标系。主要可以认为有以下几种。
 
@@ -310,7 +318,13 @@ m<sub>diffuse</sub>：漫反射率；m<sub>specular</sub>：镜面反射率；gl
 
 参考：[LearnOpenGL CN-基础光照](https://learnopengl-cn.github.io/02%20Lighting/02%20Basic%20Lighting/)
 
-### <a name="14">5.凹凸贴图/Bump Mapping</a><a style="float:right;text-decoration:none;" href="#index">[Top]</a>
+### <a name="28">5.光源/Light Source</a><a style="float:right;text-decoration:none;" href="#index">[Top]</a>
+
+（待补充）
+
+参考：[杨鼎超-图形学基础 - 着色 - 光源](https://zhuanlan.zhihu.com/p/360821314)
+
+### <a name="14">6.凹凸贴图/Bump Mapping</a><a style="float:right;text-decoration:none;" href="#index">[Top]</a>
 
 **为什么选择凹凸贴图？：** 减少建模的工作量，存储空间需求也能减少。
 
@@ -324,7 +338,7 @@ m<sub>diffuse</sub>：漫反射率；m<sub>specular</sub>：镜面反射率；gl
 
 （demo）
 
-### <a name="15">6.伽马校正/Gamma Correction</a><a style="float:right;text-decoration:none;" href="#index">[Top]</a>
+### <a name="15">7.伽马校正/Gamma Correction</a><a style="float:right;text-decoration:none;" href="#index">[Top]</a>
 
 **为什么会出现伽马校正？：** 历史原因：早期我们使用的阴极射线显像管（CRT）的亮度与电压并不成线性关系，而是gamma值约为2.2类似幂律的关系；物理原因：人类对光的暗部变化更加敏感，需要使用更多位置去存储暗部值，所以利用设备的灰度系数（即gamma），能够让暗部使用更高精度保存，而亮部使用更低精度保存。
 
@@ -354,7 +368,7 @@ m<sub>diffuse</sub>：漫反射率；m<sub>specular</sub>：镜面反射率；gl
 参考：[LearnOpenGL CN-Gamma校正](https://learnopengl-cn.github.io/05%20Advanced%20Lighting/02%20Gamma%20Correction/)和[PZZZB-Gamma、Linear、sRGB 和Unity Color Space，你真懂了吗？
 ](https://zhuanlan.zhihu.com/p/66558476)
 
-### <a name="16">7.LDR&HDR</a><a style="float:right;text-decoration:none;" href="#index">[Top]</a>
+### <a name="16">8.LDR&HDR</a><a style="float:right;text-decoration:none;" href="#index">[Top]</a>
 
 **基本概念：**
 
@@ -370,7 +384,7 @@ m<sub>diffuse</sub>：漫反射率；m<sub>specular</sub>：镜面反射率；gl
 
 参考：[LearnOpenGL CN-HDR](https://learnopengl-cn.github.io/05%20Advanced%20Lighting/06%20HDR/)
 
-### <a name="17">8.FlowMap的实现</a><a style="float:right;text-decoration:none;" href="#index">[Top]</a>
+### <a name="17">9.流动贴图/FlowMap</a><a style="float:right;text-decoration:none;" href="#index">[Top]</a>
 
 实现流程：对FlowMap进行采样，可以得到一个值在0 ~ 1之间的向量场，将它转换到-1 ~ 1后，我们还需要构造两个周期相同、相位相差半个周期的波形函数，利用偏移向量和两个波形函数，我们对纹理采样两次并进行一个线性插值，就可以得到一个循环平滑的流动。
 
@@ -753,7 +767,7 @@ $$
 E = \frac{d\Phi}{dA}
 $$
 
-辐出度（Radiance），指每单位**垂直**面积，单位立体角，单位时间接受到的能量。
+辐出度/辐亮度（Radiance），指每单位**垂直**面积，单位立体角，单位时间接受到的能量。
 
 $$
 L = \frac{d^2\Phi}{d\omega dA^\perp} = \frac{dE}{d\omega \cos\theta}
@@ -884,9 +898,15 @@ $$
 
 参考：[GAMES101-Ray Tracing 1~4](https://www.bilibili.com/video/BV1X7411F744?p=13)和[papalqi-光线追踪](https://zhuanlan.zhihu.com/p/72673165)和[孙小磊-重要性采样和多重重要性采样在路径追踪中的应用](https://zhuanlan.zhihu.com/p/360420413)
 
-### <a name="48">3.Real-time Environment Mapping</a><a style="float:right;text-decoration:none;" href="#index">[Top]</a>
+### <a name="48">3.基于图像照明/Image-based Lighting</a><a style="float:right;text-decoration:none;" href="#index">[Top]</a>
 
-The split sum approximation; Precomputed radiance transfer;
+The split sum approximation：
+
+1st Stage: 1.Prefiltering of the environment lighting; 2.Then query the pre-filtered environment lighting at the r(mirror reflected) direction;
+
+2nd Stage: 
+
+Precomputed radiance transfer;
 
 ### <a name="49">4.Real-time GLobal Illumination (in 3D)</a><a style="float:right;text-decoration:none;" href="#index">[Top]</a>
 
